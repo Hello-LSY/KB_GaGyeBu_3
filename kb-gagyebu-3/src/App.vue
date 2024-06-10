@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -8,5 +8,9 @@
 </script>
 
 <style>
-/* 스타일을 여기에 추가합니다 */
+/* 스타일 정의 */
+#app {
+  display: flex;
+  height: 100vh;
+}
 </style>

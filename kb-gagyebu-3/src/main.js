@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
-import routes from './routes'
+import routes from './routes'  // 경로가 올바른지 확인
 
 const app = createApp(App)
 const pinia = createPinia()
