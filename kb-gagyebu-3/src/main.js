@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import routes from './routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js' 
 
 const app = createApp(App);
 const pinia = createPinia();
