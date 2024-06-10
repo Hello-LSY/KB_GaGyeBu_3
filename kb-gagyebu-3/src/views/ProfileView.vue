@@ -79,13 +79,18 @@ const expense3 = ref('')
 .container {
   display: flex;
   height: 100vh;
-  background: #fff; 
+  background: #fff;
+  width: 100vw; /* Ensure the container takes the full viewport width */
+  margin: 0; /* Remove any default margin */
+  padding: 0;
 }
 
 .custom-container {
-  max-width: 1400px; /* Increase this value to make the container wider */
-  margin: 0px 0px 0px 0px;
+  max-width: 1400px; /* You can adjust this value as needed */
+  margin: 0; /* Remove all margins */
+  width: 100%; /* Ensure it takes the full width of its parent */
 }
+
 
 .content {
   display: flex;
