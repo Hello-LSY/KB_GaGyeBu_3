@@ -41,19 +41,19 @@
       <div class="form row">
         <div class="input-group col-md-6">
           <p class="input-label">이름</p>
-          <input type="text" class="input-field form-control" v-model="name" placeholder="이름을 입력하세요" />
+          <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
+        </div>
+        <div class="input-group col-md-6">
+          <p class="input-label">이메일</p>
+          <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense1" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field" v-model="expense2" placeholder="성별을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense2" placeholder="을 입력하세요" />
-        </div>
-        <div class="input-group col-md-6">
-          <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense3" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field" v-model="expense3" placeholder="금액을 입력하세요" />
         </div>
       </div>
       <div class="button-container d-flex justify-content-center mt-auto">
@@ -70,7 +70,7 @@ import { ref } from 'vue'
 import Sidebar from '../components/SideBar.vue'
 
 const name = ref('')
-const expense1 = ref('')
+const email = ref('')
 const expense2 = ref('')
 const expense3 = ref('')
 </script>
@@ -84,9 +84,11 @@ const expense3 = ref('')
 }
 
 .custom-container {
-  max-width: 1400px; /* Increase this value to make the container wider */
-  margin: 0px 0px 0px 0px;
+  max-width: 1400px; /* You can adjust this value as needed */
+  margin: 0; /* Remove all margins */
+  width: 100%; /* Ensure it takes the full width of its parent */
 }
+
 
 .content {
   display: flex;
