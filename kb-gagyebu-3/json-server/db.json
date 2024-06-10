@@ -1,27 +1,34 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john@example.com"
-      },
-      {
-        "id": 2,
-        "name": "Jane Smith",
-        "email": "jane@example.com"
-      }
-    ],
-    "money": [
-      {
-        "id": 1,
-        "userId": 1,
-        "amount": 1000
-      },
-      {
-        "id": 2,
-        "userId": 2,
-        "amount": 2000
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "qwer123"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "password": "qwer123"
+    },
+    {
+      "id": "41bc",
+      "name": "123",
+      "email": "123@123",
+      "password": "123"
+    }
+  ],
+  "money": [
+    {
+      "id": "1",
+      "userId": 1,
+      "amount": 1000
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "amount": 2000
+    }
+  ]
+}
