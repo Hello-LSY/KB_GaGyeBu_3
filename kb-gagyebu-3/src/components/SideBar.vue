@@ -47,6 +47,7 @@
           <router-link to="/account" class="sidebar-link">Account</router-link>
         </div>
       </div>
+      
     </div>
   </template>
   
