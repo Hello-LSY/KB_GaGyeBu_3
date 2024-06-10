@@ -6,17 +6,17 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: 'All-day event',
-    start: todayStr
+    start: '2024-06-10'
   },
   {
     id: createEventId(),
     title: 'Timed event',
-    start: todayStr + 'T12:00:00'
+    start: '2024-06-10' + 'T12:00:00'
   },
   {
     id: createEventId(),
     title: 'Timed event',
-    start: todayStr + 'T49:00:00'
+    start: '2024-06-10' + 'T49:00:00'
   }
 ]
 

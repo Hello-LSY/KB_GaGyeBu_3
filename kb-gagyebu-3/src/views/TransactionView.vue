@@ -1,6 +1,6 @@
 <template>
   <div class='demo-app'>
-    <!-- <div class='demo-app-sidebar'>
+    <div class='demo-app-sidebar'>
       <div class='demo-app-sidebar-section'>
         <h2>Instructions</h2>
         <ul>
@@ -28,7 +28,7 @@
           </li>
         </ul>
       </div>
-    </div> -->
+    </div>
     <div class='demo-app-main'>
       <FullCalendar
         class='demo-app-calendar'
@@ -44,7 +44,8 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive, onMounted } from 'vue'
+import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -55,7 +56,14 @@ export default defineComponent({
   components: {
     FullCalendar,
   },
-  setup() {
+  props: {
+    userId: {
+      type: Number,
+      required: false, // true로 바꿔야 함 테스트용
+      default: 1 // 이것도 없앨거임
+    }
+  },
+  setup(props) {
     const currentEvents = ref([])
 
     const calendarOptions = reactive({
@@ -70,7 +78,8 @@ export default defineComponent({
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       initialView: 'dayGridMonth',
-      initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+      initialEvents:[],
+      events:[],
       editable: true,
       selectable: true,
       selectMirror: true,
@@ -86,11 +95,38 @@ export default defineComponent({
       */
     })
 
+    onMounted(async () => {
+      const events = await fetchUserEvents()
+      calendarOptions.events = events;
+      console.log(events)
+      currentEvents.value = events
+      console.log(INITIAL_EVENTS)
+      console.log(calendarOptions.events)
+    })
+
+    async function fetchUserEvents(userId) {
+      try {
+        const response = await axios.get('http://localhost:3000/events')
+        return response.data.map(event => ({
+          ...event,
+          id: event.id.toString()
+        }))
+      } catch (error) {
+        console.error("userId에 해당하는 event 가져오기 실패", error)
+        return []
+      }
+    }
+
     function handleWeekendsToggle() {
       calendarOptions.weekends = !calendarOptions.weekends // update a property
     }
 
+    function createEventId() { //이건 수정 필요 모달창이랑 연결
+      return String(currentEvents.value.length + 1)
+    }
+
     function handleDateSelect(selectInfo) {
+      console.log( typeof selectInfo);
       let title = prompt('Please enter a new title for your event')
       let calendarApi = selectInfo.view.calendar
 
