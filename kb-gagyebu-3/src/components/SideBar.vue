@@ -7,7 +7,7 @@
             <img class="comboshape" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAETSURBVHgB7ZO7TcRAFEXPm9XmpgOXsHRAB9ABIkPaxK6A2QbAyUpkiA6gBCqADnAJjkHr4Q3SIjSej0ak3MDB+17rzZFtv7tE3AA0/JJzjILY/d3NI4G6zrafwgPCxvc5eJpn+vvBjrLt7bsmWuKa9rf2ZDHM8Boa8LWHmVOTGUakiQ9hiMV9bKWuDZUS4TydZFM9UDVlck39QOEtldJDPpvcRr3eGMbWB64SPdPs6IzTcxNp/G6a2YXBQZ/GWq/p3RzrdPGLv7B/NvzrzxL/ybEZNpTYNz9sCmfHIt1ysdLYteaWHpwlgp54hHWRKbHJ8p9a0mpMiU0qlSWFuPPCwAKb1A4ssRmLkzKgCJtaNkvsfwGphH/VjaXHQQAAAABJRU5ErkJggg==" />
           </div>
         </div>
-        <router-link to="/" class="sidebar-link">Dashboards</router-link>
+        <router-link to="/" class="sidebar-link">Dashs</router-link>
       </div>
     </div>
     <div class="sidebaritem">
@@ -52,20 +52,36 @@
         <router-link to="/transaction/regist" class="sidebar-link">Regist Transaction</router-link>
       </div>
     </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <router-link to="/register" class="sidebar-link">Regist</router-link>
-      </div>
-    </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <router-link to="/login" class="sidebar-link">Login</router-link>
-      </div>
+    <div class="sidebaritem" v-if="!isLoggedIn">
+    <div class="text">
+      <router-link to="/register" class="sidebar-link">Register</router-link>
     </div>
   </div>
+  <div class="sidebaritem" v-if="!isLoggedIn">
+    <div class="text">
+      <router-link to="/login" class="sidebar-link">Login</router-link>
+    </div>
+  </div>
+  <div class="sidebaritem" v-if="isLoggedIn">
+    <div class="text">
+      <button @click="logout" class="btn-logout">Logout</button>
+    </div>
+  </div>
+  </div>
+
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
+const isLoggedIn = computed(() => authStore.isLoggedIn);
+const userName = computed(() => authStore.userName);
+
+const logout = () => {
+  authStore.logout();
+};
 </script>
 
 <style scoped>
@@ -89,6 +105,21 @@
 }
 
 .sidebar-link:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-logout {
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+}
+
+.btn-logout:hover {
   background-color: #e0e0e0;
 }
 

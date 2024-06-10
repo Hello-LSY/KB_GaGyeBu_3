@@ -1,52 +1,84 @@
 <template>
-  <div class="register">
-    <h2>Register</h2>
-    <form @submit.prevent="register">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" v-model="formData.name" required />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-auto p-0">
+        <Sidebar />
       </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" v-model="formData.email" required />
+      <div class="col">
+        <div class="register p-3">
+          <h2>Register</h2>
+          <form @submit.prevent="register">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name:</label>
+              <input type="text" class="form-control" v-model="formData.name" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" v-model="formData.email" required />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password:</label>
+              <input type="password" class="form-control" v-model="formData.password" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" v-model="formData.password" required />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import Sidebar from '../components/SideBar.vue';
 
-export default {
-  setup() {
-    const authStore = useAuthStore();
-    const router = useRouter();
-    const formData = reactive({
-      name: '',
-      email: '',
-      password: ''
-    });
+const authStore = useAuthStore();
+const router = useRouter();
+const formData = reactive({
+  name: '',
+  email: '',
+  password: ''
+});
 
-    const register = async () => {
-      try {
-        await authStore.register(formData.name, formData.email, formData.password);
-        router.push('/login');
-      } catch (error) {
-        alert(error.message);
-      }
-    };
-
-    return {
-      formData,
-      register
-    };
+const register = async () => {
+  try {
+    await authStore.register(formData.name, formData.email, formData.password);
+    router.push('/login');
+  } catch (error) {
+    alert(error.message);
   }
 };
 </script>
+
+<style scoped>
+
+.register {
+  max-width: 600px;
+}
+
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
