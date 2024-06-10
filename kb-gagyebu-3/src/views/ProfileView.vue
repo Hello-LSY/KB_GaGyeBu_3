@@ -41,19 +41,19 @@
       <div class="form row">
         <div class="input-group col-md-6">
           <p class="input-label">이름</p>
-          <input type="text" class="input-field form-control" v-model="name" placeholder="이름을 입력하세요" />
+          <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense1" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field" v-model="expense1" placeholder="금액을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense2" placeholder="을 입력하세요" />
+          <input type="text" class="input-field" v-model="expense2" placeholder="을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field form-control" v-model="expense3" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field" v-model="expense3" placeholder="금액을 입력하세요" />
         </div>
       </div>
       <div class="button-container d-flex justify-content-center mt-auto">
