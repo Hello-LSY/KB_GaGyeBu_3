@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container custom-container">
     <Sidebar />
-    <div class="content">
-      <div class="content-header">
-        <div class="account-title">
+    <div class="content container-fluid">
+      <div class="content-header d-flex align-items-center">
+        <div class="account-title flex-grow-1 d-flex align-items-center">
           <p class="account-text">Account</p>
         </div>
         <svg
@@ -26,7 +26,7 @@
           </defs>
         </svg>
       </div>
-      <div class="tabs">
+      <div class="tabs d-flex justify-content-start">
         <div class="tab selected">
           <div class="tab-content">
             <p class="tab-text selected-text">Privacy</p>
@@ -38,26 +38,28 @@
           </div>
         </div>
       </div>
-      <div class="form">
-        <div class="input-group">
+      <div class="form row">
+        <div class="input-group col-md-6">
           <p class="input-label">이름</p>
-          <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
+          <input type="text" class="input-field form-control" v-model="name" placeholder="이름을 입력하세요" />
         </div>
-        <div class="input-group">
+        <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field" v-model="expense1" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field form-control" v-model="expense1" placeholder="금액을 입력하세요" />
         </div>
-        <div class="input-group">
+        <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field" v-model="expense2" placeholder="을 입력하세요" />
+          <input type="text" class="input-field form-control" v-model="expense2" placeholder="을 입력하세요" />
         </div>
-        <div class="input-group">
+        <div class="input-group col-md-6">
           <p class="input-label">지출액</p>
-          <input type="text" class="input-field" v-model="expense3" placeholder="금액을 입력하세요" />
+          <input type="text" class="input-field form-control" v-model="expense3" placeholder="금액을 입력하세요" />
         </div>
       </div>
-      <div class="button">
-        <p class="button-text">수정</p>
+      <div class="button-container d-flex justify-content-center mt-auto">
+        <div class="button">
+          <p class="button-text">수정</p>
+        </div>
       </div>
     </div>
   </div>
@@ -77,35 +79,37 @@ const expense3 = ref('')
 .container {
   display: flex;
   height: 100vh;
-  background: #fff;
+  background: #fff; 
+}
+
+.custom-container {
+  max-width: 1400px; /* Increase this value to make the container wider */
+  margin: 0px 0px 0px 0px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: flex-start; /* Align items to the start to keep the title on the left */
   flex-grow: 1;
-  margin: 20px;
   gap: 16px;
   padding: 16px;
   border-radius: 8px;
   background: #fff;
   box-shadow: -6px 10px 40px 0 rgba(52, 52, 52, 0.08);
-  overflow-y: auto; /* Enable vertical scrolling if needed */
+  overflow-y: auto;
+  box-sizing: border-box;
+  width: calc(100% - 40px); /* Adjust width to account for margin */
+  margin: 20px; /* Add margin */
+  max-width: 1400px; /* Limit the maximum width */
 }
-
-
 
 .content-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  align-self: stretch;
-  flex-grow: 0;
-  flex-shrink: 0;
-  position: relative;
-  gap: 12px;
+  width: 100%;
 }
 
 .account-title {
@@ -118,10 +122,8 @@ const expense3 = ref('')
 }
 
 .account-text {
-  flex-grow: 1;
-  width: 1192px;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 600;
   text-align: left;
   color: #6b7280;
 }
@@ -130,9 +132,7 @@ const expense3 = ref('')
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  align-self: stretch;
-  flex-grow: 0;
-  flex-shrink: 0;
+  width: 100%; /* Make tabs take the full width */
   gap: 16px;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -141,7 +141,7 @@ const expense3 = ref('')
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 0;
+  flex-grow: 1; /* Make tabs grow equally */
   flex-shrink: 0;
   gap: 16px;
 }
@@ -150,8 +150,7 @@ const expense3 = ref('')
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 0;
-  flex-shrink: 0;
+  flex-grow: 1;
   position: relative;
   gap: 8px;
   padding-left: 12px;
@@ -189,12 +188,10 @@ const expense3 = ref('')
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%; /* Make input groups take the full width */
 }
 
 .input-label {
-  align-self: stretch;
-  flex-grow: 0;
-  flex-shrink: 0;
   width: 100%;
   font-size: 16px;
   font-weight: 500;
@@ -203,7 +200,7 @@ const expense3 = ref('')
 }
 
 .input-field {
-  width: 90%;
+  width: 100%;
   padding: 12px 16px;
   border-radius: 8px;
   background: #fff;
@@ -211,42 +208,34 @@ const expense3 = ref('')
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.input-placeholder {
-  flex-grow: 1;
-  width: 56px;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: left;
-  color: #828282;
+.button-container {
+  width: 100%;
+  padding: 0 16px; /* Add padding for the left and right margins */
 }
 
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
-  align-self: stretch;
   flex-grow: 0;
   flex-shrink: 0;
   position: relative;
   gap: 8px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-top: 4px;
-  padding-bottom: 8px;
-  border-radius: 4px;
+  padding: 4px; /* Add padding to the button */
+  border-radius: 8px;
   background: #000;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
-  margin-top: auto;
+  width: 100%; /* Make button width full */
+  max-width: 500px; /* Limit the button's maximum width */
+  margin: 20px auto 0 auto; /* Center the button and add top margin */
 }
 
 .button-text {
   flex-grow: 0;
   flex-shrink: 0;
-  font-size: 20px;
+  font-size: 20px; /* Smaller font size */
   font-weight: 500;
-  text-align: left;
+  text-align: center; /* Center align text */
   color: #fff;
 }
-
-
 </style>
