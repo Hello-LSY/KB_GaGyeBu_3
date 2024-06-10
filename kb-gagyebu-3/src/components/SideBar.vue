@@ -47,7 +47,11 @@
           <router-link to="/account" class="sidebar-link">Account</router-link>
         </div>
       </div>
-      
+      <div class="sidebaritem">
+        <div class="text">
+          <router-link to="/transaction/regist" class="sidebar-link">Regist Transaction</router-link>
+        </div>
+      </div>
     </div>
   </template>
   
