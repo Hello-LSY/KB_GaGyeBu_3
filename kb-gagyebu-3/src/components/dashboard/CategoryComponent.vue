@@ -114,10 +114,14 @@ onMounted(async () => {
   loaded.value = false
 
   try {
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    const userId = userInfo.id
+    
     const transactions = await axios.get('http://localhost:3000/transactions')
     const categories = await axios.get('http://localhost:3000/categories')
 
-    // transaction -> 사용자의것만 가져오기
+    // 사용자 필터링
+    transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
 
     // 현재 연, 월과 동일한 transaction만 필터링
     const currentDate = new Date();
@@ -142,12 +146,12 @@ onMounted(async () => {
           if (!incomeSum[category.name]) {
             incomeSum[category.name] = 0;
           }
-          incomeSum[category.name] += transaction.amount;
+          incomeSum[category.name] += parseInt(transaction.amount);
         } else if (category.type === 'expense') {
           if (!expenseSum[category.name]) {
             expenseSum[category.name] = 0;
           }
-          expenseSum[category.name] += transaction.amount;
+          expenseSum[category.name] += parseInt(transaction.amount);
         }
       }
     });
