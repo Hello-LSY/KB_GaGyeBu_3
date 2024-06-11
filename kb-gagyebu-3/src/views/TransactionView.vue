@@ -40,6 +40,43 @@
         </template>
       </FullCalendar>
     </div>
+
+       <!-- 모달창 -->
+      <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="transactionModalLabel">거래 등록</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-container">
+              <div class="form-group mb-3">
+                <h4>{{ formData.start }}</h4>
+                <label class="form-label">지출명</label>
+                <input type="text" class="form-control" placeholder="지출명을 입력하세요" v-model="formData.title" />
+              </div>
+              <div class="form-group mb-3">
+                <label class="form-label">카테고리</label>
+                <input type="text" class="form-control" placeholder="카테고리" v-model="formData.category" />
+              </div>
+              <div class="form-group mb-3">
+                <label class="form-label">지출액</label>
+                <input type="text" class="form-control" placeholder="금액을 입력하세요" v-model="formData.amount" />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label">메모</label>
+                <textarea class="form-control" rows="3" placeholder="메모를 적어주세요" v-model="formData.memo"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" @click="saveTransaction">저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,7 +87,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from './event-utils'
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export default defineComponent({
   components: {
@@ -65,6 +102,13 @@ export default defineComponent({
   },
   setup(props) {
     const currentEvents = ref([])
+    const formData = reactive({
+      start: '',
+      title: '',
+      category: '',
+      amount: '',
+      memo: ''
+    })
 
     const calendarOptions = reactive({
       plugins: [
@@ -100,8 +144,6 @@ export default defineComponent({
       calendarOptions.events = events;
       console.log(events)
       currentEvents.value = events
-      console.log(INITIAL_EVENTS)
-      console.log(calendarOptions.events)
     })
 
     async function fetchUserEvents(userId) {
@@ -118,29 +160,45 @@ export default defineComponent({
     }
 
     function handleWeekendsToggle() {
-      calendarOptions.weekends = !calendarOptions.weekends // update a property
+      calendarOptions.weekends = !calendarOptions.weekends
     }
 
-    function createEventId() { //이건 수정 필요 모달창이랑 연결
-      return String(currentEvents.value.length + 1)
+    function resetFormData() {
+      formData.title = ''
+      formData.date = ''
+      formData.category = ''
+      formData.amount = ''
+      formData.memo = ''
     }
 
-    function handleDateSelect(selectInfo) {
-      console.log( typeof selectInfo);
-      let title = prompt('Please enter a new title for your event')
+    function handleDateSelect(selectInfo) { // 클릭하면 모달창 
+      
       let calendarApi = selectInfo.view.calendar
+      const modalElement = document.getElementById('transactionModal');
+      formData.start = selectInfo.startStr;
 
-      calendarApi.unselect() // clear date selection
+      calendarApi.unselect()
 
-      if (title) {
-        calendarApi.addEvent({
-          id: createEventId(),
-          title,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        })
-      }
+      modalElement.addEventListener('hide.bs.modal', resetFormData)
+      const modal = new bootstrap.Modal(modalElement, {
+        backdrop: 'static',
+        keyboard: false
+      })
+      modal.show()
+
+      // if (title) {
+      //   calendarApi.addEvent({
+      //     id: String(currentEvents.value.length + 1),
+      //     title,
+      //     start: selectInfo.startStr,
+      //     end: selectInfo.endStr,
+      //     allDay: selectInfo.allDay
+      //   })
+      // }
+    }
+
+    function saveTransaction() {
+
     }
 
     function handleEventClick(clickInfo) {
@@ -156,7 +214,8 @@ export default defineComponent({
     return {
       calendarOptions,
       currentEvents,
-      handleWeekendsToggle
+      handleWeekendsToggle,
+      formData
     }
   }
 })
@@ -210,3 +269,5 @@ b { /* used for event dates/times */
   margin: 0 auto;
 }
 </style>
+
+
