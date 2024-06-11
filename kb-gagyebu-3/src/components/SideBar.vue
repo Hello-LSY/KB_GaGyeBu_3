@@ -5,55 +5,73 @@
       <div class="sidebaritem">
         <div class="text">
           <i class="bi bi-speedometer2 me-2"></i>
-          <router-link to="/" class="sidebar-link">Dashs</router-link>
+          <router-link to="/" class="sidebar-link">
+            <span v-if="!isMobile">Dashs</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
           <i class="bi bi-bar-chart-line-fill me-2"></i>
-          <router-link to="/analytics" class="sidebar-link">Analytics</router-link>
+          <router-link to="/analytics" class="sidebar-link">
+            <span v-if="!isMobile">Analytics</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
           <i class="bi bi-arrow-left-right me-2"></i>
-          <router-link to="/transaction" class="sidebar-link">Transaction</router-link>
+          <router-link to="/transaction" class="sidebar-link">
+            <span v-if="!isMobile">Transaction</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
           <i class="bi bi-gear-fill me-2"></i>
-          <router-link to="/settings" class="sidebar-link">Setting</router-link>
+          <router-link to="/settings" class="sidebar-link">
+            <span v-if="!isMobile">Setting</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
           <i class="bi bi-person-circle me-2"></i>
-          <router-link to="/profile" class="sidebar-link">Profile</router-link>
+          <router-link to="/profile" class="sidebar-link">
+            <span v-if="!isMobile">Profile</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
           <i class="bi bi-file-earmark-plus-fill me-2"></i>
-          <router-link to="/transaction/regist" class="sidebar-link">Regist Transaction</router-link>
+          <router-link to="/transaction/regist" class="sidebar-link">
+            <span v-if="!isMobile">Regist Transaction</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
         <div class="text">
           <i class="bi bi-person-plus-fill me-2"></i>
-          <router-link to="/register" class="sidebar-link">Register</router-link>
+          <router-link to="/register" class="sidebar-link">
+            <span v-if="!isMobile">Register</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
         <div class="text">
           <i class="bi bi-box-arrow-in-right me-2"></i>
-          <router-link to="/login" class="sidebar-link">Login</router-link>
+          <router-link to="/login" class="sidebar-link">
+            <span v-if="!isMobile">Login</span>
+          </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
           <i class="bi bi-box-arrow-left me-2"></i>
-          <button @click="logout" class="btn-logout">Logout</button>
+          <button @click="logout" class="btn-logout">
+            <span v-if="!isMobile">Logout</span>
+          </button>
         </div>
       </div>
     </div>
