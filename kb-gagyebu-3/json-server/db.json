@@ -23,44 +23,46 @@
       "name": "123",
       "email": "123@123",
       "password": "123"
-    },
-    {
-      "id": "9807",
-      "name": "xckxmcll",
-      "email": "123@123",
-      "password": "123"
     }
   ],
-  "money": [
+  "transactions": [
     {
       "id": "1",
-      "userId": 1,
-      "amount": 1000
-    },
-    {
-      "id": "2",
-      "userId": 2,
-      "amount": 2000
+      "userId": "1",
+      "start": "2024-06-01",
+      "amount": 1000,
+      "categoryId": "1",
+      "title": "Salary",
+      "type": "income"
     }
   ],
-  "events": [
+  "categories": [
+    { "id": "1", "name": "Salary", "type": "income" },
+    { "id": "2", "name": "Investment", "type": "income" },
+    { "id": "3", "name": "Rental Income", "type": "income" },
+    { "id": "4", "name": "Gift", "type": "income" },
+    { "id": "5", "name": "Others", "type": "income" },
+    { "id": "6", "name": "Groceries", "type": "expense" },
+    { "id": "7", "name": "Utilities", "type": "expense" },
+    { "id": "8", "name": "Rent", "type": "expense" },
+    { "id": "9", "name": "Transportation", "type": "expense" },
+    { "id": "10", "name": "Entertainment", "type": "expense" },
+    { "id": "11", "name": "Dining Out", "type": "expense" },
+    { "id": "12", "name": "Healthcare", "type": "expense" },
+    { "id": "13", "name": "Education", "type": "expense" },
+    { "id": "14", "name": "Insurance", "type": "expense" },
+    { "id": "15", "name": "Clothing", "type": "expense" },
+    { "id": "16", "name": "Travel", "type": "expense" },
+    { "id": "17", "name": "Personal Care", "type": "expense" },
+    { "id": "18", "name": "Savings", "type": "expense" },
+    { "id": "19", "name": "Others", "type": "expense" }
+  ],
+  "settings": [
     {
-      "id": "1",
-      "userId": 1,
-      "title": "All-day event",
-      "start": "2024-06-10"
-    },
-    {
-      "id": "2",
-      "userId": 1,
-      "title": "Timed event",
-      "start": "2024-06-10T12:00:00"
-    },
-    {
-      "id": "3",
-      "userId": 1,
-      "title": "Timed event",
-      "start": "2024-06-10T49:00:00"
+      "userId": "1",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light"
     }
   ]
 }
