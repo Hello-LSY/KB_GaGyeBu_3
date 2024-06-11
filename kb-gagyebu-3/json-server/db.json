@@ -13,6 +13,30 @@
       "password": "qwer123"
     },
     {
+      "id": "3",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "password": "password123"
+    },
+    {
+      "id": "4",
+      "name": "Bob Brown",
+      "email": "bob@example.com",
+      "password": "password123"
+    },
+    {
+      "id": "5",
+      "name": "Charlie Davis",
+      "email": "charlie@example.com",
+      "password": "password123"
+    },
+    {
+      "id": "6",
+      "name": "Diana Evans",
+      "email": "diana@example.com",
+      "password": "password123"
+    },
+    {
       "id": "41bc",
       "name": "test",
       "email": "test@1",
@@ -30,36 +54,230 @@
       "id": "1",
       "userId": "1",
       "start": "2024-06-01",
-      "amount": 1000,
+      "amount": "1000",
       "categoryId": "1",
-      "title": "Salary",
-      "type": "income"
+      "title": "월급",
+      "type": "income",
+      "memo": "6월 월급"
+    },
+    {
+      "id": "2",
+      "userId": "2",
+      "start": "2024-06-05",
+      "amount": "200",
+      "categoryId": "6",
+      "title": "식료품",
+      "type": "expense",
+      "memo": "슈퍼마켓에서 장보기"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "start": "2024-06-10",
+      "amount": "150",
+      "categoryId": "9",
+      "title": "교통비",
+      "type": "expense",
+      "memo": "버스 요금"
+    },
+    {
+      "id": "4",
+      "userId": "2",
+      "start": "2024-06-15",
+      "amount": "3000",
+      "categoryId": "2",
+      "title": "금융소득",
+      "type": "income",
+      "memo": "투자 수익"
+    },
+    {
+      "id": "5",
+      "userId": "1",
+      "start": "2024-06-20",
+      "amount": "500",
+      "categoryId": "7",
+      "title": "공과금",
+      "type": "expense",
+      "memo": "전기 요금"
+    },
+    {
+      "id": "6",
+      "userId": "3ebc",
+      "start": "2024-06-25",
+      "amount": "700",
+      "categoryId": "8",
+      "title": "임대료",
+      "type": "expense",
+      "memo": "월세"
+    },
+    {
+      "id": "7",
+      "userId": "41bc",
+      "start": "2024-06-28",
+      "amount": "1200",
+      "categoryId": "10",
+      "title": "엔터테인먼트",
+      "type": "expense",
+      "memo": "영화 관람"
+    },
+    {
+      "id": "8",
+      "userId": "1",
+      "start": "2024-07-01",
+      "amount": "250",
+      "categoryId": "11",
+      "title": "외식",
+      "type": "expense",
+      "memo": "레스토랑에서 저녁"
+    },
+    {
+      "id": "9",
+      "userId": "2",
+      "start": "2024-07-03",
+      "amount": "400",
+      "categoryId": "12",
+      "title": "의료비",
+      "type": "expense",
+      "memo": "병원 진료비"
+    },
+    {
+      "id": "10",
+      "userId": "3ebc",
+      "start": "2024-07-05",
+      "amount": "600",
+      "categoryId": "13",
+      "title": "교육비",
+      "type": "expense",
+      "memo": "학원비"
     }
   ],
   "categories": [
-    { "id": "1", "name": "Salary", "type": "income" },
-    { "id": "2", "name": "Investment", "type": "income" },
-    { "id": "3", "name": "Rental Income", "type": "income" },
-    { "id": "4", "name": "Gift", "type": "income" },
-    { "id": "5", "name": "Others", "type": "income" },
-    { "id": "6", "name": "Groceries", "type": "expense" },
-    { "id": "7", "name": "Utilities", "type": "expense" },
-    { "id": "8", "name": "Rent", "type": "expense" },
-    { "id": "9", "name": "Transportation", "type": "expense" },
-    { "id": "10", "name": "Entertainment", "type": "expense" },
-    { "id": "11", "name": "Dining Out", "type": "expense" },
-    { "id": "12", "name": "Healthcare", "type": "expense" },
-    { "id": "13", "name": "Education", "type": "expense" },
-    { "id": "14", "name": "Insurance", "type": "expense" },
-    { "id": "15", "name": "Clothing", "type": "expense" },
-    { "id": "16", "name": "Travel", "type": "expense" },
-    { "id": "17", "name": "Personal Care", "type": "expense" },
-    { "id": "18", "name": "Savings", "type": "expense" },
-    { "id": "19", "name": "Others", "type": "expense" }
+    {
+      "id": "1",
+      "name": "월급",
+      "type": "income"
+    },
+    {
+      "id": "2",
+      "name": "금융소득",
+      "type": "income"
+    },
+    {
+      "id": "3",
+      "name": "거래",
+      "type": "income"
+    },
+    {
+      "id": "4",
+      "name": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "5",
+      "name": "환수금",
+      "type": "income"
+    },
+    {
+      "id": "6",
+      "name": "기타",
+      "type": "income"
+    },
+    {
+      "id": "7",
+      "name": "주거/통신",
+      "type": "expense"
+    },
+    {
+      "id": "8",
+      "name": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "9",
+      "name": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "10",
+      "name": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "11",
+      "name": "외식",
+      "type": "expense"
+    },
+    {
+      "id": "12",
+      "name": "생활용품",
+      "type": "expense"
+    },
+    {
+      "id": "13",
+      "name": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "14",
+      "name": "의료비",
+      "type": "expense"
+    },
+    {
+      "id": "15",
+      "name": "보험료",
+      "type": "expense"
+    },
+    {
+      "id": "16",
+      "name": "교육비",
+      "type": "expense"
+    },
+    {
+      "id": "17",
+      "name": "건강/뷰티",
+      "type": "expense"
+    },
+    {
+      "id": "18",
+      "name": "경조사/회비",
+      "type": "expense"
+    },
+    {
+      "id": "19",
+      "name": "기타",
+      "type": "expense"
+    },
+    {
+      "id": "20",
+      "name": "이체",
+      "type": "transfer"
+    }
   ],
   "settings": [
     {
       "userId": "1",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light",
+      "id": "9c72"
+    },
+    {
+      "id": "38e7",
+      "userId": "3ebc",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light"
+    },
+    {
+      "id": "06e5",
+      "userId": "6",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light"
+    },
+    {
+      "id": "3fc1",
+      "userId": "5",
       "notifications": true,
       "language": "kor",
       "theme": "light"
