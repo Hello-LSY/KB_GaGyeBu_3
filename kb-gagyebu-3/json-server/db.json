@@ -1,27 +1,66 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john@example.com"
-      },
-      {
-        "id": 2,
-        "name": "Jane Smith",
-        "email": "jane@example.com"
-      }
-    ],
-    "money": [
-      {
-        "id": 1,
-        "userId": 1,
-        "amount": 1000
-      },
-      {
-        "id": 2,
-        "userId": 2,
-        "amount": 2000
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "qwer123"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "password": "qwer123"
+    },
+    {
+      "id": "41bc",
+      "name": "test",
+      "email": "test@1",
+      "password": "123"
+    },
+    {
+      "id": "3ebc",
+      "name": "123",
+      "email": "123@123",
+      "password": "123"
+    },
+    {
+      "id": "9807",
+      "name": "xckxmcll",
+      "email": "123@123",
+      "password": "123"
+    }
+  ],
+  "money": [
+    {
+      "id": "1",
+      "userId": 1,
+      "amount": 1000
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "amount": 2000
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "userId": 1,
+      "title": "All-day event",
+      "start": "2024-06-10"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "title": "Timed event",
+      "start": "2024-06-10T12:00:00"
+    },
+    {
+      "id": "3",
+      "userId": 1,
+      "title": "Timed event",
+      "start": "2024-06-10T49:00:00"
+    }
+  ]
+}
