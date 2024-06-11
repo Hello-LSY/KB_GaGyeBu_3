@@ -1,34 +1,6 @@
 <template>
   <div class='demo-app'>
-    <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <h2>Instructions</h2>
-        <ul>
-          <li>Select dates and you will be prompted to create a new event</li>
-          <li>Drag, drop, and resize events</li>
-          <li>Click an event to delete it</li>
-        </ul>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            :checked='calendarOptions.weekends'
-            @change='handleWeekendsToggle'
-          />
-          toggle weekends
-        </label>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <h2>All Events ({{ currentEvents.length }})</h2>
-        <ul>
-          <li v-for='event in currentEvents' :key='event.id'>
-            <b>{{ event.startStr }}</b>
-            <i>{{ event.title }}</i>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Sidebar />
     <div class='demo-app-main'>
       <FullCalendar
         class='demo-app-calendar'
@@ -86,6 +58,7 @@
 
 <script>
 import { defineComponent, ref, reactive, onMounted } from 'vue'
+import Sidebar from '../components/SideBar.vue'
 import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -96,6 +69,7 @@ import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 export default defineComponent({
   components: {
     FullCalendar,
+    Sidebar
   },
   setup() {
     const currentEvents = ref([])
@@ -147,7 +121,7 @@ export default defineComponent({
 
     async function fetchUserEvents() {
       try {
-        const response = await axios.get(`http://localhost:3000/events/?userId=${userId}`) // 수정해야됨
+        const response = await axios.get(`http://localhost:3000/transactions/?userId=${userId}`)
         return response.data
       } catch (error) {
         console.error("userId에 해당하는 event 가져오기 실패", error)
@@ -169,7 +143,7 @@ export default defineComponent({
       formData.type = ''
     }
 
-    function handleDateSelect(selectInfo) { // 클릭하면 모달창 
+    function handleDateSelect(selectInfo) {  
       
       calendarApi.value = selectInfo.view.calendar
       const modalElement = document.getElementById('transactionModal');
@@ -198,7 +172,7 @@ export default defineComponent({
     function saveTransaction() {
       if (calendarApi.value) {
         const newEvent = {
-          id: String(currentEvents.value.length + 1),
+          id: userId + "+" + String(currentEvents.value.length + 1),
           title: formData.title,
           start: formData.start,
           end: formData.start,
@@ -206,7 +180,7 @@ export default defineComponent({
         }
         calendarApi.value.addEvent(newEvent)
 
-      axios.post('http://localhost:3000/events', { // 수정해야됨
+      axios.post('http://localhost:3000/transactions', { 
         id : newEvent.id,
         userId : userId,
         title : formData.title,
@@ -231,8 +205,15 @@ export default defineComponent({
     }
 
     function handleEventClick(clickInfo) {
-      if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-        clickInfo.event.remove()
+      if (confirm(`${clickInfo.event.startStr}의 '${clickInfo.event.title}' 거래내역을 삭제하시겠습니까?`)) {
+        axios.delete(`http://localhost:3000/transactions/${clickInfo.event.id}`)
+          .then(response => {
+            console.log('Event deleted:', response.data)
+            clickInfo.event.remove() 
+          })
+          .catch(error => {
+            console.error('Error deleting event:', error)
+          })
       }
     }
 
