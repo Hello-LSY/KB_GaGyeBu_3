@@ -91,6 +91,8 @@ const logout = () => {
   padding: 10px;
   height: 100vh; /* Ensure the sidebar takes the full height */
   overflow-y: auto; /* Allow scrolling if content overflows */
+  white-space: nowrap; /* Prevent line breaks */
+  
 }
 
 .sidebaritem {
