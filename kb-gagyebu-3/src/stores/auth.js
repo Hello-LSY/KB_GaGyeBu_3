@@ -20,12 +20,12 @@ export const useAuthStore = defineStore('auth', {
         });
 
         if (response.status === 201) {
-          alert('Registration successful');
+          alert('회원가입 성공');
         } else {
-          throw new Error('Registration failed');
+          throw new Error('회원가입 오류');
         }
       } catch (error) {
-        console.error('Error registering:', error);
+        console.error('회원가입 오류:', error);
         throw error;
       }
     },
@@ -39,12 +39,25 @@ export const useAuthStore = defineStore('auth', {
           this.token = btoa(`${user.email}:${user.password}`); // Base64 암호화
           localStorage.setItem('token', this.token);
           localStorage.setItem('user', JSON.stringify(user)); // 사용자 정보도 저장
-          alert('Login successful');
+
+          // settings 추가
+          const settingsResponse = await axios.get(`http://localhost:3000/settings?userId=${user.id}`);
+          if (settingsResponse.data.length === 0) {
+            //없는경우 추가(첫 생성)
+            await axios.post('http://localhost:3000/settings', {
+              userId: user.id,
+              notifications: true,
+              language: "kor",
+              theme: "light"
+            });
+          }
+
+          alert('로그인 성공');
         } else {
-          throw new Error('Incorrect email or password');
+          throw new Error('이메일 혹은 비밀번호가 일치하지 않습니다.');
         }
       } catch (error) {
-        console.error('Error logging in:', error);
+        console.error('로그인 오류:', error);
         throw error;
       }
     },
@@ -53,7 +66,7 @@ export const useAuthStore = defineStore('auth', {
       this.token = '';
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      alert('Logged out');
+      alert('로그아웃 처리');
     },
     loadUserFromStorage() {
       const user = localStorage.getItem('user');
