@@ -53,8 +53,12 @@
             <div class="form-container">
               <div class="form-group mb-3">
                 <h4>{{ formData.start }}</h4>
-                <label class="form-label">지출명</label>
-                <input type="text" class="form-control" placeholder="지출명을 입력하세요" v-model="formData.title" />
+                <label class="form-label">거래 유형</label>
+                <input type="text" class="form-control" placeholder="거래 유형을 입력하세요(수입/지출/이체)" v-model="formData.type" />
+              </div>
+              <div class="form-group mb-3">
+                <label class="form-label">거래명</label>
+                <input type="text" class="form-control" placeholder="거래명을 입력하세요" v-model="formData.title" />
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">카테고리</label>
@@ -93,23 +97,18 @@ export default defineComponent({
   components: {
     FullCalendar,
   },
-  props: {
-    userId: {
-      type: Number,
-      required: false, // true로 바꿔야 함 테스트용
-      default: 1 // 이것도 없앨거임
-    }
-  },
-  setup(props) {
+  setup() {
     const currentEvents = ref([])
+    const calendarApi = ref([])
+    const userId = localStorage.getItem('userId') || "1"
     const formData = reactive({
       start: '',
       title: '',
       category: '',
       amount: '',
+      type: '',
       memo: ''
     })
-
     const calendarOptions = reactive({
       plugins: [
         dayGridPlugin,
@@ -146,13 +145,10 @@ export default defineComponent({
       currentEvents.value = events
     })
 
-    async function fetchUserEvents(userId) {
+    async function fetchUserEvents() {
       try {
-        const response = await axios.get('http://localhost:3000/events')
-        return response.data.map(event => ({
-          ...event,
-          id: event.id.toString()
-        }))
+        const response = await axios.get(`http://localhost:3000/events/?userId=${userId}`) // 수정해야됨
+        return response.data
       } catch (error) {
         console.error("userId에 해당하는 event 가져오기 실패", error)
         return []
@@ -164,20 +160,22 @@ export default defineComponent({
     }
 
     function resetFormData() {
+      calendarApi.value = null
       formData.title = ''
-      formData.date = ''
+      formData.start = ''
       formData.category = ''
       formData.amount = ''
       formData.memo = ''
+      formData.type = ''
     }
 
     function handleDateSelect(selectInfo) { // 클릭하면 모달창 
       
-      let calendarApi = selectInfo.view.calendar
+      calendarApi.value = selectInfo.view.calendar
       const modalElement = document.getElementById('transactionModal');
       formData.start = selectInfo.startStr;
 
-      calendarApi.unselect()
+      calendarApi.value.unselect()
 
       modalElement.addEventListener('hide.bs.modal', resetFormData)
       const modal = new bootstrap.Modal(modalElement, {
@@ -198,7 +196,38 @@ export default defineComponent({
     }
 
     function saveTransaction() {
+      if (calendarApi.value) {
+        const newEvent = {
+          id: String(currentEvents.value.length + 1),
+          title: formData.title,
+          start: formData.start,
+          end: formData.start,
+          allDay: true
+        }
+        calendarApi.value.addEvent(newEvent)
 
+      axios.post('http://localhost:3000/events', { // 수정해야됨
+        id : newEvent.id,
+        userId : userId,
+        title : formData.title,
+        start : formData.start,
+        category : formData.category,
+        amount : formData.amount,
+        memo : formData.memo,
+        type : formData.type
+      })
+      .then(response => {
+        console.log('Event added:', response.data)
+      })
+      .catch(error => {
+        console.error('Error adding event:', error)
+      })
+      } else {
+        alert("거래 내역 저장에 실패했습니다")
+      }
+      const modal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'))
+      modal.hide()
+      resetFormData()
     }
 
     function handleEventClick(clickInfo) {
@@ -215,7 +244,8 @@ export default defineComponent({
       calendarOptions,
       currentEvents,
       handleWeekendsToggle,
-      formData
+      formData,
+      saveTransaction
     }
   }
 })
