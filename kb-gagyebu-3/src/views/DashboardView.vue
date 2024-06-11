@@ -107,7 +107,6 @@
   }
 
   .weekly-spend-container{
-    background-color: aqua;
     flex: 1;
     height: 300px;
   }
