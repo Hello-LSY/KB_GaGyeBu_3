@@ -1,8 +1,6 @@
 <template>
-    <div class="container">
-        <div class="chart-containe">
-          <Line v-if="loaded" :data="chartData" />
-        </div>
+    <div class="chart-container">
+        <Line v-if="loaded" :data="chartData" class="weekend-chart"/>
     </div>
 </template>
 
@@ -88,4 +86,14 @@
 </script>
 
 <style scoped>
+    .chart-container {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .weekend-chart {
+        width: 90%;
+    }
 </style>

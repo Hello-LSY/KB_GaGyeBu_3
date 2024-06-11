@@ -37,7 +37,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  flex-grow: 1;
   position: relative;
   gap: 8px;
   padding: 16px;
