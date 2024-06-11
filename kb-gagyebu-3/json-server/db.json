@@ -34,6 +34,222 @@
       "categoryId": "1",
       "title": "Salary",
       "type": "income"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "start": "2024-06-01",
+      "amount": 2000,
+      "categoryId": "1",
+      "title": "Salary",
+      "type": "income"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "start": "2024-06-03",
+      "amount": 3000,
+      "categoryId": "3",
+      "title": "Rental Income",
+      "type": "income"
+    },
+    {
+      "id": "4",
+      "userId": "1",
+      "start": "2024-06-04",
+      "amount": 4000,
+      "categoryId": "4",
+      "title": "Gift",
+      "type": "income"
+    },
+    {
+      "id": "5",
+      "userId": "1",
+      "start": "2024-06-05",
+      "amount": 5000,
+      "categoryId": "5",
+      "title": "Others",
+      "type": "income"
+    },
+    {
+      "id": "6",
+      "userId": "1",
+      "start": "2024-06-06",
+      "amount": 6000,
+      "categoryId": "6",
+      "title": "Groceries",
+      "type": "expense"
+    },
+    {
+      "id": "7",
+      "userId": "1",
+      "start": "2024-06-07",
+      "amount": 7000,
+      "categoryId": "6",
+      "title": "Groceries",
+      "type": "expense"
+    },
+    {
+      "id": "8",
+      "userId": "1",
+      "start": "2024-06-08",
+      "amount": 8000,
+      "categoryId": "6",
+      "title": "Groceries",
+      "type": "expense"
+    },
+    {
+      "id": "9",
+      "userId": "1",
+      "start": "2024-06-09",
+      "amount": 9000,
+      "categoryId": "11",
+      "title": "Dining Out",
+      "type": "expense"
+    },
+    {
+      "id": "10",
+      "userId": "1",
+      "start": "2024-06-10",
+      "amount": 10000,
+      "categoryId": "6",
+      "title": "Groceries",
+      "type": "expense"
+    },
+    {
+      "id": "11",
+      "userId": "1",
+      "start": "2024-06-11",
+      "amount": 11000,
+      "categoryId": "11",
+      "title": "Dining Out",
+      "type": "expense"
+    },
+    {
+      "id": "12",
+      "userId": "1",
+      "start": "2024-06-12",
+      "amount": 12000,
+      "categoryId": "15",
+      "title": "Clothing",
+      "type": "expense"
+    },
+    {
+      "id": "13",
+      "userId": "1",
+      "start": "2024-06-13",
+      "amount": 13000,
+      "categoryId": "13",
+      "title": "Education",
+      "type": "expense"
+    },
+    {
+      "id": "14",
+      "userId": "1",
+      "start": "2024-06-14",
+      "amount": 14000,
+      "categoryId": "14",
+      "title": "Insurance",
+      "type": "expense"
+    },
+    {
+      "id": "15",
+      "userId": "1",
+      "start": "2024-06-15",
+      "amount": 15000,
+      "categoryId": "15",
+      "title": "Clothing",
+      "type": "expense"
+    },
+    {
+      "id": "16",
+      "userId": "1",
+      "start": "2024-06-16",
+      "amount": 16000,
+      "categoryId": "16",
+      "title": "Travel",
+      "type": "expense"
+    },
+    {
+      "id": "17",
+      "userId": "1",
+      "start": "2024-06-17",
+      "amount": 17000,
+      "categoryId":"15",
+      "title": "Clothing",
+      "type": "expense"
+    },
+    {
+      "id": "18",
+      "userId": "1",
+      "start": "2024-06-18",
+      "amount": 18000,
+      "categoryId": "14",
+      "title": "Insurance",
+      "type": "expense"
+    },
+    {
+      "id": "19",
+      "userId": "1",
+      "start": "2024-06-19",
+      "amount": 19000,
+      "categoryId": "19",
+      "title": "Others",
+      "type": "expense"
+    },
+    {
+      "id": "20",
+      "userId": "1",
+      "start": "2024-06-20",
+      "amount": 20000,
+      "categoryId": "1",
+      "title": "Salary",
+      "type": "income"
+    },
+    {
+      "id": "21",
+      "userId": "1",
+      "start": "2024-06-21",
+      "amount": 21000,
+      "categoryId": "2",
+      "title": "Investment",
+      "type": "income"
+    },
+    {
+      "id": "22",
+      "userId": "1",
+      "start": "2024-06-22",
+      "amount": 22000,
+      "categoryId": "3",
+      "title": "Rental Income",
+      "type": "income"
+    },
+    {
+      "id": "23",
+      "userId": "1",
+      "start": "2024-06-23",
+      "amount": 23000,
+      "categoryId": "4",
+      "title": "Gift",
+      "type": "income"
+    },
+    {
+      "id": "24",
+      "userId": "1",
+      "start": "2024-06-24",
+      "amount": 24000,
+      "categoryId": "5",
+      "title": "Others",
+      "type": "income"
+    },
+    {
+      "id": "25",
+      "userId": "1",
+      "start": "2024-06-25",
+      "amount": 25000,
+      "categoryId": "6",
+      "title": "Groceries",
+      "type": "expense"
     }
   ],
   "categories": [
