@@ -27,41 +27,63 @@
         </svg>
       </div>
       <div class="tabs d-flex justify-content-start">
-        <div class="tab selected">
+        <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
           <div class="tab-content">
-            <p class="tab-text selected-text">Privacy</p>
+            <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">Privacy</p>
           </div>
         </div>
-        <div class="tab">
+        <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
           <div class="tab-content">
-            <p class="tab-text">Preference</p>
+            <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">Preference</p>
           </div>
         </div>
       </div>
       <div class="form row">
-        <div class="input-group col-md-6">
-          <p class="input-label">아이디</p>
-          <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
+        <div v-if="currentTab === 'privacy'">
+          <div class="input-group col-md-6">
+            <p class="input-label">아이디</p>
+            <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">이름</p>
+            <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">이메일</p>
+            <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">비밀번호 수정</p>
+            <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">비밀번호 확인</p>
+            <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
+          </div>
         </div>
-        <div class="input-group col-md-6">
-          <p class="input-label">이름</p>
-          <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
-        </div>
-        <div class="input-group col-md-6">
-          <p class="input-label">이메일</p>
-          <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
-        </div>
-        <div class="input-group col-md-6">
-          <p class="input-label">비밀번호 수정</p>
-          <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
-        </div>
-        <div class="input-group col-md-6">
-          <p class="input-label">비밀번호 확인</p>
-          <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
+        <div v-if="currentTab === 'preference'">
+          <div class="input-group col-md-6">
+            <p class="input-label">알림 설정</p>
+            <input type="checkbox" class="input-field" v-model="notifications" />
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">언어</p>
+            <select class="input-field" v-model="language">
+              <option value="kor">한국어</option>
+              <option value="eng">영어</option>
+            </select>
+          </div>
+          <div class="input-group col-md-6">
+            <p class="input-label">테마</p>
+            <select class="input-field" v-model="theme">
+              <option value="light">라이트</option>
+              <option value="dark">다크</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="button-container d-flex justify-content-center mt-auto">
-        <div class="button" @click="updatePassword">
+        <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
           <p class="button-text">수정</p>
         </div>
       </div>
@@ -74,11 +96,16 @@ import { ref, onMounted } from 'vue'
 import Sidebar from '../components/SideBar.vue'
 import axios from 'axios'
 
+const currentTab = ref('privacy')
 const userId = ref('')
 const name = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+
+const notifications = ref(false)
+const language = ref('kor')
+const theme = ref('light')
 
 onMounted(() => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -89,15 +116,24 @@ onMounted(() => {
   }
 })
 
+const selectTab = async (tab) => {
+  currentTab.value = tab
+  if (tab === 'preference') {
+    try {
+      const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`)
+      const settings = response.data[0]
+      notifications.value = settings.notifications
+      language.value = settings.language
+      theme.value = settings.theme
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 const updatePassword = async () => {
   if (password.value !== confirmPassword.value) {
     alert('비밀번호가 일치하지 않습니다.')
-    return
-  }
-
-  // 비밀 번호의 길이가 6자리 이상인지 확인
-  if (password.value.length < 6) {
-    alert('비밀번호는 6자리 이상이어야 합니다.')
     return
   }
 
@@ -115,6 +151,25 @@ const updatePassword = async () => {
   } catch (error) {
     console.error(error)
     alert('비밀번호 변경 중 오류가 발생했습니다.')
+  }
+}
+
+const updateSettings = async () => {
+  try {
+    const settings = {
+      userId: userId.value,
+      notifications: notifications.value,
+      language: language.value,
+      theme: theme.value
+    }
+
+    // JSON 서버 업데이트
+    await axios.put(`http://localhost:3000/settings/${userId.value}`, settings)
+
+    alert('설정이 성공적으로 변경되었습니다.')
+  } catch (error) {
+    console.error(error)
+    alert('설정 변경 중 오류가 발생했습니다.')
   }
 }
 </script>
@@ -136,8 +191,8 @@ const updatePassword = async () => {
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Align items to the start to keep the title on the left */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
   flex-grow: 1;
   gap: 16px;
   padding: 16px;
@@ -150,6 +205,8 @@ const updatePassword = async () => {
   margin: 20px; /* Add margin */
   max-width: 1400px; /* Limit the maximum width */
 }
+
+
 
 .content-header {
   display: flex;
@@ -190,6 +247,7 @@ const updatePassword = async () => {
   flex-grow: 1; /* Make tabs grow equally */
   flex-shrink: 0;
   gap: 16px;
+  cursor: pointer; /* Add cursor pointer */
 }
 
 .tab-content {
@@ -224,21 +282,23 @@ const updatePassword = async () => {
 }
 
 .form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+  display: flex;
+  flex-direction: column; /* Arrange items in a column */
   gap: 16px;
+  align-items: center; /* Center form items horizontally */
   width: 100%;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 100%; /* Make input groups take the full width */
+  gap: 0; /* Reduce gap to zero */
+  width: 60%; /* Adjust width as needed */
+  margin: 10px auto;
 }
 
 .input-label {
-  width: 100%;
+  margin-bottom: 2px; /* Reduce bottom margin to minimize space between label and input */
   font-size: 16px;
   font-weight: 500;
   text-align: left;
@@ -247,12 +307,15 @@ const updatePassword = async () => {
 
 .input-field {
   width: 100%;
-  padding: 12px 16px;
+  padding: 8px 16px;
+  margin: 0; /* Ensure no extra margin around input fields */
   border-radius: 8px;
   background: #fff;
   border: 1px solid #e0e0e0;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
+
+
 
 .button-container {
   width: 100%;
