@@ -1,77 +1,85 @@
 <template>
-  <div class="sidebarsection">
-    <div class="sidebaritem">
-      <div class="text">
-        <div class="huge-icon-interface-solid-apps">
-          <div class="apps2">
-            <img class="comboshape" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAETSURBVHgB7ZO7TcRAFEXPm9XmpgOXsHRAB9ABIkPaxK6A2QbAyUpkiA6gBCqADnAJjkHr4Q3SIjSej0ak3MDB+17rzZFtv7tE3AA0/JJzjILY/d3NI4G6zrafwgPCxvc5eJpn+vvBjrLt7bsmWuKa9rf2ZDHM8Boa8LWHmVOTGUakiQ9hiMV9bKWuDZUS4TydZFM9UDVlck39QOEtldJDPpvcRr3eGMbWB64SPdPs6IzTcxNp/G6a2YXBQZ/GWq/p3RzrdPGLv7B/NvzrzxL/ybEZNpTYNz9sCmfHIt1ysdLYteaWHpwlgp54hHWRKbHJ8p9a0mpMiU0qlSWFuPPCwAKb1A4ssRmLkzKgCJtaNkvsfwGphH/VjaXHQQAAAABJRU5ErkJggg==" />
-          </div>
+  <div>
+    <button v-if="isMobile" @click="toggleMenu" class="menu-button">Menu</button>
+    <div :class="sidebarClass">
+      <div class="sidebaritem">
+        <div class="text">
+          <i class="bi bi-speedometer2 me-2"></i>
+          <router-link to="/" class="sidebar-link">
+            <span v-if="!isMobile">Dashs</span>
+          </router-link>
         </div>
-        <router-link to="/" class="sidebar-link">Dashs</router-link>
       </div>
-    </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <div class="huge-icon-financeandpayment-solid-piechart">
-          <div class="piechart2">
-            <img class="comboshape2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGBSURBVHgBrZRBUsJAEEV/D6Db3MB4A72BOYF4AlkqLpjiAgx7q8hCq1jiCfQGcgRuYDyB2Qpl2m4lMVCEJIa/mZqk501PT88Hasha55XFECqqPxyPCOyYEcmqeZJgPA1dVAt4Y52voy68GzreERJ2BByGLk4/tLcj9FhL0IAMW5l6QhnL6LBbdknoysZBmq3J/70djuzK4E1gCiitl4oIfovwnM4zoNbIgCZVQZtUnPWtcxlQJj0tOBqIDAZaLrNOe4Tm8j4N94xmJyn7OIAM06WhFq73RvG6poQFSsR6WOmvD+y/iFh67VRjpEVCAXsFtDhh2DbKb9VbEV6/GFfTieuWxIIKXgAKspgX/XqcuEBHyZDfhXuCKiJcFHzP6muY6QUNJYbxBzQtNAaq82TAh3s3l9o84Z+SC5jlbeznpXTkumWIUFMCi/LZZUD1M+m1oA50DQu2TTZzG4FGAj0nbO64Q7HGHElsZccW1/CXRlqE0U1fxq/18+I4oVneobf1DcNjkModxSByAAAAAElFTkSuQmCC" />
-          </div>
+      <div class="sidebaritem">
+        <div class="text">
+          <i class="bi bi-bar-chart-line-fill me-2"></i>
+          <router-link to="/analytics" class="sidebar-link">
+            <span v-if="!isMobile">Analytics</span>
+          </router-link>
         </div>
-        <router-link to="/analytics" class="sidebar-link">Analytics</router-link>
       </div>
-    </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <div class="huge-icon-financeandpayment-solid-transfer">
-          <div class="transfer2">
-            <div class="comboshape3">
-              <div class="rectangle921"></div>
-              <div class="rectangle922"></div>
-              <img class="vector-stroke" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAQSURBVHgBAQUA+v8AAAAAAAAFAAFkeJU4AAAAAElFTkSuQmCC" />
-              <img class="vector-stroke2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAQSURBVHgBAQUA+v8AAAAAAAAFAAFkeJU4AAAAAElFTkSuQmCC" />
-            </div>
-          </div>
+      <div class="sidebaritem">
+        <div class="text">
+          <i class="bi bi-arrow-left-right me-2"></i>
+          <router-link to="/transaction" class="sidebar-link">
+            <span v-if="!isMobile">Transaction</span>
+          </router-link>
         </div>
-        <router-link to="/transaction" class="sidebar-link">Transaction</router-link>
       </div>
-    </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <img class="huge-icon-interface-solid-setting" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHFSURBVHgB7VVNTsJAFP7e+LfFE1hvgCvjDm7gEXAnYmLhAh0OINSEstUbeAVWJrrSG/QGdqkYZnxDi+lMW2nEJV/STOfxve/N+xkKbLEGVId07ctzLXDPrw2z1xqx0LiYhHK2zlegBjQhWIkvT0XwVBpwLUoDXPrS8325FOTV4zybLodTbxhexvl5L+HZ6PlyzGH99OiYZeKNMmdTKhZIVgfQiuQ0DIaVAbpcayHwiA1ACu18b6wSCcIYG0I7GnYPqLwU6U8Y7ikcmodl+qgmevntrhOf60fWxGT2/mQ0DHOG8GogGxw0cOSTVKMig4hFlEMw2FP04Nr2FULXpoF+ZB+kOKakKMEfoaELJbYCdAeBT6LY6Dmysc3hU+hOUYyCrh9YXGtMewP5joqZV0r3D5CWag66IaElypFEI3m42thNJsScZ7PMSwgafyHNjky1K6CXjc75WfqE6vGrCaFsjZ385uVpFp+etUzZWpnpjZ8PoPJ+JHziZ3bwzIb/Ou6iUP4+RZORlAuFY3OhuJZNXttw0l6BeSfTkWwZrvGZjmVhGGp9D3qDIGbqkeP5Gt3Kk3W+tb4HfDc6vMQ5U0ILDLHFf+AbXKCRdoHdi+cAAAAASUVORK5CYII=" />
-        <router-link to="/settings" class="sidebar-link">Setting</router-link>
+      <div class="sidebaritem">
+        <div class="text">
+          <i class="bi bi-gear-fill me-2"></i>
+          <router-link to="/settings" class="sidebar-link">
+            <span v-if="!isMobile">Setting</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div class="sidebaritem" v-if="isLoggedIn">
-      <div class="text">
-        <img class="icon-round-account_circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIaSURBVHgB3VTRcdpAEN09ia/kQ6kAqYK4g5AOoAOcYE9mgse4AqAC5Bklw8TEyBXY7oAS6EBSB3zb8q33hC0d0gmw/WW/GcFo792+u9O7B/DegdsGu4PIEffQtRC/AeIBELjrEVryT/wg6fbyrxe+SuBnP2ojiDkTHNgGYiGS4zohYSoenyQTAeJ6Z/P1El1LiHmvnwz3EjhmIhEMqn1g/MmWX9SDBGeG8VGPF2aoF/hxEnUtEvMyiQXPZn+a/uZCohGBqKxaguz8D7wb4w4swwSFtCHDcu3OBt/E5aOdK3MU79rqC5e8CY7NzqsIWFK062bYafWb6E2qEK2cl9cQmnV0tuuw9ztapQ0I14LiVH3Uej58rQoAHMAWIIpJI4UJ7AMsjlrAC0BACf+tXjJHlCaXwc3kOYH8rvw/C1z3Imhmd0HVCODK3DaLkgz5ESHhUv8OfI5LkcrOdOrF5em+76ldLNTzaxCNHlJxDdoRE2Fi2IFc6E3qmpcx9b3YsmVHryHJ6kV7ckh+vqkFbdgT6X3B5RiJL7TgywVC3jZf88OcyK5haw5gBxRHcZ/fiZNVH6/E9VE/URFwmhcIQkJ5NQu8xUbjftTi6UMEbBVUGM+C5mirgAInKgcZbOQSv68QKOatORx+jiHKz9lhphQ244izSd1g2p1PLCwP/2kJupeALkScU4jkMj2LgOzOKFuz8z6zOZ5s+0HxCEXx0yRldvQ4AAAAAElFTkSuQmCC" />
-        <router-link to="/profile" class="sidebar-link">Profile</router-link>
+      <div class="sidebaritem" v-if="isLoggedIn">
+        <div class="text">
+          <i class="bi bi-person-circle me-2"></i>
+          <router-link to="/profile" class="sidebar-link">
+            <span v-if="!isMobile">Profile</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div class="sidebaritem">
-      <div class="text">
-        <router-link to="/transaction/regist" class="sidebar-link">Regist Transaction</router-link>
+      <div class="sidebaritem">
+        <div class="text">
+          <i class="bi bi-file-earmark-plus-fill me-2"></i>
+          <router-link to="/transaction/regist" class="sidebar-link">
+            <span v-if="!isMobile">Regist Transaction</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div class="sidebaritem" v-if="!isLoggedIn">
-      <div class="text">
-        <router-link to="/register" class="sidebar-link">Register</router-link>
+      <div class="sidebaritem" v-if="!isLoggedIn">
+        <div class="text">
+          <i class="bi bi-person-plus-fill me-2"></i>
+          <router-link to="/register" class="sidebar-link">
+            <span v-if="!isMobile">Register</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div class="sidebaritem" v-if="!isLoggedIn">
-      <div class="text">
-        <router-link to="/login" class="sidebar-link">Login</router-link>
+      <div class="sidebaritem" v-if="!isLoggedIn">
+        <div class="text">
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          <router-link to="/login" class="sidebar-link">
+            <span v-if="!isMobile">Login</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div class="sidebaritem" v-if="isLoggedIn">
-      <div class="text">
-        <button @click="logout" class="btn-logout">Logout</button>
+      <div class="sidebaritem" v-if="isLoggedIn">
+        <div class="text">
+          <i class="bi bi-box-arrow-left me-2"></i>
+          <button @click="logout" class="btn-logout">
+            <span v-if="!isMobile">Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 
@@ -83,27 +91,83 @@ const currentTheme = computed(() => themeStore.theme);
 const logout = () => {
   authStore.logout();
 };
+
+// 반응형 처리를 위한 로직
+const sidebarClass = ref('sidebarsection hidden');
+const isMobile = ref(false);
+const isMenuVisible = ref(false);
+
+const handleResize = () => {
+  if (window.innerWidth < 768) {  // 768px 이하일 때
+    isMobile.value = true;
+    sidebarClass.value = 'sidebarsection hidden';
+  } else {
+    isMobile.value = false;
+    sidebarClass.value = 'sidebarsection';
+  }
+};
+
+const toggleMenu = () => {
+  isMenuVisible.value = !isMenuVisible.value;
+  sidebarClass.value = isMenuVisible.value ? 'sidebarsection top' : 'sidebarsection hidden';
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>
 
 <style scoped>
 .sidebarsection {
-  width: 200px;
+  width: 220px;
   background-color: var(--sidebar-background);
-  padding: 10px;
-  height: 100vh; /* Ensure the sidebar takes the full height */
-  overflow-y: auto; /* Allow scrolling if content overflows */
-  white-space: nowrap; /* Prevent line breaks */
+  padding: 15px;
+  height: 100vh;
+  overflow-y: auto;
+  white-space: nowrap;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sidebarsection.top {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  z-index: 1000;  /* 최상위로 설정 */
+}
+
+.sidebarsection.hidden {
+  display: none;
 }
 
 .sidebaritem {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.sidebarsection.top .sidebaritem {
+  margin-right: 20px;
+  margin-bottom: 0;
 }
 
 .sidebar-link {
   text-decoration: none;
-  color: inherit;
+  color: var(--text-color);
   display: block;
-  padding: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar-link:hover {
@@ -113,12 +177,14 @@ const logout = () => {
 .btn-logout {
   background: none;
   border: none;
-  padding: 10px;
+  padding: 10px 15px;
   text-align: left;
   width: 100%;
-  color: inherit;
+  color: var(--text-color);
   cursor: pointer;
   display: block;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-logout:hover {
@@ -130,7 +196,41 @@ const logout = () => {
   align-items: center;
 }
 
-.text img {
+.text i {
+  font-size: 1.2rem;
   margin-right: 10px;
+}
+
+.menu-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;  /* 메뉴 버튼이 최상위에 오도록 설정 */
+  background-color: var(--sidebar-background);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .sidebarsection {
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .sidebaritem {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
 }
 </style>

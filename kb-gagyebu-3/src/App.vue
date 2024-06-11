@@ -21,15 +21,18 @@ onMounted(() => {
   --background-color: #ffffff;
   --content-background: #f8f9fa;
   --text-color: #000000;
+  --sidebar-background: #f8f9fa;
+  --sidebar-hover-background: #e9ecef;
 }
 
 [data-theme='dark'] {
   --background-color: #121212;
   --content-background: #1e1e1e;
   --text-color: #ffffff;
+  --sidebar-background: #232323;
+  --sidebar-hover-background: #333333;
 }
 
-/* 스타일 정의 */
 #app {
   display: flex;
   flex-direction: column;
@@ -37,11 +40,14 @@ onMounted(() => {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* If there's any overflow issue */
+  overflow: hidden;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>
