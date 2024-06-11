@@ -40,6 +40,10 @@
       </div>
       <div class="form row">
         <div class="input-group col-md-6">
+          <p class="input-label">아이디</p>
+          <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
+        </div>
+        <div class="input-group col-md-6">
           <p class="input-label">이름</p>
           <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
         </div>
@@ -48,16 +52,16 @@
           <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
         </div>
         <div class="input-group col-md-6">
-          <p class="input-label">지출액</p>
-          <input type="text" class="input-field" v-model="expense2" placeholder="성별을 입력하세요" />
+          <p class="input-label">비밀번호 수정</p>
+          <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
         </div>
         <div class="input-group col-md-6">
-          <p class="input-label">지출액</p>
-          <input type="text" class="input-field" v-model="expense3" placeholder="금액을 입력하세요" />
+          <p class="input-label">비밀번호 확인</p>
+          <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
         </div>
       </div>
       <div class="button-container d-flex justify-content-center mt-auto">
-        <div class="button">
+        <div class="button" @click="updatePassword">
           <p class="button-text">수정</p>
         </div>
       </div>
@@ -66,13 +70,53 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Sidebar from '../components/SideBar.vue'
+import axios from 'axios'
 
+const userId = ref('')
 const name = ref('')
 const email = ref('')
-const expense2 = ref('')
-const expense3 = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+onMounted(() => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user) {
+    userId.value = user.id
+    name.value = user.name
+    email.value = user.email
+  }
+})
+
+const updatePassword = async () => {
+  if (password.value !== confirmPassword.value) {
+    alert('비밀번호가 일치하지 않습니다.')
+    return
+  }
+
+  // 비밀 번호의 길이가 6자리 이상인지 확인
+  if (password.value.length < 6) {
+    alert('비밀번호는 6자리 이상이어야 합니다.')
+    return
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem('user'))
+    user.password = password.value
+
+    // 로컬 스토리지 업데이트
+    localStorage.setItem('user', JSON.stringify(user))
+
+    // JSON 서버 업데이트
+    await axios.put(`http://localhost:3000/users/${userId.value}`, { password: password.value })
+
+    alert('비밀번호가 성공적으로 변경되었습니다.')
+  } catch (error) {
+    console.error(error)
+    alert('비밀번호 변경 중 오류가 발생했습니다.')
+  }
+}
 </script>
 
 <style scoped>
@@ -88,7 +132,6 @@ const expense3 = ref('')
   margin: 0; /* Remove all margins */
   width: 100%; /* Ensure it takes the full width of its parent */
 }
-
 
 .content {
   display: flex;
@@ -231,6 +274,16 @@ const expense3 = ref('')
   width: 100%; /* Make button width full */
   max-width: 500px; /* Limit the button's maximum width */
   margin: 20px auto 0 auto; /* Center the button and add top margin */
+  cursor: pointer; /* Add cursor pointer */
+  transition: background 0.3s, transform 0.1s; /* Add transition for background color and transform */
+}
+
+.button:hover {
+  background: #333; /* Change background color on hover */
+}
+
+.button:active {
+  transform: scale(0.95); /* Scale down the button on click */
 }
 
 .button-text {
