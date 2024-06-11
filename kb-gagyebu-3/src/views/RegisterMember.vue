@@ -32,6 +32,7 @@
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 import Sidebar from '../components/SideBar.vue';
 
 const authStore = useAuthStore();
@@ -44,6 +45,14 @@ const formData = reactive({
 
 const register = async () => {
   try {
+    // 이메일 중복 검사
+    const response = await axios.get(`http://localhost:3000/users?email=${formData.email}`);
+    if (response.data.length > 0) {
+      alert('이미 사용중인 이메일입니다.');
+      return;
+    }
+
+    // 회원가입 처리
     await authStore.register(formData.name, formData.email, formData.password);
     router.push('/login');
   } catch (error) {
@@ -53,11 +62,9 @@ const register = async () => {
 </script>
 
 <style scoped>
-
 .register {
   max-width: 600px;
 }
-
 
 label {
   display: block;
