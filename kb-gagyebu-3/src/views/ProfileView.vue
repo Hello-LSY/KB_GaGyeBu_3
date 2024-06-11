@@ -76,7 +76,7 @@
             </div>
             <div class="input-group">
               <p class="input-label">테마</p>
-              <select class="input-field" v-model="theme">
+              <select class="input-field" v-model="theme" @input="changeTheme">
                 <option value="light">라이트</option>
                 <option value="dark">다크</option>
               </select>
@@ -94,86 +94,108 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import Sidebar from '../components/SideBar.vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue';
+import { useThemeStore } from '@/stores/theme';
+import Sidebar from '../components/SideBar.vue';
+import axios from 'axios';
 
-const currentTab = ref('privacy')
-const userId = ref('')
-const name = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
+const currentTab = ref('privacy');
+const userId = ref('');
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 
-const notifications = ref(false)
-const language = ref('kor')
-const theme = ref('light')
+const notifications = ref(false);
+const language = ref('kor');
+const theme = ref('light');
+
+const themeStore = useThemeStore();
+theme.value = themeStore.theme;
+
+const changeTheme = () => {
+  themeStore.setTheme(theme.value);
+};
 
 onMounted(() => {
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'));
   if (user) {
-    userId.value = user.id
-    name.value = user.name
-    email.value = user.email
+    userId.value = user.id;
+    name.value = user.name;
+    email.value = user.email;
   }
-})
+});
 
 const selectTab = async (tab) => {
-  currentTab.value = tab
+  currentTab.value = tab;
   if (tab === 'preference') {
     try {
-      const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`)
-      const settings = response.data[0]
-      notifications.value = settings.notifications
-      language.value = settings.language
-      theme.value = settings.theme
+      const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`);
+      const settings = response.data[0];
+      notifications.value = settings.notifications;
+      language.value = settings.language;
+      theme.value = settings.theme;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
-}
+};
 
 const updatePassword = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('비밀번호가 일치하지 않습니다.')
-    return
+    alert('비밀번호가 일치하지 않습니다.');
+    return;
   }
 
   try {
-    const user = JSON.parse(localStorage.getItem('user'))
-    user.password = password.value
+    const user = JSON.parse(localStorage.getItem('user'));
+    user.password = password.value;
 
     // 로컬 스토리지 업데이트
-    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('user', JSON.stringify(user));
 
     // JSON 서버 업데이트
-    await axios.put(`http://localhost:3000/users/${userId.value}`, { password: password.value })
+    await axios.put(`http://localhost:3000/users/${userId.value}`, { password: password.value });
 
-    alert('비밀번호가 성공적으로 변경되었습니다.')
+    alert('비밀번호가 성공적으로 변경되었습니다.');
   } catch (error) {
-    console.error(error)
-    alert('비밀번호 변경 중 오류가 발생했습니다.')
+    console.error(error);
+    alert('비밀번호 변경 중 오류가 발생했습니다.');
   }
-}
+};
 
 const updateSettings = async () => {
   try {
-    const settings = {
-      userId: userId.value,
-      notifications: notifications.value,
-      language: language.value,
-      theme: theme.value
+    // 기존 설정을 불러오기
+
+    console.log("세팅 변경")
+    const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`);
+    const existingSettings = response.data[0];
+    
+    if (existingSettings) {
+      const settings = {
+        userId: userId.value,
+        notifications: notifications.value,
+        language: language.value,
+        theme: theme.value,
+      };
+
+      // JSON 서버 업데이트
+      await axios.put(`http://localhost:3000/settings/${existingSettings.id}`, settings);
+
+      // Pinia store 업데이트
+      themeStore.setTheme(settings.theme);
+
+      alert('설정이 성공적으로 변경되었습니다.');
+    } else {
+      alert('설정을 찾을 수 없습니다.');
     }
-
-    // JSON 서버 업데이트
-    await axios.put(`http://localhost:3000/settings/${userId.value}`, settings)
-
-    alert('설정이 성공적으로 변경되었습니다.')
   } catch (error) {
-    console.error(error)
-    alert('설정 변경 중 오류가 발생했습니다.')
+    console.error(error);
+    alert('설정 변경 중 오류가 발생했습니다.');
   }
-}
+};
+
 </script>
 
 <style scoped>
@@ -181,7 +203,7 @@ const updateSettings = async () => {
   display: flex;
   height: 100vh;
   padding: 0;
-  background: #fff;
+  background: var(--background-color);
   margin: 0;
   width: 100%;
   max-width: 100vw;
@@ -201,7 +223,7 @@ const updateSettings = async () => {
   gap: 16px;
   padding: 16px;
   border-radius: 8px;
-  background: #fff;
+  background: var(--content-background);
   box-shadow: -6px 10px 40px 0 rgba(52, 52, 52, 0.08);
   overflow-y: auto;
   box-sizing: border-box;
@@ -230,7 +252,7 @@ const updateSettings = async () => {
   font-size: 24px;
   font-weight: 600;
   text-align: left;
-  color: #6b7280;
+  color: var(--text-color);
 }
 
 .tabs {
@@ -272,7 +294,7 @@ const updateSettings = async () => {
   font-size: 14px;
   font-weight: 500;
   text-align: left;
-  color: #6b7280;
+  color: var(--text-color);
 }
 
 .selected {
@@ -304,7 +326,7 @@ const updateSettings = async () => {
   font-size: 16px;
   font-weight: 500;
   text-align: left;
-  color: #000;
+  color: var(--text-color);
 }
 
 .input-field {
