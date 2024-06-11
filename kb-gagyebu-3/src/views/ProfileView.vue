@@ -1,90 +1,92 @@
 <template>
-  <div class="container custom-container">
+  <div class="container">
     <Sidebar />
-    <div class="content container-fluid">
-      <div class="content-header d-flex align-items-center">
-        <div class="account-title flex-grow-1 d-flex align-items-center">
-          <p class="account-text">Account</p>
+    <div class="custom-container">
+      <div class="content container-fluid">
+        <div class="content-header d-flex align-items-center">
+          <div class="account-title flex-grow-1 d-flex align-items-center">
+            <p class="account-text">Account</p>
+          </div>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g clip-path="url(#clip0_1_984)">
+              <path
+                d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                fill="#84919A"
+              ></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
+            </defs>
+          </svg>
         </div>
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <g clip-path="url(#clip0_1_984)">
-            <path
-              d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-              fill="#84919A"
-            ></path>
-          </g>
-          <defs>
-            <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
-          </defs>
-        </svg>
-      </div>
-      <div class="tabs d-flex justify-content-start">
-        <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
-          <div class="tab-content">
-            <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">Privacy</p>
+        <div class="tabs d-flex justify-content-start">
+          <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
+            <div class="tab-content">
+              <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">Privacy</p>
+            </div>
           </div>
-        </div>
-        <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
-          <div class="tab-content">
-            <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">Preference</p>
-          </div>
-        </div>
-      </div>
-      <div class="form row">
-        <div v-if="currentTab === 'privacy'">
-          <div class="input-group col-md-6">
-            <p class="input-label">아이디</p>
-            <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
-          </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">이름</p>
-            <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
-          </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">이메일</p>
-            <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
-          </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">비밀번호 수정</p>
-            <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
-          </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">비밀번호 확인</p>
-            <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
+          <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
+            <div class="tab-content">
+              <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">Preference</p>
+            </div>
           </div>
         </div>
-        <div v-if="currentTab === 'preference'">
-          <div class="input-group col-md-6">
-            <p class="input-label">알림 설정</p>
-            <input type="checkbox" class="input-field" v-model="notifications" />
+        <div class="form row">
+          <div v-if="currentTab === 'privacy'">
+            <div class="input-group">
+              <p class="input-label">아이디</p>
+              <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
+            </div>
+            <div class="input-group">
+              <p class="input-label">이름</p>
+              <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
+            </div>
+            <div class="input-group">
+              <p class="input-label">이메일</p>
+              <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
+            </div>
+            <div class="input-group">
+              <p class="input-label">비밀번호 수정</p>
+              <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
+            </div>
+            <div class="input-group">
+              <p class="input-label">비밀번호 확인</p>
+              <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
+            </div>
           </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">언어</p>
-            <select class="input-field" v-model="language">
-              <option value="kor">한국어</option>
-              <option value="eng">영어</option>
-            </select>
-          </div>
-          <div class="input-group col-md-6">
-            <p class="input-label">테마</p>
-            <select class="input-field" v-model="theme">
-              <option value="light">라이트</option>
-              <option value="dark">다크</option>
-            </select>
+          <div v-if="currentTab === 'preference'">
+            <div class="input-group">
+              <p class="input-label">알림 설정</p>
+              <input type="checkbox" class="input-field" v-model="notifications" />
+            </div>
+            <div class="input-group">
+              <p class="input-label">언어</p>
+              <select class="input-field" v-model="language">
+                <option value="kor">한국어</option>
+                <option value="eng">영어</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <p class="input-label">테마</p>
+              <select class="input-field" v-model="theme">
+                <option value="light">라이트</option>
+                <option value="dark">다크</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="button-container d-flex justify-content-center mt-auto">
-        <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
-          <p class="button-text">수정</p>
+        <div class="button-container d-flex justify-content-center mt-auto">
+          <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
+            <p class="button-text">수정</p>
+          </div>
         </div>
       </div>
     </div>
@@ -155,9 +157,6 @@ const updatePassword = async () => {
 }
 
 const updateSettings = async () => {
-  // 디버깅 : 유저 id 콘솔
-  console.log(userId.value)
-
   try {
     const settings = {
       userId: userId.value,
@@ -166,15 +165,8 @@ const updateSettings = async () => {
       theme: theme.value
     }
 
-
-    // JSON 서버 업데이트  만약 settings가 없다면, post로 생성해야함
-    const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`)
-    if (response.data.length === 0) {
-      await axios.post(`http://localhost:3000/settings`, settings)
-    } else {
-      await axios.put(`http://localhost:3000/settings/${response.data[0].id}`, settings)
-    }
-
+    // JSON 서버 업데이트
+    await axios.put(`http://localhost:3000/settings/${userId.value}`, settings)
 
     alert('설정이 성공적으로 변경되었습니다.')
   } catch (error) {
@@ -188,14 +180,15 @@ const updateSettings = async () => {
 .container {
   display: flex;
   height: 100vh;
-  padding: 0%;
-  background: #fff; 
+  padding: 0;
+  background: #fff;
+  margin: 0;
+  
 }
 
 .custom-container {
-  max-width: 1400px; /* You can adjust this value as needed */
-  margin: 0; /* Remove all margins */
-  width: 100%; /* Ensure it takes the full width of its parent */
+  display: flex;
+  flex-grow: 1;
 }
 
 .content {
@@ -215,8 +208,6 @@ const updateSettings = async () => {
   margin: 20px; /* Add margin */
   max-width: 1400px; /* Limit the maximum width */
 }
-
-
 
 .content-header {
   display: flex;
@@ -304,7 +295,7 @@ const updateSettings = async () => {
   flex-direction: column;
   gap: 0; /* Reduce gap to zero */
   width: 60%; /* Adjust width as needed */
-  margin: 10px auto;
+  margin: 0px auto;
 }
 
 .input-label {
@@ -317,15 +308,15 @@ const updateSettings = async () => {
 
 .input-field {
   width: 100%;
-  padding: 8px 16px;
+  padding: 6px 12px; /* Reduce padding to decrease height */
   margin: 0; /* Ensure no extra margin around input fields */
   border-radius: 8px;
   background: #fff;
   border: 1px solid #e0e0e0;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-size: 14px; /* Optional: Adjust font size if needed */
+  height: auto; /* Ensure height adjusts to padding */
 }
-
-
 
 .button-container {
   width: 100%;
