@@ -95,9 +95,6 @@ const expenseChartData = ref({
   ]
 })
 
-const incomeDetails = ref({});
-const expenseDetails = ref({});
-
 const chartOptions = ref({
   plugins: {
     legend: {
@@ -105,6 +102,9 @@ const chartOptions = ref({
     }
   }
 });
+
+const incomeDetails = ref({});
+const expenseDetails = ref({});
 
 const selectTab = (tab) => {
   isIncome.value = tab;
@@ -119,13 +119,23 @@ onMounted(async () => {
 
     // transaction -> 사용자의것만 가져오기
 
-    // transaction -> 날짜로 해당 월만 가져오기
+    // 현재 연, 월과 동일한 transaction만 필터링
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    const currentMonthTransactions = transactions.data.filter(transaction => {
+      const transactionDate = new Date(transaction.start);
+      const transactionYear = transactionDate.getFullYear();
+      const transactionMonth = transactionDate.getMonth() + 1;
+      return transactionYear === currentYear && transactionMonth === currentMonth;
+    });
 
     // 누적 금액 계산
     const incomeSum = {};
     const expenseSum = {};
 
-    transactions.data.forEach(transaction => {
+    currentMonthTransactions.forEach(transaction => {
       const category = categories.data.find(cat => cat.id === transaction.categoryId);
       if (category) {
         if (category.type === 'income') {
