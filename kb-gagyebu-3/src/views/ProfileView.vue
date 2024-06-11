@@ -183,7 +183,8 @@ const updateSettings = async () => {
   padding: 0;
   background: #fff;
   margin: 0;
-  
+  width: 100%;
+  max-width: 100vw;
 }
 
 .custom-container {
