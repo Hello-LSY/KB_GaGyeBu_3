@@ -24,7 +24,7 @@
   import { defineProps } from 'vue';
 
   const props = defineProps({
-    percentage: Number,
+    percentage: String,
     title: String,
     content: String,
     pathData: String,
