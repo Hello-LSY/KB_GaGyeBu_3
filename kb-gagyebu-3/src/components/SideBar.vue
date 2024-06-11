@@ -41,7 +41,7 @@
         <router-link to="/settings" class="sidebar-link">Setting</router-link>
       </div>
     </div>
-    <div class="sidebaritem">
+    <div class="sidebaritem" v-if = "isLoggedIn">
       <div class="text">
         <img class="icon-round-account_circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIaSURBVHgB3VTRcdpAEN09ia/kQ6kAqYK4g5AOoAOcYE9mgse4AqAC5Bklw8TEyBXY7oAS6EBSB3zb8q33hC0d0gmw/WW/GcFo792+u9O7B/DegdsGu4PIEffQtRC/AeIBELjrEVryT/wg6fbyrxe+SuBnP2ojiDkTHNgGYiGS4zohYSoenyQTAeJ6Z/P1El1LiHmvnwz3EjhmIhEMqn1g/MmWX9SDBGeG8VGPF2aoF/hxEnUtEvMyiQXPZn+a/uZCohGBqKxaguz8D7wb4w4swwSFtCHDcu3OBt/E5aOdK3MU79rqC5e8CY7NzqsIWFK062bYafWb6E2qEK2cl9cQmnV0tuuw9ztapQ0I14LiVH3Uej58rQoAHMAWIIpJI4UJ7AMsjlrAC0BACf+tXjJHlCaXwc3kOYH8rvw/C1z3Imhmd0HVCODK3DaLkgz5ESHhUv8OfI5LkcrOdOrF5em+76ldLNTzaxCNHlJxDdoRE2Fi2IFc6E3qmpcx9b3YsmVHryHJ6kV7ckh+vqkFbdgT6X3B5RiJL7TgywVC3jZf88OcyK5haw5gBxRHcZ/fiZNVH6/E9VE/URFwmhcIQkJ5NQu8xUbjftTi6UMEbBVUGM+C5mirgAInKgcZbOQSv68QKOatORx+jiHKz9lhphQ244izSd1g2p1PLCwP/2kJupeALkScU4jkMj2LgOzOKFuz8z6zOZ5s+0HxCEXx0yRldvQ4AAAAAElFTkSuQmCC" />
         <router-link to="/profile" class="sidebar-link">Profile</router-link>
