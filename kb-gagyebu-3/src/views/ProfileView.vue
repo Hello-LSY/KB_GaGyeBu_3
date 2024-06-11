@@ -155,6 +155,9 @@ const updatePassword = async () => {
 }
 
 const updateSettings = async () => {
+  // 디버깅 : 유저 id 콘솔
+  console.log(userId.value)
+
   try {
     const settings = {
       userId: userId.value,
@@ -163,8 +166,15 @@ const updateSettings = async () => {
       theme: theme.value
     }
 
-    // JSON 서버 업데이트
-    await axios.put(`http://localhost:3000/settings/${userId.value}`, settings)
+
+    // JSON 서버 업데이트  만약 settings가 없다면, post로 생성해야함
+    const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`)
+    if (response.data.length === 0) {
+      await axios.post(`http://localhost:3000/settings`, settings)
+    } else {
+      await axios.put(`http://localhost:3000/settings/${response.data[0].id}`, settings)
+    }
+
 
     alert('설정이 성공적으로 변경되었습니다.')
   } catch (error) {
