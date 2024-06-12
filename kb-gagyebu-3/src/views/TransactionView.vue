@@ -8,13 +8,13 @@
       >
         <template v-slot:eventContent='arg'>
           <b> {{ arg.timeText }}</b>
-          <i> {{ arg.event.title }} {{ arg.event.amount }}</i>
+          <i> {{ arg.event.title }}</i>
         </template>
       </FullCalendar>
     </div>
 
        <!-- 모달창 -->
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+      <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -26,12 +26,7 @@
               <div class="form-group mb-3">
                 <h4>{{ formData.start }}</h4>
                 <label class="form-label">거래 유형</label>
-                <select class="form-control" v-model="formData.typeId">
-                  <option disabled value="">거래 유형을 선택하세요</option>
-                  <option v-for="typeOption in type" :key="typeOption.id" :value="typeOption.id">
-                    {{ typeOption.type }}
-                  </option>
-                </select>
+                <input type="text" class="form-control" placeholder="거래 유형을 입력하세요(수입/지출/이체)" v-model="formData.type" />
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">거래명</label>
@@ -39,8 +34,7 @@
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">카테고리</label>
-                <input type="text" class="form-control" readonly placeholder="카테고리 선택"
-                       @click="openCategoryModal" :value="selectedCategoryName">
+                <input type="text" class="form-control" placeholder="카테고리" v-model="formData.category" />
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">지출액</label>
@@ -125,15 +119,12 @@ export default defineComponent({
     const currentEvents = ref([])
     const calendarApi = ref([])
     const userId = localStorage.getItem('userId') || "1"
-    const type = ref([])
-    const categories = ref([])
-    const selectedCategoryName = ref('')
     const formData = reactive({
       start: '',
       title: '',
       category: '',
       amount: '',
-      typeId: '',
+      type: '',
       memo: ''
     })
     const calendarOptions = reactive({
@@ -174,37 +165,13 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      const transactions = await fetchUserTransactions()
-      const tmpType = await fetchType()
-      categories.value = await fetchCategories()
-      type.value = tmpType
-      console.log(tmpType)
-      calendarOptions.events = transactions;
-      console.log(transactions)
-      currentEvents.value = transactions
+      const events = await fetchUserEvents()
+      calendarOptions.events = events;
+      console.log(events)
+      currentEvents.value = events
     })
 
-    async function fetchType() {
-      try {
-        const response = await axios.get(`http://localhost:3000/type`)
-        return response.data
-      } catch (error) {
-        console.error("type 가져오기 실패", error)
-        return []
-      }
-    }
-
-    async function fetchCategories() {
-      try {
-        const response = await axios.get(`http://localhost:3000/categories`)
-        return response.data
-      } catch (error) {
-        console.error("categories 가져오기 실패", error)
-        return []
-      }
-    }
-
-    async function fetchUserTransactions() {
+    async function fetchUserEvents() {
       try {
         const response = await axios.get(`http://localhost:3000/transactions/?userId=${userId}`)
         return response.data
@@ -220,13 +187,12 @@ export default defineComponent({
 
     function resetFormData() {
       calendarApi.value = null
-      selectedCategoryName.value = ''
       formData.title = ''
       formData.start = ''
-      formData.categoryId = ''
+      formData.category = ''
       formData.amount = ''
       formData.memo = ''
-      formData.typeId = ''
+      formData.type = ''
     }
 
     function handleDateSelect(selectInfo) {  
@@ -243,6 +209,16 @@ export default defineComponent({
         keyboard: false
       })
       modal.show()
+
+      // if (title) {
+      //   calendarApi.addEvent({
+      //     id: String(currentEvents.value.length + 1),
+      //     title,
+      //     start: selectInfo.startStr,
+      //     end: selectInfo.endStr,
+      //     allDay: selectInfo.allDay
+      //   })
+      // }
     }
 
     function saveTransaction() {
@@ -252,7 +228,6 @@ export default defineComponent({
           title: formData.title,
           start: formData.start,
           end: formData.start,
-          memo: formData.memo,
           allDay: true
         }
         calendarApi.value.addEvent(newEvent)
@@ -262,10 +237,10 @@ export default defineComponent({
         userId : userId,
         title : formData.title,
         start : formData.start,
-        categoryId : formData.categoryId,
+        category : formData.category,
         amount : formData.amount,
         memo : formData.memo,
-        typeId : formData.typeId
+        type : formData.type
       })
       .then(response => {
         console.log('Event added:', response.data)
@@ -276,7 +251,6 @@ export default defineComponent({
       } else {
         alert("거래 내역 저장에 실패했습니다")
       }
-
       const modal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'))
       modal.hide()
       resetFormData()
@@ -319,16 +293,11 @@ export default defineComponent({
     }
 
     return {
-      type,
-      categories,
       calendarOptions,
       currentEvents,
       handleWeekendsToggle,
       formData,
-      saveTransaction,
-      openCategoryModal,
-      selectCategory,
-      selectedCategoryName
+      saveTransaction
     }
   }
 })
@@ -338,14 +307,6 @@ export default defineComponent({
 h2 {
   margin: 0;
   font-size: 16px;
-}
-
-.modal-dialog {
-  min-width: 580px; /* 기본 값보다 더 크게 조정 */
-}
-
-.modal-backdrop.show {
-  opacity: 0.5;
 }
 
 ul {
@@ -390,3 +351,5 @@ b { /* used for event dates/times */
   margin: 0 auto;
 }
 </style>
+
+
