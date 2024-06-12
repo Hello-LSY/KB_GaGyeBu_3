@@ -1,6 +1,5 @@
 <template>
   <div class='demo-app'>
-    <Sidebar />
     <div class='demo-app-main'>
       <FullCalendar
         class='demo-app-calendar'
@@ -71,7 +70,7 @@
           <div class="modal-body">
             <div class="container">
               <div class="row">
-                <div class="col-3" v-for="category in categories" :key="category.id">
+                <div class="col-3" v-for="category in categories" :key="category.categoryId">
                   <button type="button" class="btn btn-outline-primary w-100 mb-2" @click="selectCategory(category)">
                     {{ category.name }}
                   </button>
@@ -103,6 +102,7 @@ export default defineComponent({
   setup() {
     const currentEvents = ref([])
     const calendarApi = ref([])
+    const masterTransaction = ref([])
     const userId = localStorage.getItem('userId') || "1"
     const type = ref([])
     const categories = ref([])
@@ -122,9 +122,17 @@ export default defineComponent({
         interactionPlugin // needed for dateClick
       ],
       headerToolbar: {
-        left: 'prev,next today',
+        left: 'prev,next today customButtons',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      customButtons: {
+        categoryButton: {
+          text: '카테고리 보기',
+          click: function() {
+            openCategoryModal();
+          }
+        }
       },
       initialView: 'dayGridMonth',
       initialEvents:[],
@@ -151,6 +159,7 @@ export default defineComponent({
       type.value = tmpType
       console.log(tmpType)
       calendarOptions.events = transactions;
+      masterTransaction.value = transactions;
       console.log(transactions)
       currentEvents.value = transactions
     })
@@ -224,10 +233,13 @@ export default defineComponent({
           start: formData.start,
           end: formData.start,
           memo: formData.memo,
+          categoryId : formData.categoryId,
+          amount : formData.amount,
+          typeId : formData.typeId,
           allDay: true
         }
         calendarApi.value.addEvent(newEvent)
-
+      
       axios.post('http://localhost:3000/transactions', { 
         id : newEvent.id,
         userId : userId,
@@ -260,7 +272,7 @@ export default defineComponent({
       });
       modal.show();
     }
-
+    
     function selectCategory(category) {
       formData.categoryId = category.id;
       selectedCategoryName.value = category.name;
@@ -268,7 +280,6 @@ export default defineComponent({
       const modal = bootstrap.Modal.getInstance(modalElement);
       modal.hide();
     }
-
 
     function handleEventClick(clickInfo) {
       if (confirm(`${clickInfo.event.startStr}의 '${clickInfo.event.title}' 거래내역을 삭제하시겠습니까?`)) {
@@ -333,6 +344,7 @@ b { /* used for event dates/times */
 
 .demo-app {
   display: flex;
+  width: 100%;
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
