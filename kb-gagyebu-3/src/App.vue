@@ -2,19 +2,35 @@
   <div id="app">
     <Sidebar />
     <RouterView />
+    <NotificationButton v-if="settingsStore.notifications" />
+    <NotificationModal />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import { RouterView } from 'vue-router';
+import { useSettingsStore } from '@/stores/setting'; // 경로 수정
+import { useI18n } from 'vue-i18n';
 import Sidebar from '@/components/SideBar.vue';
+import NotificationButton from '@/components/NotificationButton.vue';
+import NotificationModal from '@/components/NotificationModal.vue';
 
 const themeStore = useThemeStore();
+const settingsStore = useSettingsStore();
+const { locale } = useI18n();
 
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', themeStore.theme);
+  locale.value = settingsStore.language;
+});
+
+watch(() => themeStore.theme, (newTheme) => {
+  document.documentElement.setAttribute('data-theme', newTheme);
+});
+
+watch(() => settingsStore.language, (newLanguage) => {
+  locale.value = newLanguage;
 });
 </script>
 
@@ -37,7 +53,7 @@ onMounted(() => {
 
 #app {
   display: flex;
-  flex-direction: row; /* 변경: 사이드바를 가로로 배치하기 위해 row로 변경 */
+  flex-direction: row;
   width: 100%;
   height: 100vh;
   margin: 0;

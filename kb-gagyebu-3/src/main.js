@@ -1,4 +1,3 @@
-// main.js
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -7,8 +6,10 @@ import routes from './routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useAuthStore } from './stores/auth';
+import { useThemeStore } from './stores/theme';
+import { useSettingsStore } from './stores/setting';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import i18n from './i18n';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -22,10 +23,13 @@ app.use(pinia);
 const authStore = useAuthStore();
 authStore.loadUserFromStorage();
 
-app.use(router);
+const themeStore = useThemeStore();
+themeStore.setTheme(localStorage.getItem('theme') || 'light');
 
-// 초기 테마 설정
-const theme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', theme);
+const settingsStore = useSettingsStore();
+settingsStore.setLanguage(localStorage.getItem('language') || 'ko');
+
+app.use(router);
+app.use(i18n);
 
 app.mount('#app');
