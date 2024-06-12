@@ -2,15 +2,19 @@
   <div id="app">
     <Sidebar />
     <RouterView />
+    <NotificationButton v-if="settingsStore.notifications" />
+    <NotificationModal />
   </div>
 </template>
 
 <script setup>
 import { onMounted, watch } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import { useSettingsStore } from '@/stores/setting';
+import { useSettingsStore } from '@/stores/setting'; // 경로 수정
 import { useI18n } from 'vue-i18n';
 import Sidebar from '@/components/SideBar.vue';
+import NotificationButton from '@/components/NotificationButton.vue';
+import NotificationModal from '@/components/NotificationModal.vue';
 
 const themeStore = useThemeStore();
 const settingsStore = useSettingsStore();
