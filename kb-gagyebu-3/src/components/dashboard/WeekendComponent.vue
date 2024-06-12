@@ -25,6 +25,27 @@
   
     try {
       const userInfo = JSON.parse(localStorage.getItem('user'));
+
+      if (userInfo == null){ // 로그인 하지 않았을 경우 임시 데이터
+        chartData.value = {
+            labels: ["5.12 - 5.18", "5.19 - 5.25", "5.26 - 6.1", "6.2 - 6.8", "6.9 - 6.15"],
+            datasets: [
+            {
+                label: "Income",
+                data: [76600, 207500, 107500, 270200, 122600], 
+                backgroundColor: 'rgb(255, 182, 193)',
+            },
+            {
+                label: "Expense",
+                data: [133300, 65800, 102400, 216700, 85400], 
+                backgroundColor:  'rgb(191, 232, 245)',
+            }
+            ]
+        };
+        loaded.value = true
+        return
+      }
+
       const userId = userInfo.id;
   
       const transactions = await axios.get('http://localhost:3000/transactions');
@@ -68,7 +89,7 @@
         datasets: [
           {
             label: "Income",
-            data: weeklyTransactions.map(week => calculateTotal(week, 'income')), 
+            data: weeklyTransactions.map(week => calculateTotal(week, '0')), 
             backgroundColor: 'rgb(255, 182, 193)',
           },
           {
@@ -89,7 +110,7 @@
   // 해당 주의 총 수입 또는 지출 계산
   function calculateTotal(weekTransactions, type) {
     return weekTransactions.reduce((total, transaction) => {
-      if (transaction.type === type) {
+      if (transaction.typeId === type) {
         total += parseInt(transaction.amount);
       }
       return total;

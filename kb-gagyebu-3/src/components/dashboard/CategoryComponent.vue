@@ -20,7 +20,7 @@
     </div>
     <div v-else class="contents"> <!-- 지출 -->
       <div class="category-list">
-        <div class="chart-container mb-5">
+        <div class="chart-container mb-3">
           <Doughnut v-if="loaded" :data="expenseChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -114,11 +114,40 @@ onMounted(async () => {
 
   try {
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    
+    if (userInfo == null){ // 로그인 하지 않았을 경우 임시 데이터
+        
+      incomeChartData.value = {
+        labels: ["월급", "금융소득", "기타", "용돈"],
+        datasets: [
+          {
+            data: [2800000, 372000, 238000, 150000],
+            backgroundColor: backgroundColors
+          }
+        ]
+      }
+
+      expenseChartData.value ={
+        labels: ["외식", "여행", "주거/통신", "취미/문화", "기타"],
+        datasets: [
+          {
+            data: [783000, 521000, 241000, 138000, 71000],
+            backgroundColor: backgroundColors
+          }
+        ]
+      }
+      incomeDetails.value = {"월급": 2800000, "금융소득": 372000, "기타" : 238000, "용돈": 150000}
+      expenseDetails.value = {"외식":783000, "여행": 521000, "주거/통신": 241000, "취미/문화": 138000, "기타": 71000}
+
+      loaded.value = true
+      return
+      }
+
     const userId = userInfo.id
     
     const transactions = await axios.get('http://localhost:3000/transactions')
     const categories = await axios.get('http://localhost:3000/categories')
-
+    
     // 사용자 필터링
     transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
 
@@ -141,12 +170,12 @@ onMounted(async () => {
     currentMonthTransactions.forEach(transaction => {
       const category = categories.data.find(cat => cat.id === transaction.categoryId);
       if (category) {
-        if (category.type === 'income') {
+        if (category.typeId === "0") { // 수입
           if (!incomeSum[category.name]) {
             incomeSum[category.name] = 0;
           }
           incomeSum[category.name] += parseInt(transaction.amount);
-        } else if (category.type === 'expense') {
+        } else {
           if (!expenseSum[category.name]) {
             expenseSum[category.name] = 0;
           }
