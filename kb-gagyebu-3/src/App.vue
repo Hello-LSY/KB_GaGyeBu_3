@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Sidebar />
     <RouterView />
   </div>
 </template>
@@ -8,6 +9,7 @@
 import { onMounted } from 'vue';
 import { useThemeStore } from '@/stores/theme';
 import { RouterView } from 'vue-router';
+import Sidebar from '@/components/SideBar.vue';
 
 const themeStore = useThemeStore();
 
@@ -35,7 +37,7 @@ onMounted(() => {
 
 #app {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* 변경: 사이드바를 가로로 배치하기 위해 row로 변경 */
   width: 100%;
   height: 100vh;
   margin: 0;

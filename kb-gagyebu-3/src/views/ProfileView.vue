@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Sidebar />
     <div class="custom-container">
       <div class="content container-fluid">
         <div class="content-header d-flex align-items-center">
@@ -96,7 +95,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import Sidebar from '../components/SideBar.vue';
 import axios from 'axios';
 
 const currentTab = ref('privacy');
