@@ -30,7 +30,6 @@
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user ? user.id : null;
   
-  
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/transactions?userId=${userId}`);
