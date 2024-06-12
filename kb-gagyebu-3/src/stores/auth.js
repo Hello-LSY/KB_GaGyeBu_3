@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', {
         });
 
         if (response.status === 201) {
-          alert('회원가입 성공');
+          alert('회원가입이 완료되었습니다.');
         } else {
           throw new Error('회원가입 오류');
         }
@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
           // settings 추가
           const settingsResponse = await axios.get(`http://localhost:3000/settings?userId=${user.id}`);
           if (settingsResponse.data.length === 0) {
-            //없는경우 추가(첫 생성)
+            // 없는 경우 추가(첫 생성)
             await axios.post('http://localhost:3000/settings', {
               userId: user.id,
               notifications: true,
@@ -51,8 +51,6 @@ export const useAuthStore = defineStore('auth', {
               theme: "light"
             });
           }
-
-          alert('로그인 성공');
         } else {
           throw new Error('이메일 혹은 비밀번호가 일치하지 않습니다.');
         }
@@ -66,7 +64,6 @@ export const useAuthStore = defineStore('auth', {
       this.token = '';
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      alert('로그아웃 처리');
     },
     loadUserFromStorage() {
       const user = localStorage.getItem('user');

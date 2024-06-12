@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <Sidebar />
+    <Sidebar v-if="!isExcludedView" />
     <RouterView />
-    <NotificationButton v-if="settingsStore.notifications" />
+    <NotificationButton v-if="settingsStore.notifications && !isExcludedView" />
     <NotificationModal />
   </div>
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, computed } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import { useSettingsStore } from '@/stores/setting'; // 경로 수정
+import { useSettingsStore } from '@/stores/setting';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import Sidebar from '@/components/SideBar.vue';
 import NotificationButton from '@/components/NotificationButton.vue';
 import NotificationModal from '@/components/NotificationModal.vue';
@@ -19,6 +20,12 @@ import NotificationModal from '@/components/NotificationModal.vue';
 const themeStore = useThemeStore();
 const settingsStore = useSettingsStore();
 const { locale } = useI18n();
+const route = useRoute();
+
+const isExcludedView = computed(() => {
+  const excludedPaths = ['/home', '/login', '/register'];
+  return excludedPaths.includes(route.path);
+});
 
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', themeStore.theme);
@@ -69,4 +76,3 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>
-
