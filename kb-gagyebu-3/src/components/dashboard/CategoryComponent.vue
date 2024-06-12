@@ -64,12 +64,9 @@ ChartJS.register(
 );
 
 const backgroundColors = [
-  'rgb(255, 182, 193)',  // 라이트 핑크
-  'rgb(173, 216, 230)',  // 라이트 블루
-  'rgb(255, 255, 224)',  // 라이트 옐로우
-  'rgb(144, 238, 144)',  // 라이트 그린
-  'rgb(221, 160, 221)'   // 라이트 퍼플
-]
+  'rgb(255, 182, 193)', 'rgb(191, 232, 245)', 'rgb(255, 255, 200)', 'rgb(229, 250, 175)','rgb(245, 198, 245)','rgb(222, 226, 255)',  'rgb(255, 212, 168)','rgb(255, 222, 237)', 'rgb(252, 207, 202)'
+];
+
 
 // 기본값을 false로 설정하여 초기 상태가 "지출"로 설정되도록 함
 const loaded = ref(false);
@@ -96,6 +93,8 @@ const expenseChartData = ref({
 })
 
 const chartOptions = ref({
+   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false
@@ -196,7 +195,8 @@ onMounted(async () => {
 }
 
 .chart-container {
-  width: 75%; /* 차트 크기를 줄임 */
+  width: 75%; 
+  height: 250px;
   margin: 0 auto; /* 차트를 가운데 정렬 */
 }
 

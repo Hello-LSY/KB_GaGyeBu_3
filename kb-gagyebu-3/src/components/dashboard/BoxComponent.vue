@@ -12,7 +12,7 @@
         </svg>
       </div>
       <div class="percentage-wrapper">
-        <p class="percentage-text"> {{percentage}}%</p>
+        <p :style="percentageStyle" class="percentage-text"> {{percentage}}%</p>
       </div>
     </div>
     <p class="title">{{title}}</p>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-  import { defineProps } from 'vue';
+  import { defineProps, computed } from 'vue';
 
   const props = defineProps({
     percentage: String,
@@ -29,6 +29,17 @@
     content: String,
     pathData: String,
   });
+
+  const percentageStyle = computed(() => {
+  const value = parseFloat(props.percentage);
+  if (value > 0) {
+    return { color: '#5db57a' };
+  } else if (value < 0) {
+    return { color: '#e74c3c' };
+  } else {
+    return { color: '#95a5a6' };
+  }
+});
 </script>
 
 <style scoped>

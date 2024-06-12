@@ -68,7 +68,6 @@
     try {
       const userInfo = JSON.parse(localStorage.getItem('user'))
       const userId = userInfo.id
-
       const transactionData = await axios.get('http://localhost:3000/transactions')
      
       // 사용자 아이디와 일치하는 transaction만 필터링
@@ -120,7 +119,7 @@
       totalMonthly.income.percent = incomeChange.toFixed(1);
       totalMonthly.expenese.percent = expenseChange.toFixed(1);
       totalMonthly.balance.percent = balanceChange.toFixed(1);
-      
+
     } catch(e){
       console.log(e)
     }
@@ -146,7 +145,7 @@
   }
   
   .weekly-spend-container {
-    height: 300px; /* Fixed height for the weekly component */
+    height: 350px; /* Fixed height for the weekly component */
   }
 
   .category-container {
