@@ -26,27 +26,11 @@
           </router-link>
         </div>
       </div>
-      <div class="sidebaritem">
-        <div class="text">
-          <i class="bi bi-gear-fill me-2"></i>
-          <router-link to="/settings" class="sidebar-link">
-            <span v-if="!isMobile">Setting</span>
-          </router-link>
-        </div>
-      </div>
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
           <i class="bi bi-person-circle me-2"></i>
           <router-link to="/profile" class="sidebar-link">
             <span v-if="!isMobile">Profile</span>
-          </router-link>
-        </div>
-      </div>
-      <div class="sidebaritem">
-        <div class="text">
-          <i class="bi bi-file-earmark-plus-fill me-2"></i>
-          <router-link to="/transaction/regist" class="sidebar-link">
-            <span v-if="!isMobile">Regist Transaction</span>
           </router-link>
         </div>
       </div>
