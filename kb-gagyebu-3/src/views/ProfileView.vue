@@ -1,11 +1,10 @@
 <template>
   <div class="container">
-    <Sidebar />
     <div class="custom-container">
       <div class="content container-fluid">
         <div class="content-header d-flex align-items-center">
           <div class="account-title flex-grow-1 d-flex align-items-center">
-            <p class="account-text">Account</p>
+            <p class="account-text">{{ $t('account') }}</p>
           </div>
           <svg
             width="24"
@@ -30,62 +29,62 @@
         <div class="tabs d-flex justify-content-start">
           <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
             <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">Privacy</p>
+              <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
             </div>
           </div>
           <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
             <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">Preference</p>
+              <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
             </div>
           </div>
         </div>
         <div class="form row">
           <div v-if="currentTab === 'privacy'">
             <div class="input-group">
-              <p class="input-label">아이디</p>
-              <input type="text" class="input-field" v-model="userId" placeholder="아이디" disabled />
+              <p class="input-label">{{ $t('userId') }}</p>
+              <input type="text" class="input-field" v-model="userId" :placeholder="$t('userId')" disabled />
             </div>
             <div class="input-group">
-              <p class="input-label">이름</p>
-              <input type="text" class="input-field" v-model="name" placeholder="이름을 입력하세요" />
+              <p class="input-label">{{ $t('name') }}</p>
+              <input type="text" class="input-field" v-model="name" :placeholder="$t('name')" />
             </div>
             <div class="input-group">
-              <p class="input-label">이메일</p>
-              <input type="text" class="input-field" v-model="email" placeholder="이메일을 입력하세요" />
+              <p class="input-label">{{ $t('email') }}</p>
+              <input type="text" class="input-field" v-model="email" :placeholder="$t('email')" />
             </div>
             <div class="input-group">
-              <p class="input-label">비밀번호 수정</p>
-              <input type="password" class="input-field" v-model="password" placeholder="비밀번호를 입력하세요" />
+              <p class="input-label">{{ $t('changePassword') }}</p>
+              <input type="password" class="input-field" v-model="password" :placeholder="$t('changePassword')" />
             </div>
             <div class="input-group">
-              <p class="input-label">비밀번호 확인</p>
-              <input type="password" class="input-field" v-model="confirmPassword" placeholder="비밀번호를 다시 입력하세요" />
+              <p class="input-label">{{ $t('confirmPassword') }}</p>
+              <input type="password" class="input-field" v-model="confirmPassword" :placeholder="$t('confirmPassword')" />
             </div>
           </div>
           <div v-if="currentTab === 'preference'">
             <div class="input-group">
-              <p class="input-label">알림 설정</p>
+              <p class="input-label">{{ $t('notifications') }}</p>
               <input type="checkbox" class="input-field" v-model="notifications" />
             </div>
             <div class="input-group">
-              <p class="input-label">언어</p>
-              <select class="input-field" v-model="language">
-                <option value="kor">한국어</option>
-                <option value="eng">영어</option>
+              <p class="input-label">{{ $t('language') }}</p>
+              <select class="input-field" v-model="language" @change="changeLanguage">
+                <option value="ko">한국어</option>
+                <option value="en">English</option>
               </select>
             </div>
             <div class="input-group">
-              <p class="input-label">테마</p>
+              <p class="input-label">{{ $t('theme') }}</p>
               <select class="input-field" v-model="theme" @input="changeTheme">
-                <option value="light">라이트</option>
-                <option value="dark">다크</option>
+                <option value="light">{{ $t('light') }}</option>
+                <option value="dark">{{ $t('dark') }}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="button-container d-flex justify-content-center mt-auto">
           <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
-            <p class="button-text">수정</p>
+            <p class="button-text">{{ $t('modify') }}</p>
           </div>
         </div>
       </div>
@@ -93,11 +92,15 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import Sidebar from '../components/SideBar.vue';
+import { useSettingsStore } from '@/stores/setting';
 import axios from 'axios';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const currentTab = ref('privacy');
 const userId = ref('');
@@ -107,14 +110,22 @@ const password = ref('');
 const confirmPassword = ref('');
 
 const notifications = ref(false);
-const language = ref('kor');
+const language = ref('ko');
 const theme = ref('light');
 
 const themeStore = useThemeStore();
 theme.value = themeStore.theme;
 
+const settingsStore = useSettingsStore();
+notifications.value = settingsStore.notifications;
+
+
 const changeTheme = () => {
   themeStore.setTheme(theme.value);
+};
+
+const changeLanguage = () => {
+  locale.value = language.value;
 };
 
 onMounted(() => {
@@ -143,7 +154,7 @@ const selectTab = async (tab) => {
 
 const updatePassword = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('비밀번호가 일치하지 않습니다.');
+    alert(t('passwordMismatch'));
     return;
   }
 
@@ -157,21 +168,19 @@ const updatePassword = async () => {
     // JSON 서버 업데이트
     await axios.put(`http://localhost:3000/users/${userId.value}`, { password: password.value });
 
-    alert('비밀번호가 성공적으로 변경되었습니다.');
+    alert(t('passwordChangeSuccess'));
   } catch (error) {
     console.error(error);
-    alert('비밀번호 변경 중 오류가 발생했습니다.');
+    alert(t('passwordChangeError'));
   }
 };
 
 const updateSettings = async () => {
   try {
-    // 기존 설정을 불러오기
-
-    console.log("세팅 변경")
+    console.log("세팅 변경");
     const response = await axios.get(`http://localhost:3000/settings?userId=${userId.value}`);
     const existingSettings = response.data[0];
-    
+
     if (existingSettings) {
       const settings = {
         userId: userId.value,
@@ -185,18 +194,22 @@ const updateSettings = async () => {
 
       // Pinia store 업데이트
       themeStore.setTheme(settings.theme);
+      settingsStore.setLanguage(settings.language);
+      settingsStore.setNotifications(settings.notifications);
 
-      alert('설정이 성공적으로 변경되었습니다.');
+      alert(t('settingsChangeSuccess'));
     } else {
-      alert('설정을 찾을 수 없습니다.');
+      alert(t('settingsNotFound'));
     }
   } catch (error) {
     console.error(error);
-    alert('설정 변경 중 오류가 발생했습니다.');
+    alert(t('settingsChangeError'));
   }
 };
 
 </script>
+
+
 
 <style scoped>
 .container {

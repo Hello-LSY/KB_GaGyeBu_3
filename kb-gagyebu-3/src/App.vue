@@ -1,18 +1,32 @@
 <template>
   <div id="app">
+    <Sidebar />
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useThemeStore } from '@/stores/theme';
-import { RouterView } from 'vue-router';
+import { useSettingsStore } from '@/stores/setting';
+import { useI18n } from 'vue-i18n';
+import Sidebar from '@/components/SideBar.vue';
 
 const themeStore = useThemeStore();
+const settingsStore = useSettingsStore();
+const { locale } = useI18n();
 
 onMounted(() => {
   document.documentElement.setAttribute('data-theme', themeStore.theme);
+  locale.value = settingsStore.language;
+});
+
+watch(() => themeStore.theme, (newTheme) => {
+  document.documentElement.setAttribute('data-theme', newTheme);
+});
+
+watch(() => settingsStore.language, (newLanguage) => {
+  locale.value = newLanguage;
 });
 </script>
 
@@ -35,7 +49,7 @@ onMounted(() => {
 
 #app {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   height: 100vh;
   margin: 0;
