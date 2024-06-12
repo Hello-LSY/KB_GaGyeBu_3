@@ -1,12 +1,12 @@
 <template>
-  <div class="container flex-column">
-    <div class="tab-buttons d-flex justify-content-start mt-3 mb-5 mx-2">
+  <div class="container flex-column" >
+    <div class="tab-buttons d-flex justify-content-start mt-3 mb-3 mx-2">
       <button class="tab-btn" :class="{ 'active': isIncome === false }" @click="selectTab(false)">지출</button>
       <button class="tab-btn" :class="{ 'active': isIncome === true }" @click="selectTab(true)">수입</button>
     </div>
     <div v-if="isIncome" class="contents">
       <div class="category-list"> <!-- 수입 -->
-        <div class="chart-container mb-5">
+        <div class="chart-container mb-3">
           <Doughnut v-if="loaded" :data="incomeChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -20,7 +20,7 @@
     </div>
     <div v-else class="contents"> <!-- 지출 -->
       <div class="category-list">
-        <div class="chart-container mb-5">
+        <div class="chart-container mb-3">
           <Doughnut v-if="loaded" :data="expenseChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -64,12 +64,9 @@ ChartJS.register(
 );
 
 const backgroundColors = [
-  'rgb(255, 182, 193)',  // 라이트 핑크
-  'rgb(173, 216, 230)',  // 라이트 블루
-  'rgb(255, 255, 224)',  // 라이트 옐로우
-  'rgb(144, 238, 144)',  // 라이트 그린
-  'rgb(221, 160, 221)'   // 라이트 퍼플
-]
+  'rgb(255, 182, 193)', 'rgb(191, 232, 245)', 'rgb(255, 255, 200)', 'rgb(229, 250, 175)','rgb(245, 198, 245)','rgb(222, 226, 255)',  'rgb(255, 212, 168)','rgb(255, 222, 237)', 'rgb(252, 207, 202)'
+];
+
 
 // 기본값을 false로 설정하여 초기 상태가 "지출"로 설정되도록 함
 const loaded = ref(false);
@@ -96,6 +93,8 @@ const expenseChartData = ref({
 })
 
 const chartOptions = ref({
+   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false
@@ -115,11 +114,40 @@ onMounted(async () => {
 
   try {
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    
+    if (userInfo == null){ // 로그인 하지 않았을 경우 임시 데이터
+        
+      incomeChartData.value = {
+        labels: ["월급", "금융소득", "기타", "용돈"],
+        datasets: [
+          {
+            data: [2800000, 372000, 238000, 150000],
+            backgroundColor: backgroundColors
+          }
+        ]
+      }
+
+      expenseChartData.value ={
+        labels: ["외식", "여행", "주거/통신", "취미/문화", "기타"],
+        datasets: [
+          {
+            data: [783000, 521000, 241000, 138000, 71000],
+            backgroundColor: backgroundColors
+          }
+        ]
+      }
+      incomeDetails.value = {"월급": 2800000, "금융소득": 372000, "기타" : 238000, "용돈": 150000}
+      expenseDetails.value = {"외식":783000, "여행": 521000, "주거/통신": 241000, "취미/문화": 138000, "기타": 71000}
+
+      loaded.value = true
+      return
+      }
+
     const userId = userInfo.id
     
     const transactions = await axios.get('http://localhost:3000/transactions')
     const categories = await axios.get('http://localhost:3000/categories')
-
+    
     // 사용자 필터링
     transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
 
@@ -142,12 +170,12 @@ onMounted(async () => {
     currentMonthTransactions.forEach(transaction => {
       const category = categories.data.find(cat => cat.id === transaction.categoryId);
       if (category) {
-        if (category.type === 'income') {
+        if (category.typeId === "0") { // 수입
           if (!incomeSum[category.name]) {
             incomeSum[category.name] = 0;
           }
           incomeSum[category.name] += parseInt(transaction.amount);
-        } else if (category.type === 'expense') {
+        } else {
           if (!expenseSum[category.name]) {
             expenseSum[category.name] = 0;
           }
@@ -193,10 +221,11 @@ onMounted(async () => {
 
 .tab-btn.active {
   color: #007bff; /* 선택 시 파란색 */
-}
+}å
 
 .chart-container {
-  width: 75%; /* 차트 크기를 줄임 */
+  width: 75%; 
+  height: 250px;
   margin: 0 auto; /* 차트를 가운데 정렬 */
 }
 
