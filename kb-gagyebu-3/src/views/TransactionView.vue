@@ -82,6 +82,27 @@
         </div>
       </div>
     </div>
+
+    <!-- 카테고리별 정렬 모달 -->
+    <div class="modal fade" id="categorySelectModal" tabindex="-1" aria-labelledby="categorySelectModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categorySelectModalLabel">카테고리 선택</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <select class="form-select" aria-label="카테고리 선택" v-model="selectedCategory">
+              <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" @click="applyCategoryFilter">적용</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -122,9 +143,17 @@ export default defineComponent({
         interactionPlugin // needed for dateClick
       ],
       headerToolbar: {
-        left: 'prev,next today',
+        left: 'categoryButton prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      customButtons: {
+        categoryButton: {
+          text: '카테고리 보기',
+          click: function() {
+            openCategoryModal();
+          }
+        }
       },
       initialView: 'dayGridMonth',
       initialEvents:[],
@@ -268,6 +297,8 @@ export default defineComponent({
       const modal = bootstrap.Modal.getInstance(modalElement);
       modal.hide();
     }
+
+    
 
 
     function handleEventClick(clickInfo) {
