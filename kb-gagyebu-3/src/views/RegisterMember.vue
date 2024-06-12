@@ -2,7 +2,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-auto p-0">
-        <Sidebar />
       </div>
       <div class="col">
         <div class="register p-3">
