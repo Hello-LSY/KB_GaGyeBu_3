@@ -149,6 +149,16 @@
       "title": "교육비",
       "typeId": "1",
       "memo": "학원비"
+    },
+    {
+      "id": "1+5",
+      "userId": "1",
+      "title": "sdaf",
+      "start": "2024-06-19",
+      "categoryId": "6",
+      "amount": "",
+      "memo": "",
+      "typeId": "0"
     }
   ],
   "type": [
