@@ -1,6 +1,5 @@
 <template>
   <div class='demo-app'>
-    <Sidebar />
     <div class='demo-app-main'>
       <FullCalendar
         class='demo-app-calendar'
@@ -8,13 +7,13 @@
       >
         <template v-slot:eventContent='arg'>
           <b> {{ arg.timeText }}</b>
-          <i> {{ arg.event.title }}</i>
+          <i> {{ arg.event.title }} {{ arg.event.amount }}</i>
         </template>
       </FullCalendar>
     </div>
 
        <!-- 모달창 -->
-      <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -26,7 +25,12 @@
               <div class="form-group mb-3">
                 <h4>{{ formData.start }}</h4>
                 <label class="form-label">거래 유형</label>
-                <input type="text" class="form-control" placeholder="거래 유형을 입력하세요(수입/지출/이체)" v-model="formData.type" />
+                <select class="form-control" v-model="formData.typeId">
+                  <option disabled value="">거래 유형을 선택하세요</option>
+                  <option v-for="typeOption in type" :key="typeOption.id" :value="typeOption.id">
+                    {{ typeOption.type }}
+                  </option>
+                </select>
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">거래명</label>
@@ -34,7 +38,8 @@
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">카테고리</label>
-                <input type="text" class="form-control" placeholder="카테고리" v-model="formData.category" />
+                <input type="text" class="form-control" readonly placeholder="카테고리 선택"
+                       @click="openCategoryModal" :value="selectedCategoryName">
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">지출액</label>
@@ -49,6 +54,29 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             <button type="button" class="btn btn-primary" @click="saveTransaction">저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카테고리 선택 모달 -->
+    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryModalLabel">카테고리 선택</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-3" v-for="category in categories" :key="category.categoryId">
+                  <button type="button" class="btn btn-outline-primary w-100 mb-2" @click="selectCategory(category)">
+                    {{ category.name }}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,13 +102,17 @@ export default defineComponent({
   setup() {
     const currentEvents = ref([])
     const calendarApi = ref([])
+    const masterTransaction = ref([])
     const userId = localStorage.getItem('userId') || "1"
+    const type = ref([])
+    const categories = ref([])
+    const selectedCategoryName = ref('')
     const formData = reactive({
       start: '',
       title: '',
       category: '',
       amount: '',
-      type: '',
+      typeId: '',
       memo: ''
     })
     const calendarOptions = reactive({
@@ -90,9 +122,17 @@ export default defineComponent({
         interactionPlugin // needed for dateClick
       ],
       headerToolbar: {
-        left: 'prev,next today',
+        left: 'prev,next today customButtons',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      customButtons: {
+        categoryButton: {
+          text: '카테고리 보기',
+          click: function() {
+            openCategoryModal();
+          }
+        }
       },
       initialView: 'dayGridMonth',
       initialEvents:[],
@@ -113,13 +153,38 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      const events = await fetchUserEvents()
-      calendarOptions.events = events;
-      console.log(events)
-      currentEvents.value = events
+      const transactions = await fetchUserTransactions()
+      const tmpType = await fetchType()
+      categories.value = await fetchCategories()
+      type.value = tmpType
+      console.log(tmpType)
+      calendarOptions.events = transactions;
+      masterTransaction.value = transactions;
+      console.log(transactions)
+      currentEvents.value = transactions
     })
 
-    async function fetchUserEvents() {
+    async function fetchType() {
+      try {
+        const response = await axios.get(`http://localhost:3000/type`)
+        return response.data
+      } catch (error) {
+        console.error("type 가져오기 실패", error)
+        return []
+      }
+    }
+
+    async function fetchCategories() {
+      try {
+        const response = await axios.get(`http://localhost:3000/categories`)
+        return response.data
+      } catch (error) {
+        console.error("categories 가져오기 실패", error)
+        return []
+      }
+    }
+
+    async function fetchUserTransactions() {
       try {
         const response = await axios.get(`http://localhost:3000/transactions/?userId=${userId}`)
         return response.data
@@ -135,12 +200,13 @@ export default defineComponent({
 
     function resetFormData() {
       calendarApi.value = null
+      selectedCategoryName.value = ''
       formData.title = ''
       formData.start = ''
-      formData.category = ''
+      formData.categoryId = ''
       formData.amount = ''
       formData.memo = ''
-      formData.type = ''
+      formData.typeId = ''
     }
 
     function handleDateSelect(selectInfo) {  
@@ -157,16 +223,6 @@ export default defineComponent({
         keyboard: false
       })
       modal.show()
-
-      // if (title) {
-      //   calendarApi.addEvent({
-      //     id: String(currentEvents.value.length + 1),
-      //     title,
-      //     start: selectInfo.startStr,
-      //     end: selectInfo.endStr,
-      //     allDay: selectInfo.allDay
-      //   })
-      // }
     }
 
     function saveTransaction() {
@@ -176,19 +232,23 @@ export default defineComponent({
           title: formData.title,
           start: formData.start,
           end: formData.start,
+          memo: formData.memo,
+          categoryId : formData.categoryId,
+          amount : formData.amount,
+          typeId : formData.typeId,
           allDay: true
         }
         calendarApi.value.addEvent(newEvent)
-
+      
       axios.post('http://localhost:3000/transactions', { 
         id : newEvent.id,
         userId : userId,
         title : formData.title,
         start : formData.start,
-        category : formData.category,
+        categoryId : formData.categoryId,
         amount : formData.amount,
         memo : formData.memo,
-        type : formData.type
+        typeId : formData.typeId
       })
       .then(response => {
         console.log('Event added:', response.data)
@@ -199,9 +259,26 @@ export default defineComponent({
       } else {
         alert("거래 내역 저장에 실패했습니다")
       }
+
       const modal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'))
       modal.hide()
       resetFormData()
+    }
+
+    function openCategoryModal() {
+      const modalElement = document.getElementById('categoryModal');
+      const modal = new bootstrap.Modal(modalElement, {
+        backdrop: 'static' 
+      });
+      modal.show();
+    }
+    
+    function selectCategory(category) {
+      formData.categoryId = category.id;
+      selectedCategoryName.value = category.name;
+      const modalElement = document.getElementById('categoryModal');
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
     }
 
     function handleEventClick(clickInfo) {
@@ -222,11 +299,16 @@ export default defineComponent({
     }
 
     return {
+      type,
+      categories,
       calendarOptions,
       currentEvents,
       handleWeekendsToggle,
       formData,
-      saveTransaction
+      saveTransaction,
+      openCategoryModal,
+      selectCategory,
+      selectedCategoryName
     }
   }
 })
@@ -236,6 +318,14 @@ export default defineComponent({
 h2 {
   margin: 0;
   font-size: 16px;
+}
+
+.modal-dialog {
+  min-width: 580px; /* 기본 값보다 더 크게 조정 */
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
 }
 
 ul {
@@ -254,6 +344,7 @@ b { /* used for event dates/times */
 
 .demo-app {
   display: flex;
+  width: 100%;
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
@@ -280,5 +371,3 @@ b { /* used for event dates/times */
   margin: 0 auto;
 }
 </style>
-
-
