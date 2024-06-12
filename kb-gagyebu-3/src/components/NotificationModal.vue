@@ -26,6 +26,7 @@
   import axios from 'axios';
   
   const transactions = ref([]);
+  //localStorage에 저장된 사용자 정보를 가져옵니다. 없으면 null을 반환합니다.
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user ? user.id : null;
   
