@@ -27,7 +27,7 @@
   
   const transactions = ref([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const userId = user.id;
+  const userId = user ? user.id : null;
   
   const fetchTransactions = async () => {
     try {
