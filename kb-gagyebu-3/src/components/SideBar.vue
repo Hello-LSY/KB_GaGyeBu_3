@@ -6,7 +6,7 @@
         <div class="text">
           <i class="bi bi-speedometer2 me-2"></i>
           <router-link to="/" class="sidebar-link">
-            <span v-if="!isMobile">Dashs</span>
+            <span v-if="!isMobile">Dashboard</span>
           </router-link>
         </div>
       </div>
@@ -53,7 +53,7 @@
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
           <i class="bi bi-box-arrow-left me-2"></i>
-          <button @click="logout" class="btn-logout">
+          <button @click="handleLogout" class="btn-logout">
             <span v-if="!isMobile">Logout</span>
           </button>
         </div>
@@ -64,16 +64,19 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 
 const authStore = useAuthStore();
 const themeStore = useThemeStore();
+const router = useRouter();
 const isLoggedIn = computed(() => authStore.isLoggedIn);
 const currentTheme = computed(() => themeStore.theme);
 
-const logout = () => {
+const handleLogout = () => {
   authStore.logout();
+  router.push('/home');
 };
 
 // 반응형 처리를 위한 로직
