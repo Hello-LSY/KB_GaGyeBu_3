@@ -1,11 +1,9 @@
 <template>
-  <div class="dashboard-container">
-    <Sidebar />
-    <div class="dashboard-content container mt-3">
+  <div class="dashboard-content container mt-3">
       <div class="row">
         <!-- Left Column: Box + Weekly -->
         <div class="col-md-9 col-12 left-column">
-          <div class="row box-row">
+          <div class="row box-row mb-5">
             <!-- Box Components (3:3:3) -->
             <div class="col-md-4 col-12 mb-3 box-component">
               <BoxComponent :percentage="totalMonthly.balance.percent" :title="totalMonthly.balance.title" :content="totalMonthly.balance.amount" :pathData="totalMonthly.balance.pathData"/>
@@ -17,7 +15,7 @@
               <BoxComponent :percentage="totalMonthly.expenese.percent" :title="totalMonthly.expenese.title" :content="totalMonthly.expenese.amount" :pathData="totalMonthly.expenese.pathData"/>
             </div>
           </div>
-          <div class="row weekly-row mt-3">
+          <div class="row weekly-row">
             <!-- Weekly Component -->
             <div class="col-12 weekly-spend-container">
               <WeekendComponent />
@@ -30,7 +28,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
   <script setup>
@@ -113,6 +110,8 @@
       const prevIncomeExpenseDiff = prevIncomeSum - prevExpenseSum;
       const balanceChange = prevIncomeExpenseDiff !== 0 ? ((incomeSum - expenseSum - prevIncomeExpenseDiff) / prevIncomeExpenseDiff) * 100 : 0;
 
+      console.log(prevIncomeSum, prevExpenseSum)
+      console.log(incomeSum, expenseSum)
       totalMonthly.income.amount = incomeSum.toLocaleString();
       totalMonthly.expenese.amount = expenseSum.toLocaleString();
       totalMonthly.balance.amount = (incomeSum - expenseSum).toLocaleString();
@@ -128,20 +127,13 @@
   </script>
   
 <style scoped>
-  .dashboard-container {
-    display: flex;
-  }
-
-  .sidebar {
-    width: 250px;
-  }
-
   .dashboard-content {
     flex: 1;
     padding: 20px;
     width: 100%;
     position: relative;
     background: #fff;
+    overflow: auto;
   }
   
   .weekly-spend-container {
@@ -154,7 +146,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 8px;
-    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
 
 @media (max-width: 768px) {

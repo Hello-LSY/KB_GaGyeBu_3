@@ -1,12 +1,12 @@
 <template>
-  <div class="container flex-column">
-    <div class="tab-buttons d-flex justify-content-start mt-3 mb-5 mx-2">
+  <div class="container flex-column" >
+    <div class="tab-buttons d-flex justify-content-start mt-3 mb-3 mx-2">
       <button class="tab-btn" :class="{ 'active': isIncome === false }" @click="selectTab(false)">지출</button>
       <button class="tab-btn" :class="{ 'active': isIncome === true }" @click="selectTab(true)">수입</button>
     </div>
     <div v-if="isIncome" class="contents">
       <div class="category-list"> <!-- 수입 -->
-        <div class="chart-container mb-5">
+        <div class="chart-container mb-3">
           <Doughnut v-if="loaded" :data="incomeChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -192,7 +192,7 @@ onMounted(async () => {
 
 .tab-btn.active {
   color: #007bff; /* 선택 시 파란색 */
-}
+}å
 
 .chart-container {
   width: 75%; 

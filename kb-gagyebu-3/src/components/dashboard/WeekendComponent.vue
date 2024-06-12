@@ -32,17 +32,14 @@
       // 사용자 필터링
       transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
   
+      // 이번 주 토요일, 지난주 일요일 찾기
       const currentDate = new Date();
-  
-      // 이번 주 토요일 찾기
       const thisSaturday = new Date(currentDate);
       thisSaturday.setDate(currentDate.getDate() + (6 - currentDate.getDay()));
-  
-      // 지난 주 일요일 찾기
       const lastSunday = new Date(thisSaturday);
       lastSunday.setDate(thisSaturday.getDate() - 6);
   
-      // 과거 5주치 데이터 가져오기
+      // 과거 5주치 데이터 
       const weeklyTransactions = Array.from({ length: 5 }, (_, index) => {
         const start = new Date(lastSunday);
         start.setDate(start.getDate() - (7 * index));
@@ -53,33 +50,30 @@
           const transactionDate = new Date(transaction.start);
           return transactionDate >= start && transactionDate <= end;
         });
-      }).reverse(); // 데이터 역순으로 정렬
+      })
   
-      // 주차 라벨과 해당하는 날짜 라벨 생성
-      const labels = [];
+      // 날짜 라벨 생성
       const dateLabels = [];
       weeklyTransactions.forEach((weekTransactions, index) => {
         const weekStartDate = new Date(lastSunday);
         weekStartDate.setDate(weekStartDate.getDate() - (7 * index));
         const weekEndDate = new Date(weekStartDate);
         weekEndDate.setDate(weekEndDate.getDate() + 6);
-  
-        const { year, month, weekNo } = weekNumberBySunday(weekStartDate);
-        labels.push(`${month}월 ${weekNo}주차`);
         dateLabels.push(`${weekStartDate.getMonth() + 1}.${weekStartDate.getDate()} - ${weekEndDate.getMonth() + 1}.${weekEndDate.getDate()}`);
       });
   
+      // .reverse로 데이터 역순 정렬
       chartData.value = {
-        labels: dateLabels.reverse(), // 라벨 역순으로 정렬
+        labels: dateLabels.reverse(),
         datasets: [
           {
             label: "Income",
-            data: weeklyTransactions.map(week => calculateTotal(week, 'income')).reverse(), // 데이터 역순으로 정렬
+            data: weeklyTransactions.map(week => calculateTotal(week, 'income')), 
             backgroundColor: 'rgb(255, 182, 193)',
           },
           {
             label: "Expense",
-            data: weeklyTransactions.map(week => calculateTotal(week, 'expense')).reverse(), // 데이터 역순으로 정렬
+            data: weeklyTransactions.map(week => calculateTotal(week, 'expense')), 
             backgroundColor:  'rgb(191, 232, 245)',
           }
         ]
@@ -91,18 +85,6 @@
       console.error(e);
     }
   });
-  
-  // 주차 라벨 생성 함수
-  function weekNumberBySunday(date) {
-    const inputDate = new Date(date);
-    const year = inputDate.getFullYear();
-    const month = inputDate.getMonth() + 1;
-    const day = inputDate.getDate();
-    const firstDayOfYear = new Date(year, 0, 1);
-    const pastDaysOfYear = (inputDate - firstDayOfYear) / 86400000;
-    const weekNo = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-    return { year, month, weekNo };
-  }
   
   // 해당 주의 총 수입 또는 지출 계산
   function calculateTotal(weekTransactions, type) {
@@ -128,4 +110,3 @@
     width: 90%;
   }
   </style>
-  
