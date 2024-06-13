@@ -111,7 +111,7 @@ onUnmounted(() => {
 <style scoped>
 .sidebarsection {
   width: 220px;
-  background: rgba(224, 224, 224, 0.678); /* 그라데이션과 투명도 */
+  background: var(--sidebar-background); /* 배경 색상 변수 */
   padding: 15px;
   height: 100vh;
   overflow-y: auto;
@@ -153,6 +153,7 @@ onUnmounted(() => {
   margin-right: 25px; /* 간격을 넓힘 */
   margin-bottom: 0;
 }
+
 .sidebar-link,
 .btn-logout {
   background: none;
@@ -160,7 +161,7 @@ onUnmounted(() => {
   padding: 10px 15px;
   text-align: left;
   width: 100%;
-  color: #15417a; 
+  color: var(--link-color); /* 링크 색상 변수 */
   cursor: pointer;
   display: block;
   border-radius: 5px;
@@ -172,44 +173,8 @@ onUnmounted(() => {
 
 .sidebar-link:hover,
 .btn-logout:hover {
-  background-color: #606263; /* 조금 더 짙은 파란색 */
-  color: #ffffff; /* 흰색으로 변경 */
-}
-
-/* .sidebar-link {
-  text-decoration: none;
-  color: #15417a;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-  font-weight: 500; 
-  display: block;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-} */
-
-.sidebar-link:hover {
-  background-color: #606263; /* 조금 더 짙은 파란색 */
-  color: #ffffff; /* 흰색으로 변경 */
-}
-
- /* .btn-logout {
-  background: none;
-  border: none;
-  padding: 10px 15px;
-  text-align: left;
-  width: 100%;
-  color: #15417a; 
-  cursor: pointer;
-  display: block;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-  font-weight: 500; 
-}  */
-
-.btn-logout:hover {
-  background-color: #606263; /* 조금 더 짙은 파란색 */
-  color: #ffffff; /* 흰색으로 변경 */
+  background-color: var(--link-hover-background); /* 링크 호버 배경색 변수 */
+  color: var(--link-hover-color); /* 링크 호버 텍스트 색 변수 */
 }
 
 .text {
@@ -228,9 +193,8 @@ onUnmounted(() => {
   right: 10px;
   z-index: 1001;
   border: none;
-  background: rgba(224, 224, 224, 0.678); /* 그라데이션과 투명도 */
-  color: #15417a; 
-
+  background: var(--menu-button-background); /* 메뉴 버튼 배경 색상 변수 */
+  color: var(--menu-button-color); /* 메뉴 버튼 텍스트 색상 변수 */
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;
@@ -256,4 +220,5 @@ onUnmounted(() => {
     margin-bottom: 0;
   }
 }
+
 </style>
