@@ -1,3 +1,4 @@
+<!-- AnalyticsView.vue -->
 <template>
   <div class="container-fluid" v-if="currentUser">
     <div v-if="analyzedUser">
@@ -133,6 +134,7 @@ import shoppingCardImage from '@/assets/CardImage/shopping.png';
 import generalCardImage from '@/assets/CardImage/general.png';
 
 const authStore = useAuthStore();
+const currentUser = computed(() => authStore.user);
 const transactionStore = useTransactionStore();
 const categoryStore = useCategoryStore();
 const expenseChart = ref(null);
@@ -142,33 +144,43 @@ let expenseChartInstance = null;
 let monthlyChartInstance = null;
 let weeklyChartInstance = null;
 
+// onMounted 훅에 로그 추가
 onMounted(async () => {
   await transactionStore.fetchTransactions();
   await categoryStore.fetchCategories();
-  authStore.loadUserFromStorage(); // 로그인 사용자 정보 로드
+  authStore.loadUserFromStorage();
 
-  // 차트 생성
+  // console.log('Loaded transactions:', transactionStore.transactions); // 거래 내역 로그 추가
+  // console.log('Loaded categories:', categoryStore.categories); // 카테고리 로그 추가
+  // console.log('Current user:', authStore.user); // 현재 사용자 로그 추가
+
   await nextTick();
   createCharts();
 });
 
-const currentUser = computed(() => authStore.user);
-
+// analyzedUser computed 속성에 로그 추가
 const analyzedUser = computed(() => {
   if (!currentUser.value) return null;
 
   const userTransactions = transactionStore.transactions.filter(t => t.userId === currentUser.value.id);
+  // console.log('User transactions:', userTransactions); // 사용자 거래 내역 로그 추가
+
   const expenseTransactions = userTransactions.filter(t => t.type === 'expense');
   const incomeTransactions = userTransactions.filter(t => t.type === 'income');
-  const totalExpense = expenseTransactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
-  const categoryTotals = {};
+  const totalExpense = expenseTransactions.reduce((sum, t) => sum + parseFloat(t.amount.replace(/,/g, '')), 0); // 반점을 제거하고 숫자로 변환
 
+  // console.log('Expense transactions:', expenseTransactions); // 지출 내역 로그 추가
+  // console.log('Income transactions:', incomeTransactions); // 수익 내역 로그 추가
+
+  const categoryTotals = {};
   expenseTransactions.forEach(t => {
     if (!categoryTotals[t.categoryId]) {
       categoryTotals[t.categoryId] = 0;
     }
-    categoryTotals[t.categoryId] += parseFloat(t.amount);
+    categoryTotals[t.categoryId] += parseFloat(t.amount.replace(/,/g, '')); // 반점을 제거하고 숫자로 변환
   });
+
+  // console.log('Category totals:', categoryTotals); // 카테고리 총합 로그 추가
 
   if (Object.keys(categoryTotals).length === 0) return null;
 
@@ -189,55 +201,55 @@ const analyzedUser = computed(() => {
   };
 
   const categoryCardRecommendations = {
-  '여행': {
-    name: '가온글로벌카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09167',
-    image: travelCardImage,
-    description: '글로벌한 내 스타일을 담았다!'
-  },
-  '외식': {
-    name: 'FNB캐시리플렛 리멤버카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=07274&mainCC=a',
-    image: diningCardImage,
-    description: '주유할인, 무이자할부, 외식할인 혜택을 리멤버!'
-  },
-  '취미/문화': {
-    name: '스타체크카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01552',
-    image: cultureCardImage,
-    description: '별처럼 빛나는 다양한 혜택들, 당신이 머무는 곳마다 눈부신 할인 혜택'
-  },
-  '주거/통신': {
-    name: '굿데이카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09061',
-    image: housingCardImage,
-    description: '매일 매일 기분 좋은 날, 생활에 힘이 되는 멀티 할인카드'
-  },
-  '교육': {
-    name: '에듀카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04432',
-    image: educationCardImage,
-    description: '교육비를 절약하는 현명한 선택!'
-  },
-  '교통/차량': {
-    name: '톡톡 Pay카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09231',
-    image: transportCardImage,
-    description: '똑똑하게 할인 “톡톡”! 대중교통 10% 청구할인!'
-  },
-  '쇼핑/의류': {
-    name: '마이핏카드(할인형)',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09248',
-    image: shoppingCardImage,
-    description: '쇼핑과 의류 구매에 최적화된 혜택 제공'
-  },
-  '기타': {
-    name: '가온 올포인트카드',
-    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09234',
-    image: generalCardImage,
-    description: '고민 없는 카드 생활! 풍성한 포인트리!'
-  }
-};
+    '여행': {
+      name: '가온글로벌카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09167',
+      image: travelCardImage,
+      description: '글로벌한 내 스타일을 담았다!'
+    },
+    '외식': {
+      name: 'FNB캐시리플렛 리멤버카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=07274&mainCC=a',
+      image: diningCardImage,
+      description: '주유할인, 무이자할부, 외식할인 혜택을 리멤버!'
+    },
+    '취미/문화': {
+      name: '스타체크카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01552',
+      image: cultureCardImage,
+      description: '별처럼 빛나는 다양한 혜택들, 당신이 머무는 곳마다 눈부신 할인 혜택'
+    },
+    '주거/통신': {
+      name: '굿데이카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09061',
+      image: housingCardImage,
+      description: '매일 매일 기분 좋은 날, 생활에 힘이 되는 멀티 할인카드'
+    },
+    '교육': {
+      name: '에듀카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04432',
+      image: educationCardImage,
+      description: '교육비를 절약하는 현명한 선택!'
+    },
+    '교통/차량': {
+      name: '톡톡 Pay카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09231',
+      image: transportCardImage,
+      description: '똑똑하게 할인 “톡톡”! 대중교통 10% 청구할인!'
+    },
+    '쇼핑/의류': {
+      name: '마이핏카드(할인형)',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09248',
+      image: shoppingCardImage,
+      description: '쇼핑과 의류 구매에 최적화된 혜택 제공'
+    },
+    '기타': {
+      name: '가온 올포인트카드',
+      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09234',
+      image: generalCardImage,
+      description: '고민 없는 카드 생활! 풍성한 포인트리!'
+    }
+  };
 
   const description = categoryDescriptions[maxCategoryName] || '다양한 지출을 즐기는 복합적 인간';
   const recommendation = categoryCardRecommendations[maxCategoryName] || categoryCardRecommendations['기타'];
@@ -246,12 +258,15 @@ const analyzedUser = computed(() => {
 
   // 월별 수익 및 지출 계산
   const monthlyData = calculateMonthlyData(userTransactions);
+  // console.log('Monthly data:', monthlyData); // 월별 데이터 로그 추가
 
   // 주간 지출 계산
   const weeklyData = calculateWeeklyData(userTransactions);
+  // console.log('Weekly data:', weeklyData); // 주간 데이터 로그 추가
 
   // 이번 달 지출 계산 함수 호출
   const currentMonthExpense = calculateCurrentMonthExpense(expenseTransactions);
+  // console.log('Current month expense:', currentMonthExpense); // 이번 달 지출 로그 추가
 
   return {
     id: currentUser.value.id,
@@ -265,6 +280,7 @@ const analyzedUser = computed(() => {
     currentMonthExpense
   };
 });
+
 
 // 이번 달 지출 계산 함수 추가
 const calculateCurrentMonthExpense = (transactions) => {

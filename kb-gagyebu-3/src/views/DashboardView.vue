@@ -65,54 +65,56 @@
         });
       }
 
-  const calculateTotalAmount = (transactions, type) => {
-        return transactions.reduce((total, transaction) => {
-          if (transaction.type === type) {
-            return total + parseInt(transaction.amount);
-          }
-          return total;
-    }, 0);
-  }
+      const calculateTotalAmount = (transactions, type) => {
+  return transactions.reduce((total, transaction) => {
+    if (transaction.type === type) {
+      return total + parseInt(transaction.amount.replace(/,/g, ''), 10); // 반점을 제거하고 숫자로 변환
+    }
+    return total;
+  }, 0);
+}
+
 
   onMounted(async() => {
-    try {
-      const userInfo = JSON.parse(localStorage.getItem('user'))
-      const userId = userInfo.id
-      
-      const transactions = await axios.get('http://localhost:3000/transactions')
-    
-      transactions.data = transactions.data.filter(transaction => transaction.userId === userId);                        
+  try {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const userId = userInfo.id;
 
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-      const currentMonth = currentDate.getMonth() + 1;
-      const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-      const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-      const currentMonthTransactions = filterTransactionsByDate(transactions.data, currentYear, currentMonth);
-      const prevMonthTransactions = filterTransactionsByDate(transactions.data, prevYear, prevMonth);
+    const response = await axios.get('http://localhost:3000/transactions');
+    const transactions = response.data.filter(transaction => transaction.userId === userId);
+    // console.log('Loaded transactions:', transactions); // 로그 추가
 
-      const prevIncomeSum = calculateTotalAmount(prevMonthTransactions, 'income');
-      const prevExpenseSum = calculateTotalAmount(prevMonthTransactions, 'expense');
-      const incomeSum = calculateTotalAmount(currentMonthTransactions, 'income');
-      const expenseSum = calculateTotalAmount(currentMonthTransactions, 'expense');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+    const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
 
-      // 증감률을 위한 percentage 계산
-      const incomeChange = prevIncomeSum !== 0 ? ((incomeSum - prevIncomeSum) / prevIncomeSum) * 100 : 0;
-      const expenseChange = prevExpenseSum !== 0 ? ((expenseSum - prevExpenseSum) / prevExpenseSum) * 100 : 0;
-      const prevIncomeExpenseDiff = prevIncomeSum - prevExpenseSum;
-      const balanceChange = prevIncomeExpenseDiff !== 0 ? ((incomeSum - expenseSum - prevIncomeExpenseDiff) / prevIncomeExpenseDiff) * 100 : 0;
+    const currentMonthTransactions = filterTransactionsByDate(transactions, currentYear, currentMonth);
+    const prevMonthTransactions = filterTransactionsByDate(transactions, prevYear, prevMonth);
 
-      totalMonthly.income.amount = incomeSum.toLocaleString();
-      totalMonthly.expenese.amount = expenseSum.toLocaleString();
-      totalMonthly.balance.amount = (incomeSum - expenseSum).toLocaleString();
-      totalMonthly.income.percent = incomeChange.toFixed(1);
-      totalMonthly.expenese.percent = expenseChange.toFixed(1);
-      totalMonthly.balance.percent = balanceChange.toFixed(1);
+    const prevIncomeSum = calculateTotalAmount(prevMonthTransactions, 'income');
+    const prevExpenseSum = calculateTotalAmount(prevMonthTransactions, 'expense');
+    const incomeSum = calculateTotalAmount(currentMonthTransactions, 'income');
+    const expenseSum = calculateTotalAmount(currentMonthTransactions, 'expense');
 
-    } catch(e){
-      console.log(e)
-    }
-  });
+    const incomeChange = prevIncomeSum !== 0 ? ((incomeSum - prevIncomeSum) / prevIncomeSum) * 100 : 0;
+    const expenseChange = prevExpenseSum !== 0 ? ((expenseSum - prevExpenseSum) / prevExpenseSum) * 100 : 0;
+    const prevIncomeExpenseDiff = prevIncomeSum - prevExpenseSum;
+    const balanceChange = prevIncomeExpenseDiff !== 0 ? ((incomeSum - expenseSum - prevIncomeExpenseDiff) / prevIncomeExpenseDiff) * 100 : 0;
+
+    totalMonthly.income.amount = incomeSum.toLocaleString();
+    totalMonthly.expenese.amount = expenseSum.toLocaleString();
+    totalMonthly.balance.amount = (incomeSum - expenseSum).toLocaleString();
+    totalMonthly.income.percent = incomeChange.toFixed(1);
+    totalMonthly.expenese.percent = expenseChange.toFixed(1);
+    totalMonthly.balance.percent = balanceChange.toFixed(1);
+
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 </script>
 
 <style scoped>
