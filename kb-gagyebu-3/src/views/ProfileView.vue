@@ -272,7 +272,7 @@ const updateSettings = async () => {
   align-items: flex-start;
   width: 100%; /* Make tabs take the full width */
   gap: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .tab {
@@ -309,11 +309,11 @@ const updateSettings = async () => {
 }
 
 .selected {
-  border-bottom: 2px solid #656ce1;
+  border-bottom: 2px solid var(--selected-tab-color);
 }
 
 .selected-text {
-  color: #656ce1;
+  color: var(--selected-tab-color);
 }
 
 .form {
@@ -346,11 +346,12 @@ const updateSettings = async () => {
   padding: 3px 12px; /* Adjust padding for better appearance */
   margin: 0;
   border-radius: 8px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: var(--input-background);
+  border: 1px solid var(--input-border-color);
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 16px; /* Adjust font size for input fields */
   height: auto;
+  color: var(--text-color);
 }
 
 .button-container {
@@ -368,7 +369,7 @@ const updateSettings = async () => {
   gap: 8px;
   padding: 12px 0 0 0; /* Increase padding for better appearance */
   border-radius: 30px; /* Make the button more rounded */
-  background: linear-gradient(135deg, #a3d8f4, #bfd4e6); /* 파스텔톤의 파란 그라데이션 */
+  background: var(--button-background); /* 파스텔톤의 파란 그라데이션 */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a box shadow */
   width: 100%; /* Make button width full */
   max-width: 600px; /* Limit the button's maximum width */
@@ -377,7 +378,7 @@ const updateSettings = async () => {
 }
 
 .button:hover {
-  background: linear-gradient(135deg, #81c7ed, #a3d8f4); /* Hover gradient background */
+  background: var(--button-hover-background); /* Hover gradient background */
 }
 
 .button:active {
@@ -391,7 +392,8 @@ const updateSettings = async () => {
   font-weight: 600; /* Font weight */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a modern, readable font */
   text-align: center;
-  color: #004d40; /* Text color */
+  color: var(--button-text-color); /* Text color */
   line-height: 1; /* Ensure the text is vertically centered */
 }
+
 </style>
