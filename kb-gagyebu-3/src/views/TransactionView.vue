@@ -1,27 +1,37 @@
 <template>
   <div class='demo-app'>
-    <div class='app-header-container'>
-      <p class="app-header h1 p-">내 가계부</p>
+    <div class="app-header-container row justify-content-center mt-3">
+      <div class="app-header col-auto">June 2024</div>
     </div>
     <div class='demo-app-main'>
-      <FullCalendar
-        class='demo-app-calendar'
-        ref="fullCalendar"
-        :options='calendarOptions'
-      >
-        <template v-slot:eventContent='arg'>
-          <div class="event-custom"
-          :style="{
-            backgroundColor: getEventColor(arg.event.extendedProps.type),
-            borderRadius: '3px'
-          }">
-            <b> {{ arg.timeText }}</b>
-            <i>₩ {{ arg.event.extendedProps.amount }}</i>
-          </div>
-        </template>
-      </FullCalendar>
+      <div class="calendar-container">
+        <div class="calendar-navigation row justify-content-start">
+      <div class="col-auto ">
+        <button @click="prev" class="fc-button fc-button-primary fc-prev-button"> < </button>
+        <button @click="next" class="fc-button fc-button-primary fc-next-button"> > </button>
+        <button @click="today" class="fc-button fc-button-primary fc-today-button">today</button>
+      </div>
     </div>
-    
+
+        <FullCalendar
+          class='demo-app-calendar'
+          ref="fullCalendar"
+          :options='calendarOptions'
+        >
+          <template v-slot:eventContent='arg'>
+            <div class="event-custom"
+              :style="{
+                backgroundColor: getEventColor(arg.event.extendedProps.type),
+                borderRadius: '3px'
+              }">
+              <b> {{ arg.timeText }}</b>
+              <i>₩ {{ arg.event.extendedProps.amount }}</i>
+            </div>
+          </template>
+        </FullCalendar>
+      </div>
+    </div>
+
     <!-- 거래 내역 등록 모달창 -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -135,10 +145,8 @@
   </div>
 </template>
 
-
 <script>
 import { defineComponent, ref, reactive, onMounted, computed, watch } from 'vue'
-import Sidebar from '../components/SideBar.vue'
 import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -148,12 +156,11 @@ import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export default defineComponent({
   components: {
-    FullCalendar,
-    Sidebar
+    FullCalendar
   },
   setup() {
     const currentEvents = ref([])
-    const calendarApi = ref(null)
+    const fullCalendar = ref(null)
     const masterTransaction = ref(null)
     const userId = localStorage.getItem('userId') || "1"
     const type = ref([{type:"expense", name:"지출"},
@@ -183,8 +190,8 @@ export default defineComponent({
         interactionPlugin // needed for dateClick
       ],
       headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
+        left: '',
+        center: '',
         right: ''
       },
       initialView: 'dayGridMonth',
@@ -254,7 +261,6 @@ export default defineComponent({
     }
 
     function resetFormData() {
-      calendarApi.value = null
       selectedCategoryName.value = ''
       formData.title = ''
       formData.start = ''
@@ -271,11 +277,11 @@ export default defineComponent({
 
     function handleDateSelect(selectInfo) {  
       
-      calendarApi.value = selectInfo.view.calendar
+      const calendarApi = fullCalendar.value.getApi();
       const modalElement = document.getElementById('transactionModal');
       formData.start = selectInfo.startStr;
 
-      calendarApi.value.unselect()
+      calendarApi.unselect()
 
       modalElement.addEventListener('hide.bs.modal', resetFormData)
       const modal = new bootstrap.Modal(modalElement, {
@@ -307,6 +313,7 @@ export default defineComponent({
     function saveTransaction() {
       validateForm();
       if (canSave.value) {
+        const calendarApi = fullCalendar.value.getApi();
         const newEvent = {
           id: userId + "+" + String(currentEvents.value.length + 1),
           title: formData.title,
@@ -318,7 +325,7 @@ export default defineComponent({
           type : formData.type,
           allDay: true,
         }
-        calendarApi.value.addEvent(newEvent)
+        calendarApi.addEvent(newEvent)
         axios.post('http://localhost:3000/transactions', { 
           id : newEvent.id,
           userId : userId,
@@ -358,6 +365,7 @@ export default defineComponent({
     }
 
     function handleEventClick(clickInfo) {
+      const calendarApi = fullCalendar.value.getApi();
       formData.title = clickInfo.event.title;
       formData.start = clickInfo.event.startStr;
       formData.fckCategoryName = categories.value.find(cat => cat.id === clickInfo.event.extendedProps.categoryId).name
@@ -373,6 +381,7 @@ export default defineComponent({
     }
 
     function deleteTransaction() {
+      const calendarApi = fullCalendar.value.getApi();
       if (confirm(`${calendarApi.value.startStr}의 '${calendarApi.value.title}' 거래내역을 삭제하시겠습니까?`)) {
         axios.delete(`http://localhost:3000/transactions/${calendarApi.value.id}`)
           .then(response => {
@@ -391,9 +400,9 @@ export default defineComponent({
     function getEventColor(type) {
       switch (type) {
         case 'expense':
-          return '#d45333';
+          return '#ff8a9a';
         case 'income':
-          return '#596cdb';
+          return '#0e3e72ce';
         default:
           return 'grey'; // Default color for unknown types
       }
@@ -401,6 +410,19 @@ export default defineComponent({
 
     function handleEvents(events) {
       currentEvents.value = events
+    }
+
+    // 네비게이션 버튼 메서드 추가
+    function prev() {
+      fullCalendar.value.getApi().prev();
+    }
+
+    function next() {
+      fullCalendar.value.getApi().next();
+    }
+
+    function today() {
+      fullCalendar.value.getApi().today();
     }
 
     return {
@@ -418,180 +440,122 @@ export default defineComponent({
       validationErrors,
       canSave,
       deleteTransaction,
-      getEventColor
+      getEventColor,
+      prev, // 네비게이션 메서드 반환
+      next,
+      today,
+      fullCalendar
     }
   }
 })
 </script>
 
+
 <style lang='css'>
-h2 {
+body {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   margin: 0;
-  font-size: 16px;
-}
-
-.modal-dialog {
-  min-width: 580px; /* 기본 값보다 더 크게 조정 */
-}
-
-.modal-backdrop.show {
-  opacity: 0.5;
-}
-
-ul {
-  margin: 0;
-  padding: 0 0 0 1.5em;
-}
-
-li {
-  margin: 1.5em 0;
   padding: 0;
 }
 
-b { /* used for event dates/times */
-  margin-right: 3px;
+.app-header-container {
+  text-align: center;
+  margin: 5px auto; /* 상단에 margin 추가 */
 }
+
+.app-header {
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  background-color: #0e3e72b2;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.calendar-navigation {
+  display: flex;
+  justify-content: flex-start; 
+  margin-bottom: 0px; 
+  width: 90%;
+  margin-left: 30px;
+}
+
+.fc-button.fc-button-primary {
+  background-color: #0e3e72b2;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px; /* 버튼들 사이의 간격 조정 */
+  
+}
+
+/* Calendar header cell styling */
+.fc-col-header-cell {
+  background-color: #0e3e72b2;
+}
+
+/* 날짜(일) 호버 스타일 추가 */
+.fc-daygrid-day:hover {
+  background-color: #e0e0e0; /* 배경색 그레이로 변경 */
+  
+}
+
+
+
+.fc-col-header-cell-cushion {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+.fc-daygrid-day-number {
+  text-decoration: none !important; /* 날짜 밑줄 제거 */
+  color: #5781ff;
+  font-weight: bold;
+}
+
 
 .demo-app {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 50%;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
+  min-height: 100vh;
   overflow-y: auto;
-}
-
-.demo-app-sidebar {
-  width: 300px;
-  line-height: 1.5;
-  background: #eaf9ff;
-  border-right: 1px solid #596cdb;
-}
-
-.demo-app-sidebar-section {
-  padding: 2em;
 }
 
 .demo-app-main {
   flex-grow: 1;
-  padding: 3em;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: left; /* Center the calendar container */
 }
 
-.fc { /* the calendar root */
-  max-width: 1100px;
-  margin: 0 auto;
+.calendar-container {
+  width: 100%;
+  margin-left: 0;
 }
 
-
-.fc-col-header-cell-cushion {
-  text-decoration: none; 
-  color: #ffffff;
+.demo-app-calendar {
+  width: 90%; /* Calendar width set to 90% */
+  max-width: 90%; /* Max width set to 90% */
+  margin: 0 auto; /* Center the calendar container */
 }
 
-.app-header-container {
-  text-align: center;
-  color: #f0f8ff;
-  font-weight: bold;
-  padding: 1rem;
-}
-
-.app-header {
-  text-align: left;
-  background-color: #0e3e72b2;
-  border-radius: 8px;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-}
-
-
-.fc-toolbar-title {
-  font-size: 20px; 
-  font-weight: bold; 
-  color: white;
-  background-color: #0e3e72b2; 
-  padding: 5px 20px;  
-  border-radius: 5px; 
-  width: 100%; /* 가로 길이를 넓히기 위해 추가 */
-  max-width: 1000px; /* 최대 너비를 제한하기 위해 추가, 필요에 따라 값 조정 */
-  margin: 0 auto; /* 가운데 정렬을 위해 추가 */
-  text-align: center; /* 텍스트 가운데 정렬 */
+.fc {
+  max-width: 100%;
 }
 
 .fc-event {
   text-align: right;
   background-color: transparent;
   color: white;
-  background-clip: padding-box; 
-  border: none;
-  padding-right: 1px;
-}
-
-.fc-col-header-cell {
-  background-color: #0e3e72b2; /* 원하는 배경색으로 변경 */
-  color: #ffffff; /* 텍스트 색상도 필요에 따라 변경 */
-}
-
-/* 날짜 셀 스타일 */
-.fc-daygrid-day {
-  background-color: #ffffff; /* 백그라운드 색상 */
-  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; /* 전환 효과 */
-}
-
-.fc-daygrid-day:hover {
-  /* transform: translate(-2px, -2px);  */
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-  background-color: #babcc7a2; /* 호버 시 백그라운드 색상 */
-}
-
-.fc-daygrid-day-number {
-  text-decoration: none; /* 날짜 숫자의 밑줄 제거 */
-  color: #0e253db2; /* 텍스트 색상 */
-  font-weight: bold; /* 텍스트 굵게 */
-
-}
-.fc-button.fc-button-primary {
-  background-color: #0e3e72b2; /* 배경색 */
-  border: none; /* 테두리 제거 */
-  color: white; /* 텍스트 색상 */
-  padding: 5px 10px; /* 패딩 */
-  border-radius: 5px; /* 모서리 둥글게 */
-}
-
-/* 화살표 버튼 스타일 */
-.fc-button.fc-button-primary.fc-prev-button,
-.fc-button.fc-button-primary.fc-next-button {
-  background-color: #0e3e72b2; /* 배경색 */
-  border: none; /* 테두리 제거 */
-  color: white; /* 텍스트 색상 */
-  padding: 5px 10px; /* 패딩 */
-  border-radius: 5px; /* 모서리 둥글게 */
-  margin: 0 5px; /* 간격 */
-}
-/* 이벤트 색상 스타일 */
-.fc-event {
-  text-align: right;
-  background-color: transparent;
-  color: white;
-  background-clip: padding-box; 
+  background-clip: padding-box;
   border: none;
   padding-right: 1px;
   transition: transform 0.2s, box-shadow 0.2s; /* 이벤트에 전환 효과 추가 */
 }
 
-.fc-event.expense:hover,
-.fc-event.income:hover {
-  transform: translate(-3px, -3px) !important; /* 위치 이동 */
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2) !important; /* 그림자 효과 */
-}
-
-.fc-event.expense {
-  background-color: rgb(172, 18, 18); /* 지출 색상 */
-}
-
-.fc-event.income {
-  background-color: rgb(10, 10, 138);; /* 수입 색상 */
-}
 
 .event-custom i {
   font-style: normal; /* 기울기 제거 */
@@ -600,5 +564,6 @@ b { /* used for event dates/times */
 .fc-event.transfer {
   background-color: grey; /* 이체 색상 */
 }
-</style>
 
+
+</style>
