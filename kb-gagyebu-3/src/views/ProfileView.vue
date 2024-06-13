@@ -64,7 +64,10 @@
           <div v-if="currentTab === 'preference'">
             <div class="input-group">
               <p class="input-label">{{ $t('notifications') }}</p>
-              <input type="checkbox" class="input-field" v-model="notifications" />
+              <div class="custom-checkbox">
+                <input type="checkbox" id="notifications" class="input-checkbox" v-model="notifications" />
+                <label for="notifications" class="checkbox-label">{{ notifications ? $t('enabled') : $t('disabled') }}</label>
+              </div>
             </div>
             <div class="input-group">
               <p class="input-label">{{ $t('language') }}</p>
@@ -81,10 +84,10 @@
               </select>
             </div>
           </div>
-        </div>
-        <div class="button-container d-flex justify-content-center mt-auto">
-          <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
-            <p class="button-text">{{ $t('modify') }}</p>
+          <div class="button-container d-flex justify-content-center mt-auto">
+            <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
+              <p class="button-text">{{ $t('modify') }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -228,88 +231,82 @@ const updateSettings = async () => {
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 8px;
+  gap: 24px;
+  padding: 24px;
+  border-radius: 12px;
   background: var(--content-background);
-  box-shadow: -6px 10px 40px 0 rgba(52, 52, 52, 0.08);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   box-sizing: border-box;
-  width: calc(100% - 40px); /* Adjust width to account for margin */
-  margin: 20px; /* Add margin */
-  max-width: 1400px; /* Limit the maximum width */
+  width: calc(100% - 48px);
+  margin: 24px;
+  max-width: 1200px;
 }
 
 .content-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
 }
 
 .account-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
-  position: relative;
   gap: 10px;
 }
 
 .account-text {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: bold;
   text-align: left;
   color: var(--link-color);
 }
 
 .tabs {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%; /* Make tabs take the full width */
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
   border-bottom: 1px solid var(--border-color);
+  padding-top: 10px;
 }
 
 .tab {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1; /* Make tabs grow equally */
-  flex-shrink: 0;
-  gap: 16px;
-  cursor: pointer; /* Add cursor pointer */
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  background-color: var(--hover-background-color);
 }
 
 .tab-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  position: relative;
-  gap: 8px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 20px;
 }
 
 .tab-text {
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .selected {
-  border-bottom: 2px solid var(--selected-tab-color);
+  background-color: var(--selected-tab-background);
 }
 
 .selected-text {
@@ -318,67 +315,91 @@ const updateSettings = async () => {
 
 .form {
   display: flex;
-  flex-direction: column; /* Arrange items in a column */
-  gap: 32px; /* Increase gap between input groups */
-  align-items: center; /* Center form items horizontally */
+  flex-direction: row; /* 변경된 부분 */
+  flex-wrap: wrap; /* 추가된 부분: 행이 너무 길어지지 않도록 */
+  gap: 24px;
+  align-items: center;
   width: 100%;
+  justify-content: center; /* 변경된 부분: 가운데 정렬 */
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Reduce gap between label and input */
-  width: 60%; /* Adjust width as needed */
+  gap: 6px;
+  width: 80%;
   margin: 10px auto;
 }
 
 .input-label {
-  margin-bottom: 2px;
-  font-size: 15px; /* Increase font size for better readability */
-  font-weight: 600; /* Make font weight bolder */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a more modern and readable font */
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: left;
   color: var(--text-color);
 }
 
 .input-field {
   width: 100%;
-  padding: 3px 12px; /* Adjust padding for better appearance */
-  margin: 0;
+  padding: 10px 12px;
   border-radius: 8px;
   background: var(--input-background);
   border: 1px solid var(--input-border-color);
-  box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
-  font-size: 16px; /* Adjust font size for input fields */
-  height: auto;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.input-field:focus {
+  border-color: var(--input-focus-border-color);
+  outline: none;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 15px;
+  font-weight: 500;
   color: var(--text-color);
 }
 
 .button-container {
-  width: 100%;
-  padding: 0 16px;
+  padding: 24px 0; /* 변경된 부분: 상하 패딩 추가 */
+  display: flex; /* 추가된 부분 */
+  justify-content: center; /* 추가된 부분 */
+  width: 100%; /* 추가된 부분 */
+  max-width: 300px; /* 추가된 부분 */
 }
 
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 0;
-  flex-shrink: 0;
-  position: relative;
-  gap: 8px;
-  padding: 12px 0 0 0; /* Increase padding for better appearance */
-  border-radius: 30px; /* Make the button more rounded */
-  background: var(--button-background); /* 파스텔톤의 파란 그라데이션 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a box shadow */
-  width: 100%; /* Make button width full */
-  max-width: 600px; /* Limit the button's maximum width */
+  padding: 20px 20px;
+  border-radius: 30px;
+  background: var(--button-background);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 300px;
   cursor: pointer;
   transition: background 0.3s, transform 0.1s;
+  position: relative; /* 추가된 부분 */
+  line-height: normal; /* 추가된 부분 */
 }
 
 .button:hover {
-  background: var(--button-hover-background); /* Hover gradient background */
+  background: var(--button-hover-background);
 }
 
 .button:active {
@@ -386,14 +407,24 @@ const updateSettings = async () => {
 }
 
 .button-text {
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px; /* Font size */
-  font-weight: 600; /* Font weight */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a modern, readable font */
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: center;
-  color: var(--button-text-color); /* Text color */
-  line-height: 1; /* Ensure the text is vertically centered */
+  color: var(--button-text-color);
+  line-height: 1.2;
+  position: absolute; /* 추가된 부분 */
+  top: 50%; /* 추가된 부분 */
+  left: 50%; /* 추가된 부분 */
+  transform: translate(-50%, -50%); /* 추가된 부분 */
 }
 
+.icon {
+  fill: var(--icon-color);
+  transition: fill 0.3s;
+}
+
+.icon:hover {
+  fill: var(--icon-hover-color);
+}
 </style>

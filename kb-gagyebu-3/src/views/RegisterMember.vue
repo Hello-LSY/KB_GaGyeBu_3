@@ -46,7 +46,7 @@ const register = async () => {
 
     // 회원가입 처리
     await authStore.register(formData.name, formData.email, formData.password);
-    router.push('/login');
+    router.push('/home');
     // 회원가입 성공 시 모달 닫기 이벤트 트리거
     emit('close-modal');
   } catch (error) {

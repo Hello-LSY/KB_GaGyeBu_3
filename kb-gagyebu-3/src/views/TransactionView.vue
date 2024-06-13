@@ -1,28 +1,28 @@
+<!-- TransactionView.vue -->
 <template>
   <div class='demo-app'>
-    <div class="app-header-container row justify-content-center mt-3">
-      <div class="app-header col-auto">June 2024</div>
-    </div>
-    <div class='demo-app-main'>
-      <div class="calendar-container">
-        <div class="calendar-navigation row justify-content-start">
-      <div class="col-auto ">
-        <button @click="prev" class="fc-button fc-button-primary fc-prev-button"> < </button>
-        <button @click="next" class="fc-button fc-button-primary fc-next-button"> > </button>
-        <button @click="today" class="fc-button fc-button-primary fc-today-button">today</button>
+    <div class="calendar-container">
+      <div class="app-header-container row justify-content-between align-items-center mt-4">
+        <div class="col-auto calendar-navigation">
+          <button @click="prev" class="fc-button fc-button-primary fc-prev-button"> < </button>
+          <button @click="next" class="fc-button fc-button-primary fc-next-button"> > </button>
+          <button @click="today" class="fc-button fc-button-primary fc-today-button">today</button>
+        </div>
+        <div class="col-auto app-header ">
+          {{ currentMonthYear }}
+        </div>
       </div>
-    </div>
-
-        <FullCalendar
-          class='demo-app-calendar'
-          ref="fullCalendar"
-          :options='calendarOptions'
-        >
+      
+      <FullCalendar
+        class='demo-app-calendar'
+        ref="fullCalendar"
+        :options='calendarOptions'
+      >
           <template v-slot:eventContent='arg'>
             <div class="event-custom"
               :style="{
                 backgroundColor: getEventColor(arg.event.extendedProps.type),
-                borderRadius: '3px'
+                borderRadius: '2px'
               }">
               <b> {{ arg.timeText }}</b>
               <i>₩ {{ arg.event.extendedProps.amount }}</i>
@@ -32,27 +32,27 @@
       </div>
     </div>
 
-    <!-- 거래 내역 등록 모달창 -->
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="transactionModalLabel">거래 등록</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-container">
-              <div class="form-group mb-3">
-                <h4>{{ formData.start }}</h4>
-                <label class="form-label">거래 유형</label>
-                <select class="form-control" v-model="formData.type">
-                  <option disabled value="">거래 유형을 선택하세요</option>
-                  <option v-for="typeOption in type" :key="typeOption.type" :value="typeOption.type">
-                    {{ typeOption.name }}
-                  </option>
-                </select>
-                <p v-if="validationErrors.type" class="text-danger">{{ validationErrors.type }}</p>
-              </div>
+  <!-- 거래 내역 등록 모달창 -->
+  <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="transactionModalLabel">거래 등록</h5>
+          <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-container">
+            <div class="form-group mb-3">
+              <h4 class="transaction-date">{{ formData.start }}</h4>
+              <label class="form-label">거래 유형</label>
+              <select class="form-control" v-model="formData.type">
+                <option disabled value="">거래 유형을 선택하세요</option>
+                <option v-for="typeOption in type" :key="typeOption.type" :value="typeOption.type">
+                  {{ typeOption.name }}
+                </option>
+              </select>
+              <p v-if="validationErrors.type" class="text-danger">{{ validationErrors.type }}</p>
+            </div>
               <div class="form-group mb-3">
                 <label class="form-label">거래명</label>
                 <input type="text" class="form-control" placeholder="거래명을 입력하세요" v-model="formData.title" />
@@ -74,10 +74,10 @@
                 <textarea class="form-control" rows="3" placeholder="메모를 적어주세요" v-model="formData.memo"></textarea>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
+            </div>
+            <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary" @click="saveTransaction" >저장</button>
+            <button type="button" class="btn btn-primary" @click="saveTransaction">저장</button>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
           <div class="modal-body">
             <div class="container">
               <div class="row">
-                <div class="col-3" v-for="category in categories" :key="category.categoryId">
+                <div class="col-4" v-for="category in categories" :key="category.categoryId">
                   <button type="button" class="btn btn-outline-primary w-100 mb-2" @click="selectCategory(category)">
                     {{ category.name }}
                   </button>
@@ -108,66 +108,76 @@
 
     <!-- 거래 상세 내역 모달창 -->
     <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="eventDetailsModalLabel">이벤트 상세 정보</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group mb-3">
-              <p>날짜 : {{ formData.start }}</p>
-            </div>
-            <div class="form-group mb-3">
-              <p>거래명 : {{ formData.title }}</p>
-            </div>
-            <div class="form-group mb-3">
-              <p>카테고리 : {{ formData.fckCategoryName }}</p>
-            </div>
-            <div class="form-group mb-3">
-              <p>거래 유형 : {{ formData.type }}</p>
-            </div>
-            <div class="form-group mb-3">
-              <p>금액 : {{ formData.amount }}</p>
-            </div>
-            <div class="form-group mb-3">
-              <label class="form-label">메모</label>
-              <p>{{ formData.memo }}</p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary" @click="deleteTransaction" >삭제</button>
-          </div>
-        </div> 
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventDetailsModalLabel">거래 상세 정보</h5>
+        <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div>
+      <div class="modal-body">
+        <div class="form-container">
+          <div class="form-group mb-3">
+            <p class="details-label">날짜:</p>
+            <p class="details-value">{{ formData.start }}</p>
+          </div>
+          <div class="form-group mb-3">
+            <p class="details-label">거래명:</p>
+            <p class="details-value">{{ formData.title }}</p>
+          </div>
+          <div class="form-group mb-3">
+            <p class="details-label">카테고리:</p>
+            <p class="details-value">{{ formData.fckCategoryName }}</p>
+          </div>
+          <div class="form-group mb-3">
+            <p class="details-label">거래 유형:</p>
+            <p class="details-value">{{ formData.type }}</p>
+          </div>
+          <div class="form-group mb-3">
+            <p class="details-label">금액:</p>
+            <p class="details-value">{{ formData.amount }}원</p>
+          </div>
+          <div class="form-group mb-3">
+            <p class="details-label">메모:</p>
+            <p class="details-value">{{ formData.memo }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" @click="deleteTransaction">삭제</button>
+      </div>
+    </div> 
   </div>
+</div>
+
+  
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, computed, watch } from 'vue'
+import { defineComponent, ref, reactive, onMounted, computed, watch, nextTick } from 'vue'
 import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import { useAuthStore } from '@/stores/auth';
 
 export default defineComponent({
   components: {
     FullCalendar
   },
   setup() {
-    const currentEvents = ref([])
-    const fullCalendar = ref(null)
-    const masterTransaction = ref(null)
-    const userId = localStorage.getItem('userId') || "1"
+    const authStore = useAuthStore();  // authStore 사용
+    const userId = computed(() => authStore.user.id);  // 현재 사용자 ID 가져오기
+
+    const currentEvents = ref([]);
+    const fullCalendar = ref(null);
+    const masterTransaction = ref([]);
     const type = ref([{type:"expense", name:"지출"},
-                      {type:"income", name:"수입"},
-                      {type:"transfer", name:"이체"}])
-    const categories = ref([])
-    const selectedCategoryName = ref('')
+                      {type:"income", name:"수입"}]);
+    const categories = ref([]);
+    const selectedCategoryName = ref('');
     const formData = reactive({
       start: '',
       title: '',
@@ -176,18 +186,18 @@ export default defineComponent({
       type: '',
       fckCategoryName: '',
       memo: ''
-    })
+    });
     const validationErrors = reactive({
       title: '',
       type: '',
       categoryId: '',
       amount: ''
-    })
+    });
     const calendarOptions = reactive({
       plugins: [
         dayGridPlugin,
         timeGridPlugin,
-        interactionPlugin // needed for dateClick
+        interactionPlugin
       ],
       headerToolbar: {
         left: '',
@@ -205,69 +215,83 @@ export default defineComponent({
       select: handleDateSelect,
       eventClick: handleEventClick,
       eventsSet: handleEvents
-      /* you can update a remote database when these fire:
-      eventAdd:
-      eventChange:
-      eventRemove:
-      */
-    })
+    });
 
     onMounted(async () => {
-      const transactions = await fetchUserTransactions()
-      categories.value = await fetchCategories()
+      const transactions = await fetchUserTransactions();
+      categories.value = await fetchCategories();
       calendarOptions.events = transactions;
       masterTransaction.value = transactions;
-      console.log(transactions)
-      currentEvents.value = transactions
-    })
+      currentEvents.value = transactions;
+      updateMonthYear();
+    });
+
+    function formatNumberWithCommas(number) {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function removeCommas(number) {
+      return number.toString().replace(/,/g, '');
+    }
 
     const canSave = computed(() => {
-      return formData.title && formData.categoryId && formData.amount && formData.type
-    })
+      return formData.title && formData.categoryId && formData.amount && formData.type;
+    });
 
     const filteredCategories = computed(() => {
-      return categories.value.filter(category => category.type === formData.type)
-    })
+      return categories.value.filter(category => category.type === formData.type);
+    });
 
     watch(() => formData.type, (newType, oldType) => {
       if (newType !== oldType) {
-        formData.categoryId = ''
-        selectedCategoryName.value = ''
+        formData.categoryId = '';
+        selectedCategoryName.value = '';
       }
-    })
+    });
+
+    const currentMonthYear = ref('');
+
+    function updateMonthYear() {
+      const calendarApi = fullCalendar.value.getApi();
+      const currentDate = calendarApi.getDate();
+      currentMonthYear.value = currentDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' });
+    }
 
     async function fetchCategories() {
       try {
-        const response = await axios.get(`http://localhost:3000/categories`)
-        return response.data
+        const response = await axios.get(`http://localhost:3000/categories`);
+        return response.data;
       } catch (error) {
-        console.error("categories 가져오기 실패", error)
-        return []
+        console.error("categories 가져오기 실패", error);
+        return [];
       }
     }
 
     async function fetchUserTransactions() {
       try {
-        const response = await axios.get(`http://localhost:3000/transactions/?userId=${userId}`)
-        return response.data
+        const response = await axios.get(`http://localhost:3000/transactions/?userId=${userId.value}`);
+        return response.data.map(transaction => ({
+          ...transaction,
+          amount: formatNumberWithCommas(transaction.amount)  // 가져올 때 콤마 추가
+        }));
       } catch (error) {
-        console.error("userId에 해당하는 event 가져오기 실패", error)
-        return []
+        console.error("userId에 해당하는 event 가져오기 실패", error);
+        return [];
       }
     }
 
     function handleWeekendsToggle() {
-      calendarOptions.weekends = !calendarOptions.weekends
+      calendarOptions.weekends = !calendarOptions.weekends;
     }
 
     function resetFormData() {
-      selectedCategoryName.value = ''
-      formData.title = ''
-      formData.start = ''
-      formData.categoryId = ''
-      formData.amount = ''
-      formData.memo = ''
-      formData.type = ''
+      selectedCategoryName.value = '';
+      formData.title = '';
+      formData.start = '';
+      formData.categoryId = '';
+      formData.amount = '';
+      formData.memo = '';
+      formData.type = '';
       validationErrors.title = '';
       validationErrors.type = '';
       validationErrors.categoryId = '';
@@ -275,20 +299,19 @@ export default defineComponent({
       formData.fckCategoryName = '';
     }
 
-    function handleDateSelect(selectInfo) {  
-      
+    function handleDateSelect(selectInfo) {
       const calendarApi = fullCalendar.value.getApi();
       const modalElement = document.getElementById('transactionModal');
       formData.start = selectInfo.startStr;
 
-      calendarApi.unselect()
+      calendarApi.unselect();
 
-      modalElement.addEventListener('hide.bs.modal', resetFormData)
+      modalElement.addEventListener('hide.bs.modal', resetFormData);
       const modal = new bootstrap.Modal(modalElement, {
         backdrop: 'static',
         keyboard: false
-      })
-      modal.show()
+      });
+      modal.show();
     }
 
     function validateForm() {
@@ -297,17 +320,13 @@ export default defineComponent({
       validationErrors.categoryId = formData.categoryId ? '' : '카테고리를 선택해야 합니다.';
       if (!formData.amount) {
         validationErrors.amount = '금액을 입력해야 합니다.';
-      } else if (!/^\d+$/.test(formData.amount)) {
+      } else if (!/^\d+$/.test(removeCommas(formData.amount))) {
         validationErrors.amount = '금액은 숫자로만 입력해야 합니다.';
-        formData.amount = ''
+        formData.amount = '';
       } else {
+        validationErrors.amount = removeCommas(formData.amount); // 콤마 제거
         validationErrors.amount = '';
       }
-
-    }
-
-    function formatAmount(amount) {
-      return new Intl.NumberFormat().format(amount);
     }
 
     function saveTransaction() {
@@ -315,36 +334,41 @@ export default defineComponent({
       if (canSave.value) {
         const calendarApi = fullCalendar.value.getApi();
         const newEvent = {
-          id: userId + "+" + String(currentEvents.value.length + 1),
+          id: String(userId.value) + "+" + String(currentEvents.value.length + 1),
+          userId: String(userId.value),
           title: formData.title,
           start: formData.start,
           end: formData.start,
           memo: formData.memo,
-          categoryId : formData.categoryId,
-          amount : formatAmount(formData.amount),
-          type : formData.type,
+          categoryId: formData.categoryId,
+          amount: removeCommas(formData.amount),  // 저장할 때 콤마 제거
+          type: formData.type,
           allDay: true,
-        }
-        calendarApi.addEvent(newEvent)
-        axios.post('http://localhost:3000/transactions', { 
-          id : newEvent.id,
-          userId : userId,
-          title : formData.title,
-          start : formData.start,
-          categoryId : formData.categoryId,
-          amount : newEvent.amount,
-          memo : formData.memo,
-          type : formData.type
+        };
+        calendarApi.addEvent(newEvent);
+        axios.post('http://localhost:3000/transactions', {
+          id: newEvent.id,
+          userId: String(userId.value),
+          title: formData.title,
+          start: formData.start,
+          categoryId: formData.categoryId,
+          amount: newEvent.amount,
+          memo: formData.memo,
+          type: formData.type
         })
         .then(response => {
-          console.log('Event added:', response.data)
+          fetchUserTransactions().then(updatedTransactions => {
+            calendarOptions.events = updatedTransactions;
+            currentEvents.value = updatedTransactions;
+          });
         })
         .catch(error => {
-          console.error('Error adding event:', error)
-        })
-        const modal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'))
-        modal.hide()
-        resetFormData()
+          console.error('Error adding event:', error);
+        });
+        const modal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'));
+        modal.hide();
+        resetFormData();
+        updateMonthYear(); // 달력 업데이트 후 월/년 갱신
       }
     }
 
@@ -355,7 +379,7 @@ export default defineComponent({
       });
       modal.show();
     }
-    
+
     function selectCategory(category) {
       formData.categoryId = category.id;
       selectedCategoryName.value = category.name;
@@ -368,16 +392,16 @@ export default defineComponent({
       const calendarApi = fullCalendar.value.getApi();
       formData.title = clickInfo.event.title;
       formData.start = clickInfo.event.startStr;
-      formData.fckCategoryName = categories.value.find(cat => cat.id === clickInfo.event.extendedProps.categoryId).name
-      formData.amount = clickInfo.event.extendedProps.amount;
-      formData.type = type.value.find(item => item.type ==  clickInfo.event.extendedProps.type).name;
+      formData.fckCategoryName = categories.value.find(cat => cat.id === clickInfo.event.extendedProps.categoryId).name;
+      formData.amount = formatNumberWithCommas(clickInfo.event.extendedProps.amount); // 콤마 추가
+      formData.type = type.value.find(item => item.type == clickInfo.event.extendedProps.type).name;
       formData.memo = clickInfo.event.extendedProps.memo;
       calendarApi.value = clickInfo.event;
 
       const modalElement = document.getElementById('eventDetailsModal');
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
-      modalElement.addEventListener('hide.bs.modal', resetFormData)
+      modalElement.addEventListener('hide.bs.modal', resetFormData);
     }
 
     function deleteTransaction() {
@@ -385,15 +409,19 @@ export default defineComponent({
       if (confirm(`${calendarApi.value.startStr}의 '${calendarApi.value.title}' 거래내역을 삭제하시겠습니까?`)) {
         axios.delete(`http://localhost:3000/transactions/${calendarApi.value.id}`)
           .then(response => {
-            console.log('Event deleted:', response.data)
-            calendarApi.value.remove() 
+            calendarApi.value.remove();
+            fetchUserTransactions().then(updatedTransactions => {
+              calendarOptions.events = updatedTransactions;
+              currentEvents.value = updatedTransactions;
+            });
           })
           .catch(error => {
-            console.error('Error deleting event:', error)
+            console.error('Error deleting event:', error);
           })
           .finally(() => {
             bootstrap.Modal.getInstance(document.getElementById('eventDetailsModal')).hide();
-          })
+            updateMonthYear(); // 달력 업데이트 후 월/년 갱신
+          });
       }
     }
 
@@ -409,20 +437,23 @@ export default defineComponent({
     };
 
     function handleEvents(events) {
-      currentEvents.value = events
+      currentEvents.value = events;
+      updateMonthYear(); // 달력 업데이트 후 월/년 갱신
     }
 
-    // 네비게이션 버튼 메서드 추가
     function prev() {
       fullCalendar.value.getApi().prev();
+      updateMonthYear(); // 달력 업데이트 후 월/년 갱신
     }
 
     function next() {
       fullCalendar.value.getApi().next();
+      updateMonthYear(); // 달력 업데이트 후 월/년 갱신
     }
 
     function today() {
       fullCalendar.value.getApi().today();
+      updateMonthYear(); // 달력 업데이트 후 월/년 갱신
     }
 
     return {
@@ -441,14 +472,19 @@ export default defineComponent({
       canSave,
       deleteTransaction,
       getEventColor,
-      prev, // 네비게이션 메서드 반환
+      prev,
       next,
       today,
-      fullCalendar
+      fullCalendar,
+      currentMonthYear,
+      userId
     }
   }
 })
 </script>
+
+
+
 
 
 <style lang='css'>
@@ -460,35 +496,42 @@ body {
 
 .app-header-container {
   text-align: center;
-  margin: 5px auto; /* 상단에 margin 추가 */
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .app-header {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: bold;
   color: white;
   background-color: #0e3e72b2;
   padding: 10px 20px;
-  border-radius: 5px;
-  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 20px; /* Add this line to shift the header slightly to the right */
 }
 
 .calendar-navigation {
   display: flex;
-  justify-content: flex-start; 
-  margin-bottom: 0px; 
-  width: 90%;
-  margin-left: 30px;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.fc-button.fc-button-primary {
+.calendar-navigation .fc-button {
   background-color: #0e3e72b2;
   border: none;
   color: white;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border-radius: 5px;
-  margin-right: 5px; /* 버튼들 사이의 간격 조정 */
-  
+  margin-right: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-navigation .fc-button:hover {
+  background-color: #0c2d54;
 }
 
 /* Calendar header cell styling */
@@ -496,24 +539,20 @@ body {
   background-color: #0e3e72b2;
 }
 
-/* 날짜(일) 호버 스타일 추가 */
-.fc-daygrid-day:hover {
-  background-color: #e0e0e0; /* 배경색 그레이로 변경 */
-  
-}
-
-
-
 .fc-col-header-cell-cushion {
   color: #ffffff !important;
   text-decoration: none;
 }
+
 .fc-daygrid-day-number {
-  text-decoration: none !important; /* 날짜 밑줄 제거 */
+  text-decoration: none !important;
   color: #5781ff;
   font-weight: bold;
 }
 
+.fc-daygrid-day:hover {
+  background-color: #e0e0e0;
+}
 
 .demo-app {
   display: flex;
@@ -528,18 +567,18 @@ body {
   padding: 5px;
   display: flex;
   flex-direction: column;
-  align-items: left; /* Center the calendar container */
+  align-items: center;
 }
 
 .calendar-container {
-  width: 100%;
-  margin-left: 0;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .demo-app-calendar {
-  width: 90%; /* Calendar width set to 90% */
-  max-width: 90%; /* Max width set to 90% */
-  margin: 0 auto; /* Center the calendar container */
+  width: 100%;
+  max-width: 100%;
 }
 
 .fc {
@@ -553,16 +592,115 @@ body {
   background-clip: padding-box;
   border: none;
   padding-right: 1px;
-  transition: transform 0.2s, box-shadow 0.2s; /* 이벤트에 전환 효과 추가 */
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-
 .event-custom i {
-  font-style: normal; /* 기울기 제거 */
+  font-style: normal;
 }
 
 .fc-event.transfer {
-  background-color: grey; /* 이체 색상 */
+  background-color: grey;
+}
+
+/* Modal customization */
+.modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  background-color: #0e3e72b2;
+  color: white;
+  border-bottom: none;
+  padding: 20px;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+
+.modal-footer {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-top: none;
+}
+
+.btn-close.custom-close-btn {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: #ff6b6b;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-close.custom-close-btn:before,
+.btn-close.custom-close-btn:after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  background-color: white;
+}
+
+.btn-close.custom-close-btn:before {
+  transform: rotate(45deg);
+}
+
+.btn-close.custom-close-btn:after {
+  transform: rotate(-45deg);
+}
+
+.btn-close.custom-close-btn:hover {
+  background-color: #ff4d4d;
+  transform: rotate(90deg);
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.btn-secondary,
+.btn-primary {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #0e3e72b2;
+  border: none;
+}
+
+.transaction-date {
+  color: #0e3e72b2;
+  font-weight: bold;
+}
+
+.details-label {
+  font-weight: bold;
+  color: #0e3e72b2;
+}
+
+.details-value {
+  margin-left: 10px;
+  color: #333;
 }
 
 

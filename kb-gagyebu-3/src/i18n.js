@@ -22,6 +22,8 @@ const messages = {
     settingsChangeSuccess: 'Settings have been successfully changed.',
     settingsChangeError: 'An error occurred while changing the settings.',
     settingsNotFound: 'Settings not found.',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
   },
   ko: {
     account: '계정',
@@ -35,7 +37,7 @@ const messages = {
     notifications: '알림 설정',
     language: '언어',
     theme: '테마',
-    modify: '수정',
+    modify: '수정하기',
     light: '라이트',
     dark: '다크',
     passwordMismatch: '비밀번호가 일치하지 않습니다.',
@@ -44,6 +46,8 @@ const messages = {
     settingsChangeSuccess: '설정이 성공적으로 변경되었습니다.',
     settingsChangeError: '설정 변경 중 오류가 발생했습니다.',
     settingsNotFound: '설정을 찾을 수 없습니다.',
+    enabled: '활성화됨',
+    disabled: '비활성화됨',
   },
 };
 

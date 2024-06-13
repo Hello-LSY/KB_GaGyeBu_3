@@ -2,9 +2,9 @@
   <div id="wrapper">
     <header id="header">
       <div class="content">
-        <h1>적고 가계</h1>
+        <h1 class="big-font">적고 가계</h1>
+        <h4 class="">👈😎 거기 자네, 적고 가게!</h4>
         <p class="h5 mb-2">사용자의 소비를 분석해주는 나만의 가계부</p>
-        <p class="h6">거기 자네👈 적고 가게😎</p>
         <ul class="actions">
           <li><button class="button primary icon solid bi-box-arrow-in-right" @click="openModal('loginModal')">로그인</button></li>
           <li><button class="button icon solid fa-chevron-down scrolly" @click="openModal('registerModal')">시작하기</button></li>
@@ -17,7 +17,7 @@
 
     <section id="one" class="wrapper style2 special">
       <header class="major">
-        <h2>저희의 개발 스택을 확인하세요!</h2>
+        <h2>개발 스택을 확인하세요!</h2>
       </header>
       <ul class="icons major">
         <li><span class="icon solid fa-database"><span class="label">Database</span></span></li>
@@ -53,7 +53,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="login p-3">
@@ -78,7 +78,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="register p-3">
@@ -114,16 +114,17 @@
 </template>
 
 <script setup>
-import {reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 // 이미지 경로를 직접 import
-import pic01 from '../assets/Home/images/alertImage.png';
-import pic02 from '../assets/Home/images/pic02.jpg';
-import pic03 from '../assets/Home/images/pic03.jpg';
-import pic04 from '../assets/Home/images/alertImage.png';
+import pic01 from '../assets/Home/images/pic01.png';
+import pic02 from '../assets/Home/images/pic02.png';
+import pic03 from '../assets/Home/images/pic03.png';
+import pic04 from '../assets/Home/images/pic04.png';
+import pic05 from '../assets/Home/images/pic05.png';
 import myImageFile from '../assets/logo_l.png';
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -140,21 +141,26 @@ const myImage = ref(myImageFile);
 const spotlights = ref([
   {
     image: pic01,
-    title: '설명 1',
-    description: '내용 설명',
+    title: '한 눈에 보기 좋은 메뉴',
+    description: '손 쉽게 내역을 확인하세요!',
   },
   {
     image: pic02,
-    title: '설명 2',
-    description: '내용 설명 2',
+    title: '개인화된 지출 분석',
+    description: '당신의 지출을 분석하여 추천하는 카드와 당신의 키워드가 보입니다!',
   },
   {
     image: pic03,
-    title: '설명 3',
-    description: '내용 설명 3',
+    title: '손 쉬운 가계부 관리',
+    description: '버튼 하나로 가계부를 등록할 수 있어요!',
   },  
   {
     image: pic04,
+    title: '다국어와 테마 지원',
+    description: '영어와 테마를 지원해요!',
+  },
+  {
+    image: pic05,
     title: '사용자화된 알림!',
     description: '당신의 알림을 확인해보세요!',
   }
@@ -163,7 +169,7 @@ const spotlights = ref([
 const login = async (modalId) => {
   try {
     await authStore.login(formData.email, formData.password);
-    closeModal(modalId)
+    closeModal(modalId);
     router.push('/');
     // 로그인 성공 시 모달 닫기 이벤트 트리거
   } catch (error) {
@@ -183,27 +189,26 @@ const register = async (modalId) => {
     // 회원가입 처리
     await authStore.register(formData.name, formData.email, formData.password);
     closeModal(modalId);
-    router.push('/login');
+    router.push('/home');
     // 회원가입 성공 시 모달 닫기 이벤트 트리거
   } catch (error) {
     alert(error.message);
   }
-
 };
 
 const resetFormData = () => {
   formData.name = '';
   formData.email = '';
   formData.password = '';
-}
+};
 
 const openModal = (modalId) => {
   const modalElement = document.getElementById(modalId);
   const modal = new bootstrap.Modal(modalElement, {
-    backdrop: 'static' 
+    backdrop: 'static'
   });
   modal.show();
-  modalElement.addEventListener('hide.bs.modal', resetFormData)
+  modalElement.addEventListener('hide.bs.modal', resetFormData);
 };
 
 const closeModal = (modalId) => {
@@ -265,6 +270,51 @@ html, body {
 .modal-content {
   margin: auto;
   width: 50%;
+}
+
+.custom-close-btn {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: #ff6b6b; /* 배경 색상 */
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.custom-close-btn:before,
+.custom-close-btn:after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  background-color: white; /* X 표시의 색상 */
+}
+
+.custom-close-btn:before {
+  transform: rotate(45deg);
+}
+
+.custom-close-btn:after {
+  transform: rotate(-45deg);
+}
+
+.custom-close-btn:hover {
+  background-color: #ff4d4d; /* 호버 시 배경 색상 */
+  transform: rotate(90deg); /* 호버 시 회전 효과 */
+}
+
+.big-font {
+  font-size: large;
+}
+
+.custom-close-btn:hover {
+  background-color: #ff4d4d; /* 호버 시 배경 색상 */
+  transform: rotate(90deg); /* 호버 시 회전 효과 */
 }
 
 @media (max-width: 450px) {
