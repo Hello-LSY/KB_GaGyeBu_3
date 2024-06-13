@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-if="isMobile" @click="toggleMenu" class="menu-button">Menu</button>
+    <button v-if="isMobile" @click="toggleMenu" class="menu-button fw-bold">Menu</button>
     <div :class="sidebarClass">
       <div class="sidebaritem">
         <div class="text">
@@ -111,15 +111,15 @@ onUnmounted(() => {
 <style scoped>
 .sidebarsection {
   width: 220px;
-  background: linear-gradient(135deg, rgba(178, 235, 242, 0.9), rgba(224, 247, 250, 0.9)); /* 그라데이션과 투명도 */
+  background: rgba(224, 224, 224, 0.678); /* 그라데이션과 투명도 */
   padding: 15px;
   height: 100vh;
   overflow-y: auto;
   white-space: nowrap;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  border-radius: 15px; /* 둥근 모서리 */
-  border: 2px solid rgba(178, 235, 242, 0.5); /* 외부 테두리 */
+  border-radius: 0px; /* 둥근 모서리 */
+  /* border: 2px solid rgba(178, 235, 242, 0.5); 외부 테두리 */
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5); /* 내부 테두리 */
   backdrop-filter: blur(10px); /* 배경 블러 */
 }
@@ -153,40 +153,62 @@ onUnmounted(() => {
   margin-right: 25px; /* 간격을 넓힘 */
   margin-bottom: 0;
 }
-
-.sidebar-link {
-  text-decoration: none;
-  color: #004d40; /* 짙은 청록색 */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 고급스러운 폰트 */
-  font-weight: 500; /* 글자 굵기 조정 */
-  display: block;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.sidebar-link:hover {
-  background-color: #80deea; /* 조금 더 짙은 파란색 */
-  color: #ffffff; /* 흰색으로 변경 */
-}
-
+.sidebar-link,
 .btn-logout {
   background: none;
   border: none;
   padding: 10px 15px;
   text-align: left;
   width: 100%;
-  color: #004d40; /* 짙은 청록색 */
+  color: #15417a; 
   cursor: pointer;
   display: block;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 고급스러운 폰트 */
   font-weight: 500; /* 글자 굵기 조정 */
+  text-decoration: none;
 }
 
+.sidebar-link:hover,
 .btn-logout:hover {
-  background-color: #80deea; /* 조금 더 짙은 파란색 */
+  background-color: #606263; /* 조금 더 짙은 파란색 */
+  color: #ffffff; /* 흰색으로 변경 */
+}
+
+/* .sidebar-link {
+  text-decoration: none;
+  color: #15417a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  font-weight: 500; 
+  display: block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+} */
+
+.sidebar-link:hover {
+  background-color: #606263; /* 조금 더 짙은 파란색 */
+  color: #ffffff; /* 흰색으로 변경 */
+}
+
+ /* .btn-logout {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  text-align: left;
+  width: 100%;
+  color: #15417a; 
+  cursor: pointer;
+  display: block;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  font-weight: 500; 
+}  */
+
+.btn-logout:hover {
+  background-color: #606263; /* 조금 더 짙은 파란색 */
   color: #ffffff; /* 흰색으로 변경 */
 }
 
@@ -205,9 +227,10 @@ onUnmounted(() => {
   top: 10px;
   right: 10px;
   z-index: 1001;
-  background-color: var(--sidebar-background);
-  color: var(--text-color);
   border: none;
+  background: rgba(224, 224, 224, 0.678); /* 그라데이션과 투명도 */
+  color: #15417a; 
+
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;

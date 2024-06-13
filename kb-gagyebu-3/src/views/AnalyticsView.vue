@@ -590,7 +590,7 @@ watch(analyzedUser, async () => {
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
