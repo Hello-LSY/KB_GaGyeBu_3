@@ -209,8 +209,6 @@ const updateSettings = async () => {
 
 </script>
 
-
-
 <style scoped>
 .container {
   display: flex;
@@ -321,7 +319,7 @@ const updateSettings = async () => {
 .form {
   display: flex;
   flex-direction: column; /* Arrange items in a column */
-  gap: 16px;
+  gap: 32px; /* Increase gap between input groups */
   align-items: center; /* Center form items horizontally */
   width: 100%;
 }
@@ -329,34 +327,35 @@ const updateSettings = async () => {
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 0; /* Reduce gap to zero */
+  gap: 4px; /* Reduce gap between label and input */
   width: 60%; /* Adjust width as needed */
-  margin: 0px auto;
+  margin: 10px auto;
 }
 
 .input-label {
-  margin-bottom: 2px; /* Reduce bottom margin to minimize space between label and input */
-  font-size: 16px;
-  font-weight: 500;
+  margin-bottom: 2px;
+  font-size: 15px; /* Increase font size for better readability */
+  font-weight: 600; /* Make font weight bolder */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a more modern and readable font */
   text-align: left;
   color: var(--text-color);
 }
 
 .input-field {
   width: 100%;
-  padding: 6px 12px; /* Reduce padding to decrease height */
-  margin: 0; /* Ensure no extra margin around input fields */
+  padding: 3px 12px; /* Adjust padding for better appearance */
+  margin: 0;
   border-radius: 8px;
   background: #fff;
   border: 1px solid #e0e0e0;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
-  font-size: 14px; /* Optional: Adjust font size if needed */
-  height: auto; /* Ensure height adjusts to padding */
+  font-size: 16px; /* Adjust font size for input fields */
+  height: auto;
 }
 
 .button-container {
   width: 100%;
-  padding: 0 16px; /* Add padding for the left and right margins */
+  padding: 0 16px;
 }
 
 .button {
@@ -367,31 +366,32 @@ const updateSettings = async () => {
   flex-shrink: 0;
   position: relative;
   gap: 8px;
-  padding: 4px; /* Add padding to the button */
-  border-radius: 8px;
-  background: #000;
-  box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 12px 0 0 0; /* Increase padding for better appearance */
+  border-radius: 30px; /* Make the button more rounded */
+  background: linear-gradient(135deg, #a3d8f4, #bfd4e6); /* 파스텔톤의 파란 그라데이션 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a box shadow */
   width: 100%; /* Make button width full */
-  max-width: 500px; /* Limit the button's maximum width */
-  margin: 20px auto 0 auto; /* Center the button and add top margin */
-  cursor: pointer; /* Add cursor pointer */
-  transition: background 0.3s, transform 0.1s; /* Add transition for background color and transform */
+  max-width: 600px; /* Limit the button's maximum width */
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
 }
 
 .button:hover {
-  background: #333; /* Change background color on hover */
+  background: linear-gradient(135deg, #81c7ed, #a3d8f4); /* Hover gradient background */
 }
 
 .button:active {
-  transform: scale(0.95); /* Scale down the button on click */
+  transform: scale(0.95);
 }
 
 .button-text {
   flex-grow: 0;
   flex-shrink: 0;
-  font-size: 20px; /* Smaller font size */
-  font-weight: 500;
-  text-align: center; /* Center align text */
-  color: #fff;
+  font-size: 18px; /* Font size */
+  font-weight: 600; /* Font weight */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a modern, readable font */
+  text-align: center;
+  color: #004d40; /* Text color */
+  line-height: 1; /* Ensure the text is vertically centered */
 }
 </style>

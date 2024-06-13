@@ -43,19 +43,19 @@ watch(() => settingsStore.language, (newLanguage) => {
 
 <style>
 :root {
-  --background-color: #ffffff;
-  --content-background: #f8f9fa;
-  --text-color: #000000;
-  --sidebar-background: #f8f9fa;
-  --sidebar-hover-background: #e9ecef;
+  --background-color: #e0f7fa; /* 연한 파란색 */
+  --content-background: #f1f8e9; /* 연한 녹색 */
+  --text-color: #004d40; /* 짙은 청록색 */
+  --sidebar-background: #b2ebf2; /* 파스텔톤의 연한 파란색 */
+  --sidebar-hover-background: #80deea; /* 조금 더 짙은 파란색 */
 }
 
 [data-theme='dark'] {
-  --background-color: #121212;
-  --content-background: #1e1e1e;
-  --text-color: #ffffff;
-  --sidebar-background: #232323;
-  --sidebar-hover-background: #333333;
+  --background-color: #004d40; /* 짙은 청록색 */
+  --content-background: #00796b; /* 중간 톤의 청록색 */
+  --text-color: #ffffff; /* 흰색 */
+  --sidebar-background: #006064; /* 짙은 청록색 */
+  --sidebar-hover-background: #004d40; /* 더 짙은 청록색 */
 }
 
 #app {
