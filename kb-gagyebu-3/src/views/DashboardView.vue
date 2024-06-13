@@ -3,26 +3,23 @@
       <div class="row">
         <!-- Left Column: Box + Weekly -->
         <div class="col-md-9 col-12 left-column">
-          <div class="row box-row mb-5">
-            <!-- Box Components (3:3:3) -->
-            <div class="col-md-4 col-12 mb-3 box-component">
+          <div class="row mb-2">
+            <div class="col-md-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.balance.percent" :title="totalMonthly.balance.title" :content="totalMonthly.balance.amount" :pathData="totalMonthly.balance.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-component">
+            <div class="col-md-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.income.percent" :title="totalMonthly.income.title" :content="totalMonthly.income.amount" :pathData="totalMonthly.income.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-component">
+            <div class="col-md-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.expenese.percent" :title="totalMonthly.expenese.title" :content="totalMonthly.expenese.amount" :pathData="totalMonthly.expenese.pathData"/>
             </div>
           </div>
-          <div class="row weekly-row">
-            <!-- Weekly Component -->
+          <div class="row">
             <div class="col-12 weekly-spend-container">
               <WeekendComponent :calculateTotalAmount="calculateTotalAmount"/>
             </div>
           </div>
         </div>
-        <!-- Right Column: Category  -->
         <div class="col-md-3 col-12 category-container">
           <CategoryComponent :filterTransactionsByDate="filterTransactionsByDate" />
         </div>
@@ -131,6 +128,8 @@
   /* Fixed height for the weekly component */
   .weekly-spend-container {
     height: 350px; 
+    justify-content: center;
+    align-items: center;
   }
 
   .category-container {
@@ -138,8 +137,19 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    border-radius: 8px;
-    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+  }
+  
+  .category-container:hover{
+    transform: translateY(-5px);
+  }
+
+  .box-container:hover{
+    transform: translateY(-5px);
+  }
+
+  .weekly-spend-container:hover{
+    transform: translateY(-5px);
   }
 
   @media (max-width: 768px) {
@@ -149,7 +159,7 @@
     }
 
     .weekly-spend-container {
-      height: auto;
+      height: 250px;
     }
 
     .dashboard-container {
