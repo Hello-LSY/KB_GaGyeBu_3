@@ -5,7 +5,7 @@
       </div>
     </div>
   </template>
-  
+
 <script setup>
   import { Bar } from "vue-chartjs";
   import { ref, onMounted } from "vue";
