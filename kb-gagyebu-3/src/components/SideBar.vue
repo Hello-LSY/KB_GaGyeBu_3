@@ -3,51 +3,64 @@
     <button v-if="isMobile" @click="toggleMenu" class="menu-button">Menu</button>
     <div :class="sidebarClass">
       <div class="sidebaritem">
-        <router-link to="/" class="sidebar-link">
-          <i class="bi bi-speedometer2"></i>
-          <span v-if="!isMobile">Dashboard</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/" class="sidebar-link">
+            <i class="bi bi-speedometer2 me-2"></i>
+            <span v-if="!isMobile">Dashboard</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem">
-        <router-link to="/analytics" class="sidebar-link">
-          <i class="bi bi-bar-chart-line-fill"></i>
-          <span v-if="!isMobile">Analytics</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/analytics" class="sidebar-link">
+            <i class="bi bi-bar-chart-line-fill me-2"></i>
+            <span v-if="!isMobile">Analytics</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem">
-        <router-link to="/transaction" class="sidebar-link">
-          <i class="bi bi-arrow-left-right"></i>
-          <span v-if="!isMobile">Transaction</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/transaction" class="sidebar-link">
+            <i class="bi bi-arrow-left-right me-2"></i>
+            <span v-if="!isMobile">Transaction</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
-        <router-link to="/profile" class="sidebar-link">
-          <i class="bi bi-person-circle"></i>
-          <span v-if="!isMobile">Profile</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/profile" class="sidebar-link">
+            <i class="bi bi-person-circle me-2"></i>
+            <span v-if="!isMobile">Profile</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
-        <router-link to="/register" class="sidebar-link">
-          <i class="bi bi-person-plus-fill"></i>
-          <span v-if="!isMobile">Register</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/register" class="sidebar-link">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            <span v-if="!isMobile">Register</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
-        <router-link to="/login" class="sidebar-link">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span v-if="!isMobile">Login</span>
-        </router-link>
+        <div class="text">
+          <router-link to="/login" class="sidebar-link">
+            <i class="bi bi-box-arrow-in-right me-2"></i>
+            <span v-if="!isMobile">Login</span>
+          </router-link>
+        </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
-        <button @click="handleLogout" class="btn-logout">
-          <i class="bi bi-box-arrow-left"></i>
-          <span v-if="!isMobile">Logout</span>
-        </button>
+        <div class="text">
+          <button @click="handleLogout" class="btn-logout">
+            <i class="bi bi-box-arrow-left me-2"></i>
+            <span v-if="!isMobile">Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -132,15 +145,14 @@ onUnmounted(() => {
 }
 
 .sidebarsection.top .sidebaritem {
-  margin-right: 0;
+  margin-right: 20px;
   margin-bottom: 0;
 }
 
 .sidebar-link {
   text-decoration: none;
   color: var(--text-color);
-  display: flex;
-  align-items: center;
+  display: block;
   padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -158,8 +170,7 @@ onUnmounted(() => {
   width: 100%;
   color: var(--text-color);
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  display: block;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
@@ -200,17 +211,14 @@ onUnmounted(() => {
     left: 0;
     width: 100%;
     flex-direction: row;
-    justify-content: space-around;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding-right: 40px;  /* 오른쪽에 여백 추가 */
   }
 
   .sidebaritem {
-    margin-right: 0;
+    margin-right: 20px;
     margin-bottom: 0;
   }
-  
 }
 </style>
