@@ -4,10 +4,20 @@
       <!-- 이번 달 지출 섹션 -->
       <div class="row mb-4">
         <div class="col-lg-12">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body text-center p-5">
               <p class="font-weight-bold display-4">이번 달 지출: {{ analyzedUser.currentMonthExpense.toLocaleString() }}원</p>
-              <p class="text-muted h6">{{ monthlyChangeSummary }}</p>
+              <p class="text-muted h6">
+                전 달에 비해 수익은 
+                <span :class="monthlyChangeSummary.incomeChangeClass">
+                  {{ monthlyChangeSummary.incomeChangeFormatted }}원
+                </span> 
+                {{ monthlyChangeSummary.incomeChangeDirection }}하였고, 지출은 
+                <span :class="monthlyChangeSummary.expenseChangeClass">
+                  {{ monthlyChangeSummary.expenseChangeFormatted }}원
+                </span> 
+                {{ monthlyChangeSummary.expenseChangeDirection }}하였습니다.
+              </p>
               <div class="highlight-box">
                 <p class="lead mb-1 quote-text"><span class="quote-icon">“</span>{{ analyzedUser.description }}<span class="quote-icon">”</span></p>
                 <p class="font-weight-bold2 h5 spending-summary">{{ analyzedUser.spendingSummary }}</p>
@@ -19,25 +29,25 @@
       <!-- 주요 지출 내역 및 주간 지출 내역 섹션 -->
       <div class="row mb-4">
         <div class="col-lg-8 mb-4">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body">
-              <h5 class="card-title text-center">카테고리 별 지출 내역</h5>
+              <h5 class="card-title text-center p-2">카테고리 별 지출 내역</h5>
               <canvas ref="expenseChart" class="w-100"></canvas>
             </div>
           </div>
         </div>
         <div class="col-lg-4 mb-4">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body">
-              <h5 class="card-title text-center">주간 지출 내역</h5>
+              <h5 class="card-title p-2 text-center">주간 지출 내역</h5>
               <div v-for="week in displayedWeeklyData" :key="week.weekRange" class="week-analysis mb-3">
                 <div class="week-range">{{ week.weekRange }}</div>
                 <div class="progress bg-light">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark-blue" role="progressbar" :style="{ width: (week.total / maxWeeklyExpense * 100) + '%' }"></div>
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark-blue" role="progressbar" :style="{ width: week.relativeTotal + '%' }"></div>
                 </div>
                 <div class="week-total">{{ week.total.toLocaleString() }}원</div>
               </div>
-              <p class="text-center font-weight-bold2 mt-3">주간 평균 {{ weeklyAverage.toLocaleString() }}원</p>
+              <p class="text-center font-weight-bold2 mt-3 bg-primary text-white p-2 rounded">주간 평균 {{ weeklyAverage.toLocaleString() }}원</p>
             </div>
           </div>
         </div>
@@ -45,20 +55,21 @@
       <!-- 월별 수익 및 지출 및 추천카드 섹션 -->
       <div class="row mb-4">
         <div class="col-lg-8 mb-4">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body">
-              <h5 class="card-title text-center">월별 수익 및 지출</h5>
+              <h5 class="card-title text-center p-2">월별 수익 및 지출</h5>
               <canvas ref="monthlyChart" class="w-100"></canvas>
             </div>
           </div>
         </div>
         <div class="col-lg-4 mb-4">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body text-center p-4">
-              <h3 class="card-title mb-5 ">이 카드는 어때요?</h3>
+              <h3 class="card-title mb-5 p-2 bg-primary text-white rounded">이 카드는 어때요?</h3>
               <img :src="analyzedUser.recommendation.image" alt="Card Image" class="img-fluid mb-3 card-img-small">
-              <h6>{{ analyzedUser.recommendation.name }}</h6>
-              <a :href="analyzedUser.recommendation.link" target="_blank" class="btn btn-primary mt-3">카드 보러가기</a>
+              <h6 class="fw-bold mb-3">{{ analyzedUser.recommendation.name }}</h6>
+              <p class="text-muted mb-1">{{ analyzedUser.recommendation.description }}</p>
+              <a :href="analyzedUser.recommendation.link" target="_blank" class="btn fw-bold bg-primary text-white mt-3 p-2 rounded">카드 보러가기</a>
             </div>
           </div>
         </div>
@@ -72,7 +83,6 @@
     <p class="text-center text-muted">로그인 해주세요.</p>
   </div>
 </template>
-
 
 <script setup>
 import { computed, onMounted, ref, watch, nextTick } from 'vue';
@@ -179,47 +189,55 @@ const analyzedUser = computed(() => {
   };
 
   const categoryCardRecommendations = {
-    '여행': {
-      name: '가온글로벌카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09167',
-      image: travelCardImage
-    },
-    '외식': {
-      name: 'FNB캐시리플렛 리멤버카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=07274&mainCC=a',
-      image: diningCardImage
-    },
-    '취미/문화': {
-      name: '스타체크카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01552',
-      image: cultureCardImage
-    },
-    '주거/통신': {
-      name: '굿데이카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09061',
-      image: housingCardImage
-    },
-    '교육': {
-      name: '에듀카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04432',
-      image: educationCardImage
-    },
-    '교통/차량': {
-      name: '톡톡 Pay카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09231',
-      image: transportCardImage
-    },
-    '쇼핑/의류': {
-      name: '마이핏카드(할인형)',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09248',
-      image: shoppingCardImage
-    },
-    '기타': {
-      name: '가온 올포인트카드',
-      link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09234',
-      image: generalCardImage
-    }
-  };
+  '여행': {
+    name: '가온글로벌카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09167',
+    image: travelCardImage,
+    description: '글로벌한 내 스타일을 담았다!'
+  },
+  '외식': {
+    name: 'FNB캐시리플렛 리멤버카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=07274&mainCC=a',
+    image: diningCardImage,
+    description: '주유할인, 무이자할부, 외식할인 혜택을 리멤버!'
+  },
+  '취미/문화': {
+    name: '스타체크카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01552',
+    image: cultureCardImage,
+    description: '별처럼 빛나는 다양한 혜택들, 당신이 머무는 곳마다 눈부신 할인 혜택'
+  },
+  '주거/통신': {
+    name: '굿데이카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09061',
+    image: housingCardImage,
+    description: '매일 매일 기분 좋은 날, 생활에 힘이 되는 멀티 할인카드'
+  },
+  '교육': {
+    name: '에듀카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04432',
+    image: educationCardImage,
+    description: '교육비를 절약하는 현명한 선택!'
+  },
+  '교통/차량': {
+    name: '톡톡 Pay카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09231',
+    image: transportCardImage,
+    description: '똑똑하게 할인 “톡톡”! 대중교통 10% 청구할인!'
+  },
+  '쇼핑/의류': {
+    name: '마이핏카드(할인형)',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09248',
+    image: shoppingCardImage,
+    description: '쇼핑과 의류 구매에 최적화된 혜택 제공'
+  },
+  '기타': {
+    name: '가온 올포인트카드',
+    link: 'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09234',
+    image: generalCardImage,
+    description: '고민 없는 카드 생활! 풍성한 포인트리!'
+  }
+};
 
   const description = categoryDescriptions[maxCategoryName] || '다양한 지출을 즐기는 복합적 인간';
   const recommendation = categoryCardRecommendations[maxCategoryName] || categoryCardRecommendations['기타'];
@@ -278,35 +296,50 @@ const calculateMonthlyData = (transactions) => {
   }, {});
 };
 
-// 주간 지출 계산 함수
 const calculateWeeklyData = (transactions) => {
   const weeklyData = {};
+  const today = new Date();
+  const startOfCurrentWeek = new Date(today);
+  startOfCurrentWeek.setDate(today.getDate() - today.getDay()); // 이번 주의 시작(일요일)
+
+  // 최근 4주간의 주간 데이터를 계산
+  for (let i = 0; i < 4; i++) {
+    const startOfWeek = new Date(startOfCurrentWeek);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // 주의 끝(토요일)
+    const weekRange = getWeekRange(startOfWeek);
+    weeklyData[weekRange] = { total: 0, weekRange: weekRange };
+    startOfCurrentWeek.setDate(startOfCurrentWeek.getDate() - 7); // 이전 주로 이동
+  }
+
+  // 거래 데이터를 기반으로 주간 지출 계산
   transactions.forEach(t => {
     const date = new Date(t.start);
-    const week = getWeekNumber(date);
-    if (!weeklyData[week]) {
-      weeklyData[week] = { total: 0, weekRange: getWeekRange(date) };
-    }
-    if (t.type === 'expense') {
-      weeklyData[week].total += parseFloat(t.amount);
+    const weekRange = getWeekRange(date);
+    if (weeklyData[weekRange]) {
+      if (t.type === 'expense') {
+        weeklyData[weekRange].total += parseFloat(t.amount);
+      }
     }
   });
-  return Object.values(weeklyData);
-};
 
-const getWeekNumber = (date) => {
-  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-  const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-  return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  // 각 주간 데이터에서 최대 값을 구하여 상대적인 비율로 변환
+  const maxWeekTotal = Math.max(...Object.values(weeklyData).map(week => week.total));
+  Object.values(weeklyData).forEach(week => {
+    week.relativeTotal = maxWeekTotal > 0 ? (week.total / maxWeekTotal) * 100 : 0; // 상대적인 비율 계산
+  });
+
+  return Object.values(weeklyData).sort((a, b) => new Date(a.weekRange.split(' ~ ')[0]) - new Date(b.weekRange.split(' ~ ')[0]));
 };
 
 const getWeekRange = (date) => {
   const startOfWeek = new Date(date);
   const endOfWeek = new Date(date);
-  startOfWeek.setDate(date.getDate() - date.getDay());
-  endOfWeek.setDate(date.getDate() + (6 - date.getDay()));
+  startOfWeek.setDate(date.getDate() - date.getDay()); // 주의 시작을 일요일로 설정
+  endOfWeek.setDate(startOfWeek.getDate() + 6); // 주의 끝을 토요일로 설정
   return `${startOfWeek.toISOString().slice(5, 10)} ~ ${endOfWeek.toISOString().slice(5, 10)}`;
 };
+
 
 // 전월 대비 수익 및 지출 변화 계산 함수
 const calculateMonthlyChanges = (monthlyData) => {
@@ -319,14 +352,29 @@ const calculateMonthlyChanges = (monthlyData) => {
   const incomeChange = monthlyData[lastMonth].income - monthlyData[prevMonth].income;
   const expenseChange = monthlyData[lastMonth].expense - monthlyData[prevMonth].expense;
 
-  return `전 달에 비해 수익은 ${Math.abs(incomeChange).toLocaleString()}원 ${incomeChange > 0 ? '증가' : '감소'}하였고, 지출은 ${Math.abs(expenseChange).toLocaleString()}원 ${expenseChange > 0 ? '증가' : '감소'}하였습니다.`;
+  const incomeChangeFormatted = Math.abs(incomeChange).toLocaleString();
+  const expenseChangeFormatted = Math.abs(expenseChange).toLocaleString();
+
+  const incomeChangeClass = incomeChange > 0 ? 'text-red' : 'text-blue';
+  const expenseChangeClass = expenseChange > 0 ? 'text-red' : 'text-blue';
+
+  return {
+    incomeChangeFormatted,
+    incomeChangeClass,
+    incomeChangeDirection: incomeChange > 0 ? '증가' : '감소',
+    expenseChangeFormatted,
+    expenseChangeClass,
+    expenseChangeDirection: expenseChange > 0 ? '증가' : '감소'
+  };
 };
 
 const monthlyChangeSummary = computed(() => {
-  if (!analyzedUser.value || !analyzedUser.value.monthlyData) return '';
+  if (!analyzedUser.value || !analyzedUser.value.monthlyData) return {};
 
   return calculateMonthlyChanges(analyzedUser.value.monthlyData);
 });
+
+
 
 // 최근 4주간의 주간 지출 데이터만 표시
 const displayedWeeklyData = computed(() => {
@@ -334,16 +382,16 @@ const displayedWeeklyData = computed(() => {
 
   const recentWeeks = analyzedUser.value.weeklyData.slice(-4);
   return recentWeeks.map((week, index) => {
-    week.total = week.total.toFixed(0); // 소수점 제거
+    week.relativeTotal = week.relativeTotal.toFixed(0); // 소수점 제거
     return week;
   });
 });
 
 // 주간 지출의 최대값 계산
 const maxWeeklyExpense = computed(() => {
-  if (!analyzedUser.value || !analyzedUser.value.weeklyData) return 0;
+  if (!analyzedUser.value || !analyzedUser.value.weeklyData) return 100; // 기본값을 100으로 설정
 
-  return Math.max(...analyzedUser.value.weeklyData.map(week => week.total));
+  return Math.max(...analyzedUser.value.weeklyData.map(week => week.relativeTotal));
 });
 
 // 주간 평균 지출 계산
@@ -484,7 +532,7 @@ const createCharts = () => {
           {
             label: '주간 지출',
             data: analyzedUser.value.weeklyData.slice(-4).map(d => d.total),
-            backgroundColor: 'rgba(0, 123, 255, 0.2)',
+            backgroundColor: 'rgba(0, 123, 255, 0.6)',
             borderColor: 'rgba(0, 123, 255, 1)',
             borderWidth: 1
           }
@@ -498,7 +546,14 @@ const createCharts = () => {
             beginAtZero: true
           },
           y: {
-            beginAtZero: true
+            type: 'logarithmic', // 로그 스케일 사용
+            beginAtZero: true,
+            min: 1, // 최소값을 설정하여 0에서 시작하지 않도록 함
+            ticks: {
+              callback: function(value) {
+                return Number(value.toString()); // 로그 값이 아닌 실제 값을 표시
+              }
+            }
           }
         },
         plugins: {
@@ -515,15 +570,12 @@ const createCharts = () => {
   }
 };
 
-
 // analyzedUser가 변경될 때 차트를 업데이트합니다.
 watch(analyzedUser, async () => {
   await nextTick();
   createCharts();
 });
 </script>
-
-
 
 <style scoped>
 .container-fluid {
@@ -647,6 +699,15 @@ canvas {
   color: #0056b3;
   margin-top: 10px;
 }
+
+.text-red {
+  color: red;
+}
+
+.text-blue {
+  color: blue;
+}
+
 
 @media (max-width: 768px) {
   .card-title {
