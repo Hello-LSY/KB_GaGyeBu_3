@@ -111,13 +111,17 @@ onUnmounted(() => {
 <style scoped>
 .sidebarsection {
   width: 220px;
-  background-color: var(--sidebar-background);
+  background: linear-gradient(135deg, rgba(178, 235, 242, 0.9), rgba(224, 247, 250, 0.9)); /* 그라데이션과 투명도 */
   padding: 15px;
   height: 100vh;
   overflow-y: auto;
   white-space: nowrap;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  border-radius: 15px; /* 둥근 모서리 */
+  border: 2px solid rgba(178, 235, 242, 0.5); /* 외부 테두리 */
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5); /* 내부 테두리 */
+  backdrop-filter: blur(10px); /* 배경 블러 */
 }
 
 .sidebarsection.top {
@@ -132,8 +136,9 @@ onUnmounted(() => {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  z-index: 1000;  /* 최상위로 설정 */
-  padding-right: 70px;  /* 오른쪽에 여백 추가 */
+  z-index: 1000;
+  padding-right: 70px;
+  border-radius: 0; /* 최상단에서는 둥근 모서리 적용 안함 */
 }
 
 .sidebarsection.hidden {
@@ -141,25 +146,28 @@ onUnmounted(() => {
 }
 
 .sidebaritem {
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* 간격을 넓힘 */
 }
 
 .sidebarsection.top .sidebaritem {
-  margin-right: 20px;
+  margin-right: 25px; /* 간격을 넓힘 */
   margin-bottom: 0;
 }
 
 .sidebar-link {
   text-decoration: none;
-  color: var(--text-color);
+  color: #004d40; /* 짙은 청록색 */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 고급스러운 폰트 */
+  font-weight: 500; /* 글자 굵기 조정 */
   display: block;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-link:hover {
-  background-color: var(--sidebar-hover-background);
+  background-color: #80deea; /* 조금 더 짙은 파란색 */
+  color: #ffffff; /* 흰색으로 변경 */
 }
 
 .btn-logout {
@@ -168,15 +176,18 @@ onUnmounted(() => {
   padding: 10px 15px;
   text-align: left;
   width: 100%;
-  color: var(--text-color);
+  color: #004d40; /* 짙은 청록색 */
   cursor: pointer;
   display: block;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 고급스러운 폰트 */
+  font-weight: 500; /* 글자 굵기 조정 */
 }
 
 .btn-logout:hover {
-  background-color: var(--sidebar-hover-background);
+  background-color: #80deea; /* 조금 더 짙은 파란색 */
+  color: #ffffff; /* 흰색으로 변경 */
 }
 
 .text {
@@ -193,7 +204,7 @@ onUnmounted(() => {
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 1001;  /* 메뉴 버튼이 최상위에 오도록 설정 */
+  z-index: 1001;
   background-color: var(--sidebar-background);
   color: var(--text-color);
   border: none;
@@ -214,10 +225,11 @@ onUnmounted(() => {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    border-radius: 0; /* 모바일에서는 둥근 모서리 적용 안함 */
   }
 
   .sidebaritem {
-    margin-right: 20px;
+    margin-right: 25px; /* 간격을 넓힘 */
     margin-bottom: 0;
   }
 }
