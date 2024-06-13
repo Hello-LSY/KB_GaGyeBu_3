@@ -8,12 +8,12 @@
       >
         <template v-slot:eventContent='arg'>
           <b> {{ arg.timeText }}</b>
-          <i> {{ arg.event.title }} {{ arg.event.extendedProps.amount }}</i>
+          <i> {{ arg.event.extendedProps.amount }}</i>
         </template>
       </FullCalendar>
     </div>
     
-    <!-- 모달창 -->
+    <!-- 거래 내역 등록 모달창 -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <!-- 카테고리 선택 모달 -->
+    <!-- 거래내역 등록에서 카테고리 선택 모달 -->
     <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -84,6 +84,43 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- 거래 상세 내역 모달창 -->
+    <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eventDetailsModalLabel">이벤트 상세 정보</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <p>날짜 : {{ formData.start }}</p>
+            </div>
+            <div class="form-group mb-3">
+              <p>거래명 : {{ formData.title }}</p>
+            </div>
+            <div class="form-group mb-3">
+              <p>카테고리 : {{ formData.fckCategoryName }}</p>
+            </div>
+            <div class="form-group mb-3">
+              <p>거래 유형 : {{ formData.type }}</p>
+            </div>
+            <div class="form-group mb-3">
+              <p>금액 : {{ formData.amount }}</p>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">메모</label>
+              <p>{{ formData.memo }}</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" @click="deleteTransaction" >삭제</button>
+          </div>
+        </div> 
       </div>
     </div>
   </div>
@@ -107,7 +144,7 @@ export default defineComponent({
   setup() {
     const currentEvents = ref([])
     const calendarApi = ref(null)
-    const masterTransaction = ref([])
+    const masterTransaction = ref(null)
     const userId = localStorage.getItem('userId') || "1"
     const type = ref([{type:"expense", name:"지출"},
                       {type:"income", name:"수입"},
@@ -120,6 +157,7 @@ export default defineComponent({
       categoryId: '',
       amount: '',
       type: '',
+      fckCategoryName: '',
       memo: ''
     })
     const validationErrors = reactive({
@@ -229,6 +267,7 @@ export default defineComponent({
       validationErrors.type = '';
       validationErrors.categoryId = '';
       validationErrors.amount = '';
+      formData.fckCategoryName = '';
     }
 
     function handleDateSelect(selectInfo) {  
@@ -317,14 +356,33 @@ export default defineComponent({
     }
 
     function handleEventClick(clickInfo) {
-      if (confirm(`${clickInfo.event.startStr}의 '${clickInfo.event.title}' 거래내역을 삭제하시겠습니까?`)) {
-        axios.delete(`http://localhost:3000/transactions/${clickInfo.event.id}`)
+      formData.title = clickInfo.event.title;
+      formData.start = clickInfo.event.startStr;
+      formData.fckCategoryName = categories.value.find(cat => cat.id === clickInfo.event.extendedProps.categoryId).name
+      formData.amount = clickInfo.event.extendedProps.amount;
+      formData.type = type.value.find(item => item.type ==  clickInfo.event.extendedProps.type).name;
+      formData.memo = clickInfo.event.extendedProps.memo;
+      calendarApi.value = clickInfo.event;
+
+      const modalElement = document.getElementById('eventDetailsModal');
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+      modalElement.addEventListener('hide.bs.modal', resetFormData)
+    }
+
+
+    function deleteTransaction() {
+      if (confirm(`${calendarApi.value.startStr}의 '${calendarApi.value.title}' 거래내역을 삭제하시겠습니까?`)) {
+        axios.delete(`http://localhost:3000/transactions/${calendarApi.value.id}`)
           .then(response => {
             console.log('Event deleted:', response.data)
-            clickInfo.event.remove() 
+            calendarApi.value.remove() 
           })
           .catch(error => {
             console.error('Error deleting event:', error)
+          })
+          .finally(() => {
+            bootstrap.Modal.getInstance(document.getElementById('eventDetailsModal')).hide();
           })
       }
     }
@@ -346,7 +404,8 @@ export default defineComponent({
       selectCategory,
       selectedCategoryName,
       validationErrors,
-      canSave
+      canSave,
+      deleteTransaction
     }
   }
 })
