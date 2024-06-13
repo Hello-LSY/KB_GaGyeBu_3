@@ -263,7 +263,7 @@ const updateSettings = async () => {
   font-size: 24px;
   font-weight: 600;
   text-align: left;
-  color: var(--text-color);
+  color: var(--link-color);
 }
 
 .tabs {
