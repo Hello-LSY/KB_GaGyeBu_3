@@ -1,6 +1,8 @@
 <template>
-    <div class="chart-container">
-      <Bar v-if="loaded" :data="chartData" class="weekend-chart"/>
+    <div class="flex-container">
+      <div class="chart-container">
+        <Bar v-if="loaded" :data="chartData" class="weekend-chart" :options="chartOptions"/>
+      </div>
     </div>
   </template>
   
@@ -16,6 +18,17 @@
     labels: [],
     datasets: []
   });
+
+  const chartOptions = ref({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+  });
+
   
   const loaded = ref(false);
   const props = defineProps({  calculateTotalAmount: Function });
@@ -70,14 +83,16 @@
         labels: getDateLabels(weeklyTransactions, lastSunday),
         datasets: [
           {
+            barThickness: 25,
             label: "Income",
             data: weeklyTransactions.map(week => props.calculateTotalAmount(week, 'income')), 
-            backgroundColor: 'rgb(255, 182, 193)',
+            backgroundColor: '#5987e3',
           },
           {
+            barThickness: 25,
             label: "Expense",
             data: weeklyTransactions.map(week => props.calculateTotalAmount(week, 'expense')), 
-            backgroundColor:  'rgb(191, 232, 245)',
+            backgroundColor: '#ed7868',
           }
         ]
       };
@@ -89,10 +104,18 @@
 </script>
   
 <style scoped>
-  .chart-container {
-    height: 100%;
+  .flex-container {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
+    height: 100%; 
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .chart-container {
+    height: 80%;
+    width: 75%;
   }
 </style>
