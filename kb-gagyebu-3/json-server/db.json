@@ -319,7 +319,7 @@
       "title": "금융소득",
       "type": "income",
       "memo": "Generated transaction"
-    },    
+    },
     {
       "id": "28",
       "userId": "1",
@@ -439,110 +439,120 @@
       "title": "교통/차량",
       "type": "expense",
       "memo": "Generated transaction"
+    },
+    {
+      "id": "1+34",
+      "userId": "1",
+      "title": "ㄴㅁㅇㄹ",
+      "start": "2024-06-19",
+      "categoryId": "13",
+      "amount": "213",
+      "memo": "ㄴㅁㅇㄹ",
+      "type": "expense"
     }
   ],
-    "categories": [
-      {
-        "id": "1",
-        "name": "월급",
-        "type": "income"
-      },
-      {
-        "id": "2",
-        "name": "금융소득",
-        "type": "income"
-      },
-      {
-        "id": "3",
-        "name": "거래",
-        "type": "income"
-      },
-      {
-        "id": "4",
-        "name": "용돈",
-        "type": "income"
-      },
-      {
-        "id": "5",
-        "name": "환수금",
-        "type": "income"
-      },
-      {
-        "id": "6",
-        "name": "기타",
-        "type": "income"
-      },
-      {
-        "id": "7",
-        "name": "주거/통신",
-        "type": "expense"
-      },
-      {
-        "id": "8",
-        "name": "교통/차량",
-        "type": "expense"
-      },
-      {
-        "id": "9",
-        "name": "취미/문화",
-        "type": "expense"
-      },
-      {
-        "id": "10",
-        "name": "여행",
-        "type": "expense"
-      },
-      {
-        "id": "11",
-        "name": "외식",
-        "type": "expense"
-      },
-      {
-        "id": "12",
-        "name": "생활용품",
-        "type": "expense"
-      },
-      {
-        "id": "13",
-        "name": "카페/간식",
-        "type": "expense"
-      },
-      {
-        "id": "14",
-        "name": "의료비",
-        "type": "expense"
-      },
-      {
-        "id": "15",
-        "name": "보험료",
-        "type": "expense"
-      },
-      {
-        "id": "16",
-        "name": "교육비",
-        "type": "expense"
-      },
-      {
-        "id": "17",
-        "name": "건강/뷰티",
-        "type": "expense"
-      },
-      {
-        "id": "18",
-        "name": "경조사/회비",
-        "type": "expense"
-      },
-      {
-        "id": "19",
-        "name": "기타",
-        "type": "expense"
-      },
-      {
-        "id": "20",
-        "name": "이체",
-        "type": "transfer"
-      }
-    ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "월급",
+      "type": "income"
+    },
+    {
+      "id": "2",
+      "name": "금융소득",
+      "type": "income"
+    },
+    {
+      "id": "3",
+      "name": "거래",
+      "type": "income"
+    },
+    {
+      "id": "4",
+      "name": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "5",
+      "name": "환수금",
+      "type": "income"
+    },
+    {
+      "id": "6",
+      "name": "기타",
+      "type": "income"
+    },
+    {
+      "id": "7",
+      "name": "주거/통신",
+      "type": "expense"
+    },
+    {
+      "id": "8",
+      "name": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "9",
+      "name": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "10",
+      "name": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "11",
+      "name": "외식",
+      "type": "expense"
+    },
+    {
+      "id": "12",
+      "name": "생활용품",
+      "type": "expense"
+    },
+    {
+      "id": "13",
+      "name": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "14",
+      "name": "의료비",
+      "type": "expense"
+    },
+    {
+      "id": "15",
+      "name": "보험료",
+      "type": "expense"
+    },
+    {
+      "id": "16",
+      "name": "교육비",
+      "type": "expense"
+    },
+    {
+      "id": "17",
+      "name": "건강/뷰티",
+      "type": "expense"
+    },
+    {
+      "id": "18",
+      "name": "경조사/회비",
+      "type": "expense"
+    },
+    {
+      "id": "19",
+      "name": "기타",
+      "type": "expense"
+    },
+    {
+      "id": "20",
+      "name": "이체",
+      "type": "transfer"
+    }
+  ],
   "settings": [
     {
       "userId": "1",
