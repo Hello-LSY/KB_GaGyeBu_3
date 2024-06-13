@@ -1,34 +1,25 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-auto p-0">
+  <div class="login p-3">
+    <h2>Login</h2>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" v-model="formData.email" required />
       </div>
-      <div class="col">
-        <div class="login p-3">
-          <h2>Login</h2>
-          <form @submit.prevent="login">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control" v-model="formData.email" required />
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password:</label>
-              <input type="password" class="form-control" v-model="formData.password" required />
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
-        </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" v-model="formData.password" required />
       </div>
-    </div>
+      <button type="button" class="btn btn-primary w-100" @click="login">Login</button>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, defineEmits } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
-import Sidebar from '../components/SideBar.vue';
 
+const emit = defineEmits(['close-modal']);
 const authStore = useAuthStore();
 const router = useRouter();
 const formData = reactive({
@@ -40,6 +31,8 @@ const login = async () => {
   try {
     await authStore.login(formData.email, formData.password);
     router.push('/');
+    // 로그인 성공 시 모달 닫기 이벤트 트리거
+    emit('close-modal');
   } catch (error) {
     alert(error.message);
   }
@@ -47,9 +40,9 @@ const login = async () => {
 </script>
 
 <style scoped>
-
 .login {
   max-width: 600px;
+  margin: auto;
 }
 
 label {

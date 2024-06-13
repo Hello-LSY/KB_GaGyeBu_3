@@ -47,6 +47,18 @@
       "name": "123",
       "email": "123@123",
       "password": "123"
+    },
+    {
+      "id": "676a",
+      "name": "111",
+      "email": "11@1",
+      "password": "11"
+    },
+    {
+      "id": "f494",
+      "name": "한상민",
+      "email": "gkstkdals07@naver.com",
+      "password": "1"
     }
   ],
   "transactions": [
@@ -319,7 +331,7 @@
       "title": "금융소득",
       "type": "income",
       "memo": "Generated transaction"
-    },    
+    },
     {
       "id": "28",
       "userId": "1",
@@ -1028,6 +1040,20 @@
     {
       "id": "3fc1",
       "userId": "5",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light"
+    },
+    {
+      "id": "19a0",
+      "userId": "41bc",
+      "notifications": true,
+      "language": "kor",
+      "theme": "light"
+    },
+    {
+      "id": "2fd1",
+      "userId": "f494",
       "notifications": true,
       "language": "kor",
       "theme": "light"
