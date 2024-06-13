@@ -1,11 +1,11 @@
 <template>
-  <div class="container flex-column" >
-    <div class="tab-buttons d-flex justify-content-start mt-3 mb-3 mx-2">
+  <div class="container flex-column" style="height: 100%; border-radius: 8px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);" >
+    <div class="tab-buttons d-flex justify-content-start mt-4 mx-2">
       <button class="tab-btn" :class="{ 'active': isIncome === false }" @click="selectTab(false)">지출</button>
       <button class="tab-btn" :class="{ 'active': isIncome === true }" @click="selectTab(true)">수입</button>
     </div>
     <div v-if="isIncome" class="contents">
-        <div class="chart-container mb-3">
+        <div class="chart-container mb-3 mx-3">
           <Doughnut v-if="loaded" :data="incomeChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -17,7 +17,7 @@
         </ul>
     </div>
     <div v-else class="contents"> <!-- 지출 -->
-        <div class="chart-container mb-3">
+        <div class="chart-container mb-3 mx-3">
           <Doughnut v-if="loaded" :data="expenseChartData" :options="chartOptions" />
         </div>
         <ul v-if="loaded" class="details-list">
@@ -40,7 +40,20 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, Poin
 ChartJS.register( Title, Tooltip, Legend, ArcElement, LineElement, PointElement, CategoryScale, LinearScale);
 
 const backgroundColors = [
-  'rgb(255, 182, 193)', 'rgb(191, 232, 245)', 'rgb(255, 255, 200)', 'rgb(229, 250, 175)','rgb(245, 198, 245)','rgb(222, 226, 255)',  'rgb(255, 212, 168)','rgb(255, 222, 237)', 'rgb(252, 207, 202)'
+'rgba(0, 123, 255, 0.2)',    // Light Blue
+    'rgba(0, 106, 217, 0.4)',    // Medium Light Blue
+    'rgba(0, 89, 179, 0.6)',     // Medium Blue
+    'rgba(0, 72, 143, 0.8)',     // Medium Dark Blue
+    'rgba(0, 56, 107, 1.0)',     // Dark Blue
+    'rgba(51, 153, 255, 0.6)',   // Sky Blue
+    'rgba(102, 178, 255, 0.6)',  // Lighter Blue
+    'rgba(153, 204, 255, 0.6)',  // Very Light Blue
+    'rgba(204, 229, 255, 0.6)',  // Very Very Light Blue
+    'rgba(169, 169, 169, 0.6)',  // Light Gray
+    'rgba(128, 128, 128, 0.6)',  // Gray
+    'rgba(105, 105, 105, 0.6)',  // Dim Gray
+    'rgba(169, 169, 169, 0.8)',  // Dark Gray
+    'rgba(192, 192, 192, 1.0)'   // Silver
 ];
 
 const props = defineProps({
@@ -154,15 +167,17 @@ onMounted(async () => {
   background-color: transparent;
   color: #6c757d; /* 회색 */
   cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .tab-btn.active {
-  color: #007bff; /* 선택 시 파란색 */
+  color: #15417a; /* 선택 시 파란색 */
 }å
 
 .chart-container {
-  width: 75%; 
   margin: 0 auto; 
+  width: 250px;
 }
 
 .details-list {

@@ -7,8 +7,14 @@
         :options='calendarOptions'
       >
         <template v-slot:eventContent='arg'>
-          <b> {{ arg.timeText }}</b>
-          <i> {{ arg.event.extendedProps.amount }}</i>
+          <div class="event-custom"
+           :style="{
+             backgroundColor: getEventColor(arg.event.extendedProps.type),
+             borderRadius: '3px'
+          }">
+            <b> {{ arg.timeText }}</b>
+            <i> {{ arg.event.extendedProps.amount }}</i>
+          </div>
         </template>
       </FullCalendar>
     </div>
@@ -41,7 +47,7 @@
               </div>
               <div class="form-group mb-3">
                 <label class="form-label">카테고리</label>
-                <input type="text" class="form-control" readonly placeholder="카테고리 선택"
+                <input type="text" class="form-control" readonly placeholder="거래 유형을 먼저 선택해주세요"
                        @click="openCategoryModal" :value="selectedCategoryName">
                 <p v-if="validationErrors.categoryId" class="text-danger">{{ validationErrors.categoryId }}</p>
               </div>
@@ -387,6 +393,17 @@ export default defineComponent({
       }
     }
 
+    function getEventColor(type) {
+      switch (type) {
+        case 'expense':
+          return 'red';
+        case 'income':
+          return 'blue';
+        default:
+          return 'grey'; // Default color for unknown types
+      }
+    };
+
     function handleEvents(events) {
       currentEvents.value = events
     }
@@ -405,7 +422,8 @@ export default defineComponent({
       selectedCategoryName,
       validationErrors,
       canSave,
-      deleteTransaction
+      deleteTransaction,
+      getEventColor
     }
   }
 })
@@ -466,5 +484,14 @@ b { /* used for event dates/times */
 .fc { /* the calendar root */
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.fc-event {
+  text-align: right;
+  background-color: transparent;
+  color: white;
+  background-clip: padding-box; 
+  border: none;
+  padding-right: 1px;
 }
 </style>
