@@ -6,7 +6,7 @@
         <div class="col-lg-12">
           <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body text-center p-5">
-              <p class="font-weight-bold display-4">이번 달 지출: {{ analyzedUser.currentMonthExpense.toLocaleString() }}원</p>
+              <p class="card-title h1  p-4">이번 달 지출: {{ analyzedUser.currentMonthExpense.toLocaleString() }}원</p>
               <p class="text-muted h6">
                 전 달에 비해 수익은 
                 <span :class="monthlyChangeSummary.incomeChangeClass">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="week-total">{{ week.total.toLocaleString() }}원</div>
               </div>
-              <p class="text-center font-weight-bold2 mt-3 bg-primary text-white p-2 rounded">주간 평균 {{ weeklyAverage.toLocaleString() }}원</p>
+              <p class="card-title  mt-3 text-white p-2 rounded">주간 평균 {{ weeklyAverage.toLocaleString() }}원</p>
             </div>
           </div>
         </div>
@@ -65,11 +65,11 @@
         <div class="col-lg-4 mb-4">
           <div class="card shadow-sm h-100 bg-light-blue">
             <div class="card-body text-center p-4">
-              <h3 class="card-title mb-5 p-2 bg-primary text-white rounded">이 카드는 어때요?</h3>
+              <h3 class="card-title mb-5 p-2 text-white rounded">이 카드는 어때요?</h3>
               <img :src="analyzedUser.recommendation.image" alt="Card Image" class="img-fluid mb-3 card-img-small">
               <h6 class="fw-bold mb-3">{{ analyzedUser.recommendation.name }}</h6>
               <p class="text-muted mb-1">{{ analyzedUser.recommendation.description }}</p>
-              <a :href="analyzedUser.recommendation.link" target="_blank" class="btn fw-bold bg-primary text-white mt-3 p-2 rounded">카드 보러가기</a>
+              <a :href="analyzedUser.recommendation.link" target="_blank" class="card-title btn btn-over text-white mt-3 p-2 ">카드 보러가기</a>
             </div>
           </div>
         </div>
@@ -399,8 +399,10 @@ const weeklyAverage = computed(() => {
   if (!analyzedUser.value || !analyzedUser.value.weeklyData) return 0;
 
   const total = analyzedUser.value.weeklyData.reduce((sum, week) => sum + parseFloat(week.total), 0);
-  return (total / analyzedUser.value.weeklyData.length).toFixed(0);
+  return Number((total / analyzedUser.value.weeklyData.length).toFixed(0)).toLocaleString(); // .toLocaleString()을 사용해 포맷
 });
+
+
 
 // 차트 생성 함수
 const createCharts = () => {
@@ -419,25 +421,41 @@ const createCharts = () => {
           }
         ),
         datasets: [{
-          data: Object.values(analyzedUser.value.categoryTotals),
-          backgroundColor: [
-            'rgba(0, 123, 255, 0.2)',
-            'rgba(0, 123, 255, 0.4)',
-            'rgba(0, 123, 255, 0.6)',
-            'rgba(0, 123, 255, 0.8)',
-            'rgba(0, 123, 255, 1.0)',
-            'rgba(0, 123, 255, 0.5)'
-          ],
-          borderColor: [
-            'rgba(0, 123, 255, 1)',
-            'rgba(0, 123, 255, 1)',
-            'rgba(0, 123, 255, 1)',
-            'rgba(0, 123, 255, 1)',
-            'rgba(0, 123, 255, 1)',
-            'rgba(0, 123, 255, 1)'
-          ],
-          borderWidth: 1
-        }]
+  data: Object.values(analyzedUser.value.categoryTotals),
+  backgroundColor: [
+    'rgba(0, 123, 255, 0.2)',    // Light Blue
+    'rgba(0, 106, 217, 0.4)',    // Medium Light Blue
+    'rgba(0, 89, 179, 0.6)',     // Medium Blue
+    'rgba(0, 72, 143, 0.8)',     // Medium Dark Blue
+    'rgba(0, 56, 107, 1.0)',     // Dark Blue
+    'rgba(51, 153, 255, 0.6)',   // Sky Blue
+    'rgba(102, 178, 255, 0.6)',  // Lighter Blue
+    'rgba(153, 204, 255, 0.6)',  // Very Light Blue
+    'rgba(204, 229, 255, 0.6)',  // Very Very Light Blue
+    'rgba(169, 169, 169, 0.6)',  // Light Gray
+    'rgba(128, 128, 128, 0.6)',  // Gray
+    'rgba(105, 105, 105, 0.6)',  // Dim Gray
+    'rgba(169, 169, 169, 0.8)',  // Dark Gray
+    'rgba(192, 192, 192, 1.0)'   // Silver
+  ],
+  borderColor: [
+    'rgba(0, 123, 255, 1)',
+    'rgba(0, 106, 217, 1)',
+    'rgba(0, 89, 179, 1)',
+    'rgba(0, 72, 143, 1)',
+    'rgba(0, 56, 107, 1)',
+    'rgba(51, 153, 255, 1)',
+    'rgba(102, 178, 255, 1)',
+    'rgba(153, 204, 255, 1)',
+    'rgba(204, 229, 255, 1)',
+    'rgba(169, 169, 169, 1)',
+    'rgba(128, 128, 128, 1)',
+    'rgba(105, 105, 105, 1)',
+    'rgba(169, 169, 169, 1)',
+    'rgba(192, 192, 192, 1)'
+  ],
+  borderWidth: 0.5
+}]
       },
       options: {
         responsive: true,
@@ -480,24 +498,25 @@ const createCharts = () => {
     monthlyChartInstance = new Chart(monthlyCtx, {
       type: 'line',
       data: {
-        labels: lastSixMonths,
-        datasets: [
-          {
-            label: '수익',
-            data: lastSixMonths.map(month => analyzedUser.value.monthlyData[month].income),
-            backgroundColor: 'rgba(255, 99, 132, 0.6)', // 진한 빨간색 배경
-            borderColor: 'rgba(255, 99, 132, 1)', // 빨간색 경계
-            borderWidth: 1
-          },
-          {
-            label: '지출',
-            data: lastSixMonths.map(month => analyzedUser.value.monthlyData[month].expense),
-            backgroundColor: 'rgba(54, 162, 235, 0.6)', // 진한 파란색 배경
-            borderColor: 'rgba(54, 162, 235, 1)', // 파란색 경계
-            borderWidth: 1
-          }
-        ]
-      },
+  labels: lastSixMonths,
+  datasets: [
+    {
+      label: '수익',
+      data: lastSixMonths.map(month => analyzedUser.value.monthlyData[month].income),
+      backgroundColor: 'rgba(153, 0, 0, 0.8)', // 진한 빨간색 배경
+      borderColor: 'rgba(153, 0, 0, 1)', // 빨간색 경계
+      borderWidth: 1
+    },
+    {
+      label: '지출',
+      data: lastSixMonths.map(month => analyzedUser.value.monthlyData[month].expense),
+      backgroundColor: 'rgba(0, 0, 153, 0.8)', // 진한 남색 배경
+      borderColor: 'rgba(0, 0, 153, 1)', // 남색 경계
+      borderWidth: 1
+    }
+  ]
+}
+,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -591,17 +610,20 @@ watch(analyzedUser, async () => {
 
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
 .card-title {
-  font-size: 1.25rem;
   margin-bottom: 1rem;
   font-weight: bold;
   text-align: center;
-  background-color: #007bff;
+  background-color: #0e3e72b2;
   color: #f0f8ff;
-  border-radius: 8px; /* 끝이 둥근 효과 */
+  border-radius: 8px; 
+}
+.btn-over:hover{
+  background-color: #032b55f3;
+
 }
 
 canvas {
@@ -609,16 +631,8 @@ canvas {
   height: 400px !important;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-  transition: background-color 0.2s, border-color 0.2s;
-}
 
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
-}
+
 
 .text-center {
   text-align: center;
@@ -659,12 +673,19 @@ canvas {
 .week-range {
   flex: 1;
   text-align: left;
+  font-family: Arial, sans-serif; /* 폰트 변경 */
+  font-size: 0.8rem; /* 폰트 크기 변경 */
+  color: #5d5e5f; /* 폰트 색상 변경 */
 }
 
 .week-total {
   flex: 1;
   text-align: right;
+  font-family: Arial, sans-serif; /* 폰트 변경 */
+  font-size: 0.8rem; /* 폰트 크기 변경 */
+  color: #5d5e5f; /* 폰트 색상 변경 */
 }
+
 
 .progress {
   flex: 2;
@@ -672,7 +693,7 @@ canvas {
 }
 
 .progress-bar {
-  background-color: #007bff;
+  background-color: #1466be;
 }
 
 .card-img-small {
@@ -701,11 +722,11 @@ canvas {
 }
 
 .text-red {
-  color: red;
+  color: rgb(172, 18, 18);
 }
 
 .text-blue {
-  color: blue;
+  color: rgb(10, 10, 138);
 }
 
 
