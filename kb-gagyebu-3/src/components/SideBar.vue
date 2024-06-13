@@ -4,56 +4,56 @@
     <div :class="sidebarClass">
       <div class="sidebaritem">
         <div class="text">
-          <i class="bi bi-speedometer2 me-2"></i>
           <router-link to="/" class="sidebar-link">
+            <i class="bi bi-speedometer2 me-2"></i>
             <span v-if="!isMobile">Dashboard</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
-          <i class="bi bi-bar-chart-line-fill me-2"></i>
           <router-link to="/analytics" class="sidebar-link">
+            <i class="bi bi-bar-chart-line-fill me-2"></i>
             <span v-if="!isMobile">Analytics</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem">
         <div class="text">
-          <i class="bi bi-arrow-left-right me-2"></i>
           <router-link to="/transaction" class="sidebar-link">
+            <i class="bi bi-arrow-left-right me-2"></i>
             <span v-if="!isMobile">Transaction</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
-          <i class="bi bi-person-circle me-2"></i>
           <router-link to="/profile" class="sidebar-link">
+            <i class="bi bi-person-circle me-2"></i>
             <span v-if="!isMobile">Profile</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
         <div class="text">
-          <i class="bi bi-person-plus-fill me-2"></i>
           <router-link to="/register" class="sidebar-link">
+            <i class="bi bi-person-plus-fill me-2"></i>
             <span v-if="!isMobile">Register</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="!isLoggedIn">
         <div class="text">
-          <i class="bi bi-box-arrow-in-right me-2"></i>
           <router-link to="/login" class="sidebar-link">
+            <i class="bi bi-box-arrow-in-right me-2"></i>
             <span v-if="!isMobile">Login</span>
           </router-link>
         </div>
       </div>
       <div class="sidebaritem" v-if="isLoggedIn">
         <div class="text">
-          <i class="bi bi-box-arrow-left me-2"></i>
           <button @click="handleLogout" class="btn-logout">
+            <i class="bi bi-box-arrow-left me-2"></i>
             <span v-if="!isMobile">Logout</span>
           </button>
         </div>
@@ -151,7 +151,8 @@ onUnmounted(() => {
 .sidebar-link {
   text-decoration: none;
   color: var(--text-color);
-  display: block;
+  display: flex; /* 수정된 부분 */
+  align-items: center; /* 수정된 부분 */
   padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -169,7 +170,8 @@ onUnmounted(() => {
   width: 100%;
   color: var(--text-color);
   cursor: pointer;
-  display: block;
+  display: flex; /* 수정된 부분 */
+  align-items: center; /* 수정된 부분 */
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
