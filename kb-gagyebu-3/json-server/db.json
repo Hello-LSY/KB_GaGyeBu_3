@@ -319,7 +319,7 @@
       "title": "금융소득",
       "type": "income",
       "memo": "Generated transaction"
-    },
+    },    
     {
       "id": "28",
       "userId": "1",
@@ -439,6 +439,16 @@
       "title": "교통/차량",
       "type": "expense",
       "memo": "Generated transaction"
+    },
+    {
+      "id": "1+34",
+      "userId": "1",
+      "title": "ㄴㅁㅇㄹ",
+      "start": "2024-06-19",
+      "categoryId": "13",
+      "amount": "213",
+      "memo": "ㄴㅁㅇㄹ",
+      "type": "expense"
     },
      {
     "id": "49",
