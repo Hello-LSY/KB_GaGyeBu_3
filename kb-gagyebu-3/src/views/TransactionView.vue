@@ -1,23 +1,24 @@
 <!-- TransactionView.vue -->
 <template>
-  <div class='demo-app'>
-    <div class="calendar-container">
-      <div class="app-header-container row justify-content-between align-items-center mt-4">
-        <div class="col-auto calendar-navigation">
-          <button @click="prev" class="fc-button fc-button-primary fc-prev-button"> < </button>
-          <button @click="next" class="fc-button fc-button-primary fc-next-button"> > </button>
-          <button @click="today" class="fc-button fc-button-primary fc-today-button">today</button>
-        </div>
-        <div class="col-auto app-header ">
-          {{ currentMonthYear }}
-        </div>
-      </div>
-      
-      <FullCalendar
-        class='demo-app-calendar'
-        ref="fullCalendar"
-        :options='calendarOptions'
-      >
+  <Transition name="slide-fade">
+    <div class='demo-app' v-if="calendarLoaded" >
+      <div class="calendar-container">
+        <div class="app-header-container row justify-content-between align-items-center mt-4">
+          <div class="col-auto calendar-navigation">
+            <button @click="prev" class="fc-button fc-button-primary fc-prev-button"> < </button>
+            <button @click="next" class="fc-button fc-button-primary fc-next-button"> > </button>
+            <button @click="today" class="fc-button fc-button-primary fc-today-button">today</button>
+          </div>
+          <div class="col-auto app-header ">
+            {{ currentMonthYear }}
+          </div>
+        </div>  
+
+        <FullCalendar
+          class='demo-app-calendar'
+          ref="fullCalendar"
+          :options='calendarOptions'
+        >
           <template v-slot:eventContent='arg'>
             <div class="event-custom"
               :style="{
@@ -31,6 +32,7 @@
         </FullCalendar>
       </div>
     </div>
+  </Transition>
 
   <!-- 거래 내역 등록 모달창 -->
   <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
@@ -173,6 +175,7 @@ export default defineComponent({
 
     const currentEvents = ref([]);
     const fullCalendar = ref(null);
+    const calendarLoaded = ref(false);
     const masterTransaction = ref([]);
     const type = ref([{type:"expense", name:"지출"},
                       {type:"income", name:"수입"}]);
@@ -223,6 +226,8 @@ export default defineComponent({
       calendarOptions.events = transactions;
       masterTransaction.value = transactions;
       currentEvents.value = transactions;
+      calendarLoaded.value = true;
+      await nextTick();
       updateMonthYear();
     });
 
@@ -477,7 +482,7 @@ export default defineComponent({
       today,
       fullCalendar,
       currentMonthYear,
-      userId
+      calendarLoaded
     }
   }
 })
@@ -488,6 +493,7 @@ export default defineComponent({
 
 
 <style lang='css'>
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
 body {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   margin: 0;
@@ -669,7 +675,7 @@ body {
 }
 
 .modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.5) ;
 }
 
 .btn-secondary,
@@ -703,5 +709,16 @@ body {
   color: #333;
 }
 
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
 
+.slide-fade-leave-active {
+  transition: all 1s ease-in-out;
+}
+
+.slide-fade-enter-from, .slide-fade-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
 </style>
