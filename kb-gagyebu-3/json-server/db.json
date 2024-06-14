@@ -1,924 +1,738 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "John Doe",
-      "email": "john@example.com",
-      "password": "qwer123"
+      "id": "08f6",
+      "name": "admin",
+      "email": "admin@test.com",
+      "password": "admin"
     },
     {
-      "id": "2",
-      "name": "Jane Smith",
-      "email": "jane@example.com",
-      "password": "qwer123"
-    },
-    {
-      "id": "3",
-      "name": "Alice Johnson",
-      "email": "alice@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "4",
-      "name": "Bob Brown",
-      "email": "bob@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "5",
-      "name": "Charlie Davis",
-      "email": "charlie@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "6",
-      "name": "Diana Evans",
-      "email": "diana@example.com",
-      "password": "password123"
-    },
-    {
-      "id": "41bc",
-      "name": "test",
-      "email": "test@1",
-      "password": "123"
-    },
-    {
-      "id": "3ebc",
-      "name": "123",
-      "email": "123@123",
-      "password": "123"
+      "id": "2116",
+      "name": "typhoon",
+      "email": "yun233@naver.com",
+      "password": "yun233"
     }
   ],
   "transactions": [
     {
-      "id": "1",
-      "userId": "1",
-      "start": "2024-06-01",
-      "amount": "100000",
-      "categoryId": "1",
-      "title": "월급",
-      "type": "income",
-      "memo": "6월 월급"
-    },
-    {
-      "id": "2",
-      "userId": "2",
-      "start": "2024-06-05",
-      "amount": "2000",
-      "categoryId": "6",
-      "title": "식료품",
-      "type": "expense",
-      "memo": "슈퍼마켓에서 장보기"
-    },
-    {
-      "id": "3",
-      "userId": "1",
-      "start": "2024-06-10",
-      "amount": "25500",
-      "categoryId": "9",
-      "title": "교통비",
-      "type": "expense",
-      "memo": "버스 요금"
-    },
-    {
-      "id": "4",
-      "userId": "2",
-      "start": "2024-06-15",
-      "amount": "300000",
-      "categoryId": "2",
-      "title": "금융소득",
-      "type": "income",
-      "memo": "투자 수익"
-    },
-    {
-      "id": "5",
-      "userId": "1",
-      "start": "2024-06-20",
-      "amount": "500000",
-      "categoryId": "7",
-      "title": "공과금",
-      "type": "expense",
-      "memo": "전기 요금"
-    },
-    {
-      "id": "6",
-      "userId": "3ebc",
-      "start": "2024-06-25",
-      "amount": "70000",
-      "categoryId": "8",
-      "title": "임대료",
-      "type": "expense",
-      "memo": "월세"
-    },
-    {
-      "id": "7",
-      "userId": "41bc",
-      "start": "2024-06-28",
-      "amount": "120000",
-      "categoryId": "10",
-      "title": "엔터테인먼트",
-      "type": "expense",
-      "memo": "영화 관람"
-    },
-    {
-      "id": "8",
-      "userId": "1",
-      "start": "2024-07-01",
-      "amount": "25000",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "레스토랑에서 저녁"
-    },
-    {
-      "id": "9",
-      "userId": "2",
-      "start": "2024-07-03",
-      "amount": "40000",
-      "categoryId": "12",
-      "title": "의료비",
-      "type": "expense",
-      "memo": "병원 진료비"
-    },
-    {
-      "id": "10",
-      "userId": "3ebc",
-      "start": "2024-07-05",
-      "amount": "600000",
-      "categoryId": "13",
-      "title": "교육비",
-      "type": "expense",
-      "memo": "학원비"
-    },
-    {
-      "id": "11",
-      "userId": "1",
-      "start": "2024-01-03",
-      "amount": "234560",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "12",
-      "userId": "1",
-      "start": "2024-01-11",
-      "amount": "23432300",
-      "categoryId": "1",
-      "title": "월급",
-      "type": "income",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "13",
-      "userId": "1",
-      "start": "2024-01-15",
-      "amount": "773400",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "14",
-      "userId": "1",
-      "start": "2024-01-21",
-      "amount": "19345",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "15",
-      "userId": "1",
-      "start": "2024-01-29",
-      "amount": "281670",
-      "categoryId": "8",
-      "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "16",
-      "userId": "1",
-      "start": "2024-02-02",
-      "amount": "154230",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "17",
-      "userId": "1",
-      "start": "2024-02-07",
-      "amount": "1478034",
-      "categoryId": "2",
-      "title": "금융소득",
-      "type": "income",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "18",
-      "userId": "1",
-      "start": "2024-02-13",
-      "amount": "299990",
-      "categoryId": "8",
-      "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "19",
-      "userId": "1",
-      "start": "2024-02-18",
-      "amount": "19990",
-      "categoryId": "13",
-      "title": "카페/간식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "20",
-      "userId": "1",
-      "start": "2024-02-25",
-      "amount": "15450",
-      "categoryId": "13",
-      "title": "카페/간식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "21",
-      "userId": "1",
-      "start": "2024-03-01",
-      "amount": "12345",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
       "id": "22",
-      "userId": "1",
-      "start": "2024-03-05",
-      "amount": "54321",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "23",
-      "userId": "1",
-      "start": "2024-03-10",
-      "amount": "432120",
-      "categoryId": "2",
-      "title": "금융소득",
-      "type": "income",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "24",
-      "userId": "1",
-      "start": "2024-03-15",
-      "amount": "23456",
-      "categoryId": "8",
-      "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "25",
-      "userId": "1",
-      "start": "2024-03-20",
-      "amount": "67890",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "26",
-      "userId": "1",
-      "start": "2024-03-25",
-      "amount": "345067",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
+      "userId": "08f6",
+      "start": "2024-05-04",
+      "amount": "11400",
+      "categoryId": "9",
+      "title": "취미/문화",
+      "type": "expense"
     },
     {
       "id": "27",
-      "userId": "1",
-      "start": "2024-04-01",
-      "amount": "999990",
-      "categoryId": "2",
-      "title": "금융소득",
-      "type": "income",
-      "memo": "Generated transaction"
+      "userId": "08f6",
+      "start": "2024-05-04",
+      "amount": "20600",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
     },
     {
-      "id": "28",
-      "userId": "1",
-      "start": "2024-04-05",
-      "amount": "50055",
-      "categoryId": "13",
-      "title": "카페/간식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "29",
-      "userId": "1",
-      "start": "2024-04-10",
-      "amount": "89099",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "30",
-      "userId": "1",
-      "start": "2024-04-15",
-      "amount": "12000",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "31",
-      "userId": "1",
-      "start": "2024-04-20",
-      "amount": "22022",
+      "id": "5",
+      "userId": "08f6",
+      "start": "2024-05-05",
+      "amount": "59900",
       "categoryId": "8",
       "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
+      "type": "expense"
     },
     {
-      "id": "32",
-      "userId": "1",
-      "start": "2024-04-25",
-      "amount": "30000",
-      "categoryId": "11",
-      "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
+      "id": "9",
+      "userId": "08f6",
+      "start": "2024-05-06",
+      "amount": "31200",
+      "categoryId": "7",
+      "title": "주거/통신",
+      "type": "expense"
+    },
+    {
+      "id": "12",
+      "userId": "08f6",
+      "start": "2024-05-06",
+      "amount": "80900",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "16",
+      "userId": "08f6",
+      "start": "2024-05-07",
+      "amount": "45800",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "18",
+      "userId": "08f6",
+      "start": "2024-05-07",
+      "amount": "14900",
+      "categoryId": "2",
+      "title": "금융소득",
+      "type": "income"
+    },
+    {
+      "id": "1",
+      "userId": "08f6",
+      "start": "2024-05-13",
+      "amount": "55100",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "7",
+      "userId": "08f6",
+      "start": "2024-05-14",
+      "amount": "38900",
+      "categoryId": "7",
+      "title": "주거/통신",
+      "type": "expense"
     },
     {
       "id": "33",
-      "userId": "1",
-      "start": "2024-05-01",
-      "amount": "40000",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "34",
-      "userId": "1",
-      "start": "2024-05-05",
-      "amount": "50000",
-      "categoryId": "8",
-      "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "35",
-      "userId": "1",
-      "start": "2024-05-10",
-      "amount": "60000",
-      "categoryId": "2",
-      "title": "금융소득",
-      "type": "income",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "36",
-      "userId": "1",
+      "userId": "08f6",
       "start": "2024-05-15",
-      "amount": "70000",
-      "categoryId": "13",
-      "title": "카페/간식",
-      "type": "expense",
-      "memo": "Generated transaction"
+      "amount": "100",
+      "categoryId": "17",
+      "title": "건강/뷰티",
+      "type": "expense"
     },
     {
-      "id": "37",
-      "userId": "1",
+      "id": "31",
+      "userId": "08f6",
+      "start": "2024-05-16",
+      "amount": "78100",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "32",
+      "userId": "08f6",
       "start": "2024-05-20",
-      "amount": "80000",
+      "amount": "77100",
       "categoryId": "11",
       "title": "외식",
-      "type": "expense",
-      "memo": "Generated transaction"
+      "type": "expense"
+    },
+    {
+      "id": "14",
+      "userId": "08f6",
+      "start": "2024-05-19",
+      "amount": "46900",
+      "categoryId": "12",
+      "title": "생활용품",
+      "type": "expense"
     },
     {
       "id": "38",
-      "userId": "1",
-      "start": "2024-05-25",
-      "amount": "90000",
-      "categoryId": "7",
-      "title": "주거/통신",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "39",
-      "userId": "1",
-      "start": "2024-05-30",
-      "amount": "10000",
-      "categoryId": "8",
-      "title": "교통/차량",
-      "type": "expense",
-      "memo": "Generated transaction"
-    },
-    {
-      "id": "1+34",
-      "userId": "1",
-      "title": "ㄴㅁㅇㄹ",
-      "start": "2024-06-19",
-      "categoryId": "13",
-      "amount": "213",
-      "memo": "ㄴㅁㅇㄹ",
-      "type": "expense"
-    },
-    {
-      "id": "49",
-      "userId": "1",
-      "start": "2024-05-02",
-      "amount": "80100",
-      "categoryId": "2",
-      "title": "Investment",
-      "type": "income"
-    },
-    {
-      "id": "71",
-      "userId": "1",
-      "start": "2024-05-04",
-      "amount": "22000",
-      "categoryId": "10",
-      "title": "Entertainment",
-      "type": "expense"
-    },
-    {
-      "id": "81",
-      "userId": "1",
-      "start": "2024-05-05",
-      "amount": "23600",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "41",
-      "userId": "1",
-      "start": "2024-05-06",
-      "amount": "79100",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "56",
-      "userId": "1",
-      "start": "2024-05-06",
-      "amount": "10100",
-      "categoryId": "9",
-      "title": "Transportation",
-      "type": "expense"
-    },
-    {
-      "id": "66",
-      "userId": "1",
-      "start": "2024-05-06",
-      "amount": "41300",
-      "categoryId": "19",
-      "title": "Others",
-      "type": "expense"
-    },
-    {
-      "id": "75",
-      "userId": "1",
-      "start": "2024-05-07",
-      "amount": "25400",
-      "categoryId": "6",
-      "title": "Groceries",
-      "type": "expense"
-    },
-    {
-      "id": "44",
-      "userId": "1",
-      "start": "2024-05-08",
-      "amount": "60100",
-      "categoryId": "11",
-      "title": "Dining Out",
-      "type": "expense"
-    },
-    {
-      "id": "54",
-      "userId": "1",
-      "start": "2024-05-08",
-      "amount": "19100",
-      "categoryId": "2",
-      "title": "Investment",
-      "type": "income"
-    },
-    {
-      "id": "79",
-      "userId": "1",
-      "start": "2024-05-08",
-      "amount": "40100",
-      "categoryId": "2",
-      "title": "Investment",
-      "type": "income"
-    },
-    {
-      "id": "67",
-      "userId": "1",
-      "start": "2024-05-09",
-      "amount": "18800",
-      "categoryId": "16",
-      "title": "Travel",
-      "type": "expense"
-    },
-    {
-      "id": "88",
-      "userId": "1",
-      "start": "2024-05-12",
-      "amount": "76200",
-      "categoryId": "11",
-      "title": "Dining Out",
-      "type": "expense"
-    },
-    {
-      "id": "53",
-      "userId": "1",
-      "start": "2024-05-13",
-      "amount": "23900",
-      "categoryId": "9",
-      "title": "Transportation",
-      "type": "expense"
-    },
-    {
-      "id": "48",
-      "userId": "1",
-      "start": "2024-05-15",
-      "amount": "2400",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "50",
-      "userId": "1",
-      "start": "2024-05-16",
-      "amount": "6900",
-      "categoryId": "9",
-      "title": "Transportation",
-      "type": "expense"
-    },
-    {
-      "id": "87",
-      "userId": "1",
-      "start": "2024-05-16",
-      "amount": "30600",
-      "categoryId": "6",
-      "title": "Groceries",
-      "type": "expense"
-    },
-    {
-      "id": "42",
-      "userId": "1",
-      "start": "2024-05-17",
-      "amount": "78500",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "70",
-      "userId": "1",
-      "start": "2024-05-17",
-      "amount": "90700",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "45",
-      "userId": "1",
-      "start": "2024-05-18",
-      "amount": "92900",
+      "userId": "08f6",
+      "start": "2024-05-22",
+      "amount": "22900",
       "categoryId": "5",
-      "title": "Others",
-      "type": "income"
-    },
-    {
-      "id": "61",
-      "userId": "1",
-      "start": "2024-05-18",
-      "amount": "19400",
-      "categoryId": "13",
-      "title": "Education",
-      "type": "expense"
-    },
-    {
-      "id": "63",
-      "userId": "1",
-      "start": "2024-05-18",
-      "amount": "61200",
-      "categoryId": "16",
-      "title": "Travel",
-      "type": "expense"
-    },
-    {
-      "id": "60",
-      "userId": "1",
-      "start": "2024-05-19",
-      "amount": "21200",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "65",
-      "userId": "1",
-      "start": "2024-05-19",
-      "amount": "75200",
-      "categoryId": "5",
-      "title": "Others",
-      "type": "income"
-    },
-    {
-      "id": "72",
-      "userId": "1",
-      "start": "2024-05-19",
-      "amount": "35800",
-      "categoryId": "19",
-      "title": "Others",
-      "type": "expense"
-    },
-    {
-      "id": "52",
-      "userId": "1",
-      "start": "2024-05-23",
-      "amount": "4900",
-      "categoryId": "4",
-      "title": "Gift",
-      "type": "income"
-    },
-    {
-      "id": "74",
-      "userId": "1",
-      "start": "2024-05-23",
-      "amount": "47100",
-      "categoryId": "6",
-      "title": "Groceries",
-      "type": "expense"
-    },
-    {
-      "id": "86",
-      "userId": "1",
-      "start": "2024-05-23",
-      "amount": "8300",
-      "categoryId": "19",
-      "title": "Others",
-      "type": "expense"
-    },
-    {
-      "id": "84",
-      "userId": "1",
-      "start": "2024-05-24",
-      "amount": "72200",
-      "categoryId": "3",
-      "title": "Rental Income",
-      "type": "income"
-    },
-    {
-      "id": "55",
-      "userId": "1",
-      "start": "2024-05-26",
-      "amount": "15700",
-      "categoryId": "1",
-      "title": "Salary",
-      "type": "income"
-    },
-    {
-      "id": "77",
-      "userId": "1",
-      "start": "2024-05-26",
-      "amount": "49900",
-      "categoryId": "18",
-      "title": "Savings",
-      "type": "expense"
-    },
-    {
-      "id": "80",
-      "userId": "1",
-      "start": "2024-05-27",
-      "amount": "68500",
-      "categoryId": "11",
-      "title": "Dining Out",
-      "type": "expense"
-    },
-    {
-      "id": "47",
-      "userId": "1",
-      "start": "2024-05-28",
-      "amount": "91900",
-      "categoryId": "1",
-      "title": "Salary",
+      "title": "환수금",
       "type": "income"
     },
     {
       "id": "58",
-      "userId": "1",
-      "start": "2024-05-29",
-      "amount": "60300",
-      "categoryId": "6",
-      "title": "Groceries",
+      "userId": "08f6",
+      "start": "2024-05-23",
+      "amount": "50000",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "36",
+      "userId": "08f6",
+      "start": "2024-05-23",
+      "amount": "104700",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "36",
+      "userId": "08f6",
+      "start": "2024-05-23",
+      "amount": "24700",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "4",
+      "userId": "08f6",
+      "start": "2024-05-25",
+      "amount": "19200",
+      "categoryId": "9",
+      "title": "취미/문화",
       "type": "expense"
     },
     {
-      "id": "59",
-      "userId": "1",
-      "start": "2024-05-30",
-      "amount": "80600",
+      "id": "11",
+      "userId": "08f6",
+      "start": "2024-05-26",
+      "amount": "60500",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "35",
+      "userId": "08f6",
+      "start": "2024-05-26",
+      "amount": "54200",
       "categoryId": "3",
-      "title": "Rental Income",
+      "title": "거래",
       "type": "income"
     },
     {
-      "id": "43",
-      "userId": "1",
-      "start": "2024-06-01",
-      "amount": "35800",
-      "categoryId": "19",
-      "title": "Others",
+      "id": "54",
+      "userId": "08f6",
+      "start": "2024-05-28",
+      "amount": "87200",
+      "categoryId": "10",
+      "title": "여행",
       "type": "expense"
     },
     {
-      "id": "51",
-      "userId": "1",
-      "start": "2024-06-01",
-      "amount": "41600",
-      "categoryId": "6",
-      "title": "Groceries",
-      "type": "expense"
+      "id": "39",
+      "userId": "08f6",
+      "start": "2024-05-30",
+      "amount": "56900",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
     },
     {
-      "id": "85",
-      "userId": "1",
-      "start": "2024-06-03",
+      "id": "8",
+      "userId": "08f6",
+      "start": "2024-06-01",
+      "amount": "53000",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "10",
+      "userId": "08f6",
+      "start": "2024-06-02",
       "amount": "36300",
-      "categoryId": "11",
-      "title": "Dining Out",
-      "type": "expense"
-    },
-    {
-      "id": "40",
-      "userId": "1",
-      "start": "2024-06-04",
-      "amount": "33200",
-      "categoryId": "11",
-      "title": "Dining Out",
-      "type": "expense"
-    },
-    {
-      "id": "62",
-      "userId": "1",
-      "start": "2024-06-04",
-      "amount": "12400",
-      "categoryId": "6",
-      "title": "Groceries",
-      "type": "expense"
-    },
-    {
-      "id": "69",
-      "userId": "1",
-      "start": "2024-06-04",
-      "amount": "76500",
-      "categoryId": "16",
-      "title": "Travel",
-      "type": "expense"
-    },
-    {
-      "id": "76",
-      "userId": "1",
-      "start": "2024-06-04",
-      "amount": "81900",
-      "categoryId": "19",
-      "title": "Others",
-      "type": "expense"
-    },
-    {
-      "id": "89",
-      "userId": "1",
-      "start": "2024-06-04",
-      "amount": "193900",
-      "categoryId": "1",
-      "title": "Salary",
-      "type": "income"
-    },
-    {
-      "id": "57",
-      "userId": "1",
-      "start": "2024-06-05",
-      "amount": "2000",
-      "categoryId": "1",
-      "title": "Salary",
-      "type": "income"
-    },
-    {
-      "id": "78",
-      "userId": "1",
-      "start": "2024-06-08",
-      "amount": "87800",
-      "categoryId": "16",
-      "title": "Travel",
-      "type": "expense"
-    },
-    {
-      "id": "82",
-      "userId": "1",
-      "start": "2024-06-08",
-      "amount": "96200",
       "categoryId": "5",
-      "title": "Others",
+      "title": "환수금",
       "type": "income"
     },
     {
-      "id": "64",
-      "userId": "1",
-      "start": "2024-06-10",
-      "amount": "94900",
-      "categoryId": "11",
-      "title": "Dining Out",
+      "id": "25",
+      "userId": "08f6",
+      "start": "2024-06-02",
+      "amount": "37200",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
+    },
+    {
+      "id": "29",
+      "userId": "08f6",
+      "start": "2024-06-02",
+      "amount": "40800",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "15",
+      "userId": "08f6",
+      "start": "2024-06-03",
+      "amount": "88200",
+      "categoryId": "5",
+      "title": "환수금",
+      "type": "income"
+    },
+    {
+      "id": "17",
+      "userId": "08f6",
+      "start": "2024-06-03",
+      "amount": "55000",
+      "categoryId": "12",
+      "title": "생활용품",
+      "type": "expense"
+    },
+    {
+      "id": "28",
+      "userId": "08f6",
+      "start": "2024-06-03",
+      "amount": "34000",
+      "categoryId": "15",
+      "title": "보험료",
       "type": "expense"
     },
     {
       "id": "68",
-      "userId": "1",
-      "start": "2024-06-10",
-      "amount": "96200",
-      "categoryId": "10",
-      "title": "Entertainment",
+      "userId": "08f6",
+      "start": "2024-06-01",
+      "amount": "84400",
+      "categoryId": "8",
+      "title": "교통/차량",
       "type": "expense"
     },
     {
-      "id": "73",
-      "userId": "1",
-      "start": "2024-06-11",
-      "amount": "33900",
-      "categoryId": "2",
-      "title": "Investment",
-      "type": "income"
+      "id": "2",
+      "userId": "08f6",
+      "start": "2024-06-05",
+      "amount": "24400",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
     },
     {
-      "id": "46",
-      "userId": "1",
-      "start": "2024-06-12",
-      "amount": "17300",
+      "id": "19",
+      "userId": "08f6",
+      "start": "2024-06-05",
+      "amount": "61800",
       "categoryId": "3",
-      "title": "Rental Income",
+      "title": "거래",
       "type": "income"
     },
     {
-      "id": "1+85",
-      "userId": "1",
-      "title": "132",
-      "start": "2024-06-17",
+      "id": "23",
+      "userId": "08f6",
+      "start": "2024-06-06",
+      "amount": "9000",
+      "categoryId": "12",
+      "title": "생활용품",
+      "type": "expense"
+    },
+    {
+      "id": "34",
+      "userId": "08f6",
+      "start": "2024-06-08",
+      "amount": "46400",
+      "categoryId": "11",
+      "title": "외식",
+      "type": "expense"
+    },
+    {
+      "id": "37",
+      "userId": "08f6",
+      "start": "2024-06-08",
+      "amount": "10300",
       "categoryId": "7",
-      "amount": "123",
-      "memo": "",
+      "title": "주거/통신",
       "type": "expense"
     },
     {
-      "id": "1+86",
-      "userId": "1",
-      "title": "123",
-      "start": "2024-06-24",
-      "categoryId": "11",
-      "amount": "123",
-      "memo": "",
+      "id": "3",
+      "userId": "08f6",
+      "start": "2024-06-10",
+      "amount": "37200",
+      "categoryId": "8",
+      "title": "교통/차량",
       "type": "expense"
     },
     {
-      "id": "1+87",
-      "userId": "1",
-      "title": "test",
-      "start": "2024-06-18",
+      "id": "20",
+      "userId": "08f6",
+      "start": "2024-06-10",
+      "amount": "65800",
+      "categoryId": "16",
+      "title": "교육비",
+      "type": "expense"
+    },
+    {
+      "id": "24",
+      "userId": "08f6",
+      "start": "2024-06-11",
+      "amount": "46300",
+      "categoryId": "2",
+      "title": "금융소득",
+      "type": "income"
+    },
+    {
+      "id": "6",
+      "userId": "08f6",
+      "start": "2024-06-12",
+      "amount": "120400",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "40",
+      "userId": "08f6",
+      "start": "2024-06-12",
+      "amount": "90900",
+      "categoryId": "17",
+      "title": "건강/뷰티",
+      "type": "expense"
+    },
+  
+    {
+      "id": "119",
+      "userId": "2116",
+      "start": "2024-05-12",
+      "amount": "34900",
+      "categoryId": "17",
+      "title": "건강/뷰티",
+      "type": "expense"
+    },
+    {
+      "id": "125",
+      "userId": "2116",
+      "start": "2024-05-15",
+      "amount": "72600",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
+    },
+    {
+      "id": "136",
+      "userId": "2116",
+      "start": "2024-05-16",
+      "amount": "29300",
+      "categoryId": "17",
+      "title": "건강/뷰티",
+      "type": "expense"
+    },
+    {
+      "id": "134",
+      "userId": "2116",
+      "start": "2024-05-18",
+      "amount": "65400",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
+    },
+    {
+      "id": "122",
+      "userId": "2116",
+      "start": "2024-05-19",
+      "amount": "80900",
+      "categoryId": "13",
+      "title": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "105",
+      "userId": "2116",
+      "start": "2024-05-21",
+      "amount": "38800",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "108",
+      "userId": "2116",
+      "start": "2024-05-21",
+      "amount": "44500",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "102",
+      "userId": "2116",
+      "start": "2024-05-22",
+      "amount": "54900",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "112",
+      "userId": "2116",
+      "start": "2024-05-22",
+      "amount": "42200",
+      "categoryId": "13",
+      "title": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "127",
+      "userId": "2116",
+      "start": "2024-05-24",
+      "amount": "55300",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "100",
+      "userId": "2116",
+      "start": "2024-05-26",
+      "amount": "87700",
+      "categoryId": "9",
+      "title": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "113",
+      "userId": "2116",
+      "start": "2024-05-28",
+      "amount": "12500",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "115",
+      "userId": "2116",
+      "start": "2024-05-28",
+      "amount": "88400",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "128",
+      "userId": "2116",
+      "start": "2024-05-28",
+      "amount": "30300",
+      "categoryId": "9",
+      "title": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "121",
+      "userId": "2116",
+      "start": "2024-05-18",
+      "amount": "56800",
       "categoryId": "11",
-      "amount": "123,456",
-      "memo": "tset",
+      "title": "외식",
+      "type": "expense"
+    },
+    {
+      "id": "104",
+      "userId": "2116",
+      "start": "2024-05-30",
+      "amount": "80700",
+      "categoryId": "13",
+      "title": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "101",
+      "userId": "2116",
+      "start": "2024-05-31",
+      "amount": "20600",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "110",
+      "userId": "2116",
+      "start": "2024-05-31",
+      "amount": "7600",
+      "categoryId": "3",
+      "title": "거래",
+      "type": "income"
+    },
+    {
+      "id": "117",
+      "userId": "2116",
+      "start": "2024-05-31",
+      "amount": "36100",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "135",
+      "userId": "2116",
+      "start": "2024-05-31",
+      "amount": "68100",
+      "categoryId": "3",
+      "title": "거래",
+      "type": "income"
+    },
+    {
+      "id": "103",
+      "userId": "2116",
+      "start": "2024-06-01",
+      "amount": "84100",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "106",
+      "userId": "2116",
+      "start": "2024-06-01",
+      "amount": "83600",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "123",
+      "userId": "2116",
+      "start": "2024-06-02",
+      "amount": "76200",
+      "categoryId": "13",
+      "title": "카페/간식",
+      "type": "expense"
+    },
+    {
+      "id": "114",
+      "userId": "2116",
+      "start": "2024-06-04",
+      "amount": "18100",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "132",
+      "userId": "2116",
+      "start": "2024-06-05",
+      "amount": "46400",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "99",
+      "userId": "2116",
+      "start": "2024-06-06",
+      "amount": "71000",
+      "categoryId": "3",
+      "title": "거래",
+      "type": "income"
+    },
+    {
+      "id": "107",
+      "userId": "2116",
+      "start": "2024-06-06",
+      "amount": "10900",
+      "categoryId": "8",
+      "title": "교통/차량",
+      "type": "expense"
+    },
+    {
+      "id": "111",
+      "userId": "2116",
+      "start": "2024-06-06",
+      "amount": "69200",
+      "categoryId": "4",
+      "title": "용돈",
+      "type": "income"
+    },
+    {
+      "id": "124",
+      "userId": "2116",
+      "start": "2024-06-06",
+      "amount": "21700",
+      "categoryId": "10",
+      "title": "여행",
+      "type": "expense"
+    },
+    {
+      "id": "131",
+      "userId": "2116",
+      "start": "2024-06-07",
+      "amount": "34900",
+      "categoryId": "17",
+      "title": "건강/뷰티",
+      "type": "expense"
+    },
+    {
+      "id": "118",
+      "userId": "2116",
+      "start": "2024-06-08",
+      "amount": "56000",
+      "categoryId": "9",
+      "title": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "137",
+      "userId": "2116",
+      "start": "2024-06-09",
+      "amount": "93200",
+      "categoryId": "15",
+      "title": "보험료",
+      "type": "expense"
+    },
+    {
+      "id": "138",
+      "userId": "2116",
+      "start": "2024-06-09",
+      "amount": "72800",
+      "categoryId": "9",
+      "title": "취미/문화",
+      "type": "expense"
+    },
+    {
+      "id": "109",
+      "userId": "2116",
+      "start": "2024-06-10",
+      "amount": "49000",
+      "categoryId": "2",
+      "title": "금융소득",
+      "type": "income"
+    },
+    {
+      "id": "116",
+      "userId": "2116",
+      "start": "2024-06-10",
+      "amount": "83500",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
+    },
+    {
+      "id": "120",
+      "userId": "2116",
+      "start": "2024-06-10",
+      "amount": "71700",
+      "categoryId": "6",
+      "title": "기타",
+      "type": "income"
+    },
+    {
+      "id": "126",
+      "userId": "2116",
+      "start": "2024-06-11",
+      "amount": "2000",
+      "categoryId": "1",
+      "title": "월급",
+      "type": "income"
+    },
+    {
+      "id": "129",
+      "userId": "2116",
+      "start": "2024-05-20",
+      "amount": "65200",
+      "categoryId": "3",
+      "title": "거래",
+      "type": "income"
+    },
+    {
+      "id": "133",
+      "userId": "2116",
+      "start": "2024-06-11",
+      "amount": "41800",
+      "categoryId": "3",
+      "title": "거래",
+      "type": "income"
+    },
+    {
+      "id": "122",
+      "userId": "2116",
+      "start": "2024-06-12",
+      "amount": "80900",
+      "categoryId": "13",
+      "title": "카페/간식",
       "type": "expense"
     }
   ],
@@ -1017,38 +831,19 @@
       "id": "19",
       "name": "기타",
       "type": "expense"
-    },
-    {
-      "id": "20",
-      "name": "이체",
-      "type": "transfer"
     }
   ],
   "settings": [
     {
-      "userId": "1",
-      "notifications": false,
-      "language": "kor",
-      "theme": "dark",
-      "id": "9c72"
-    },
-    {
-      "id": "38e7",
-      "userId": "3ebc",
+      "id": "2403",
+      "userId": "08f6",
       "notifications": true,
       "language": "kor",
       "theme": "light"
     },
     {
-      "id": "06e5",
-      "userId": "6",
-      "notifications": true,
-      "language": "kor",
-      "theme": "light"
-    },
-    {
-      "id": "3fc1",
-      "userId": "5",
+      "id": "73a8",
+      "userId": "2116",
       "notifications": true,
       "language": "kor",
       "theme": "light"

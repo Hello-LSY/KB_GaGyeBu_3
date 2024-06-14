@@ -2,25 +2,25 @@
     <div class="dashboard-content container mt-3">
       <div class="row">
         <!-- Left Column: Box + Weekly -->
-        <div class="col-md-9 col-12 left-column">
-          <div class="row mb-2">
-            <div class="col-md-4 col-12 mb-3 box-container">
+        <div class="col-lg-9 col-12 left-column">
+          <div class="row lg-2">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.balance.percent" :title="totalMonthly.balance.title" :content="totalMonthly.balance.amount" :pathData="totalMonthly.balance.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-container">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.income.percent" :title="totalMonthly.income.title" :content="totalMonthly.income.amount" :pathData="totalMonthly.income.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-container">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.expenese.percent" :title="totalMonthly.expenese.title" :content="totalMonthly.expenese.amount" :pathData="totalMonthly.expenese.pathData"/>
             </div>
           </div>
           <div class="row">
-            <div class="col-12 weekly-spend-container">
+            <div class="col-12 mb-3 weekly-spend-container">
               <WeekendComponent :calculateTotalAmount="calculateTotalAmount"/>
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-12 category-container">
+        <div class="col-lg-3 mb-3 col-12 category-container">
           <CategoryComponent :filterTransactionsByDate="filterTransactionsByDate" />
         </div>
       </div>
@@ -65,54 +65,56 @@
         });
       }
 
-  const calculateTotalAmount = (transactions, type) => {
-        return transactions.reduce((total, transaction) => {
-          if (transaction.type === type) {
-            return total + parseInt(transaction.amount);
-          }
-          return total;
-    }, 0);
-  }
+      const calculateTotalAmount = (transactions, type) => {
+  return transactions.reduce((total, transaction) => {
+    if (transaction.type === type) {
+      return total + parseInt(transaction.amount.replace(/,/g, ''), 10); // 반점을 제거하고 숫자로 변환
+    }
+    return total;
+  }, 0);
+}
+
 
   onMounted(async() => {
-    try {
-      const userInfo = JSON.parse(localStorage.getItem('user'))
-      const userId = userInfo.id
-      
-      const transactions = await axios.get('http://localhost:3000/transactions')
-    
-      transactions.data = transactions.data.filter(transaction => transaction.userId === userId);                        
+  try {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const userId = userInfo.id;
 
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-      const currentMonth = currentDate.getMonth() + 1;
-      const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-      const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-      const currentMonthTransactions = filterTransactionsByDate(transactions.data, currentYear, currentMonth);
-      const prevMonthTransactions = filterTransactionsByDate(transactions.data, prevYear, prevMonth);
+    const response = await axios.get('http://localhost:3000/transactions');
+    const transactions = response.data.filter(transaction => transaction.userId === userId);
+    // console.log('Loaded transactions:', transactions); // 로그 추가
 
-      const prevIncomeSum = calculateTotalAmount(prevMonthTransactions, 'income');
-      const prevExpenseSum = calculateTotalAmount(prevMonthTransactions, 'expense');
-      const incomeSum = calculateTotalAmount(currentMonthTransactions, 'income');
-      const expenseSum = calculateTotalAmount(currentMonthTransactions, 'expense');
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+    const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
 
-      // 증감률을 위한 percentage 계산
-      const incomeChange = prevIncomeSum !== 0 ? ((incomeSum - prevIncomeSum) / prevIncomeSum) * 100 : 0;
-      const expenseChange = prevExpenseSum !== 0 ? ((expenseSum - prevExpenseSum) / prevExpenseSum) * 100 : 0;
-      const prevIncomeExpenseDiff = prevIncomeSum - prevExpenseSum;
-      const balanceChange = prevIncomeExpenseDiff !== 0 ? ((incomeSum - expenseSum - prevIncomeExpenseDiff) / prevIncomeExpenseDiff) * 100 : 0;
+    const currentMonthTransactions = filterTransactionsByDate(transactions, currentYear, currentMonth);
+    const prevMonthTransactions = filterTransactionsByDate(transactions, prevYear, prevMonth);
 
-      totalMonthly.income.amount = incomeSum.toLocaleString();
-      totalMonthly.expenese.amount = expenseSum.toLocaleString();
-      totalMonthly.balance.amount = (incomeSum - expenseSum).toLocaleString();
-      totalMonthly.income.percent = incomeChange.toFixed(1);
-      totalMonthly.expenese.percent = expenseChange.toFixed(1);
-      totalMonthly.balance.percent = balanceChange.toFixed(1);
+    const prevIncomeSum = calculateTotalAmount(prevMonthTransactions, 'income');
+    const prevExpenseSum = calculateTotalAmount(prevMonthTransactions, 'expense');
+    const incomeSum = calculateTotalAmount(currentMonthTransactions, 'income');
+    const expenseSum = calculateTotalAmount(currentMonthTransactions, 'expense');
 
-    } catch(e){
-      console.log(e)
-    }
-  });
+    const incomeChange = prevIncomeSum !== 0 ? ((incomeSum - prevIncomeSum) / prevIncomeSum) * 100 : 0;
+    const expenseChange = prevExpenseSum !== 0 ? ((expenseSum - prevExpenseSum) / prevExpenseSum) * 100 : 0;
+    const prevIncomeExpenseDiff = prevIncomeSum - prevExpenseSum;
+    const balanceChange = prevIncomeExpenseDiff !== 0 ? ((incomeSum - expenseSum - prevIncomeExpenseDiff) / prevIncomeExpenseDiff) * 100 : 0;
+
+    totalMonthly.income.amount = incomeSum.toLocaleString();
+    totalMonthly.expenese.amount = expenseSum.toLocaleString();
+    totalMonthly.balance.amount = (incomeSum - expenseSum).toLocaleString();
+    totalMonthly.income.percent = incomeChange.toFixed(1);
+    totalMonthly.expenese.percent = expenseChange.toFixed(1);
+    totalMonthly.balance.percent = balanceChange.toFixed(1);
+
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 </script>
 
 <style scoped>
@@ -125,7 +127,6 @@
     overflow: auto;
   }
 
-  /* Fixed height for the weekly component */
   .weekly-spend-container {
     height: 350px; 
     justify-content: center;
@@ -152,18 +153,17 @@
     transform: translateY(-5px);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1250px) and (min-width: 961px) {
     .category-container {
-      height: auto;
-      margin-top: 20px;
+      width: 100%; 
     }
 
-    .weekly-spend-container {
-      height: 250px;
+    .weekly-spend-container{
+      width: 100%;
     }
 
-    .dashboard-container {
-      overflow: auto; 
+    .left-column{
+      width: 100%;
     }
   }
 </style>

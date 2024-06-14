@@ -2,96 +2,113 @@
   <div class="container">
     <div class="custom-container">
       <div class="content container-fluid">
-        <div class="content-header d-flex align-items-center">
-          <div class="account-title flex-grow-1 d-flex align-items-center">
-            <p class="account-text">{{ $t('account') }}</p>
+        <div v-if="!isPasswordChecked" class="password-check-container">
+          <div class="input-group">
+            <p class="input-label">{{ $t('비밀번호 입력') }}</p>
+            <input type="password" class="input-field" v-model="passwordCheck" :placeholder="$t('password')" />
           </div>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <g clip-path="url(#clip0_1_984)">
-              <path
-                d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-                fill="#84919A"
-              ></path>
-            </g>
-            <defs>
-              <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
-            </defs>
-          </svg>
-        </div>
-        <div class="tabs d-flex justify-content-start">
-          <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
-            <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
-            </div>
-          </div>
-          <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
-            <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
+          <div class="button-container d-flex justify-content-center mt-auto">
+            <div class="button" @click="checkPassword">
+              <p class="button-text">{{ $t('confirm') }}</p>
             </div>
           </div>
         </div>
-        <div class="form row">
-          <div v-if="currentTab === 'privacy'">
-            <div class="input-group">
-              <p class="input-label">{{ $t('userId') }}</p>
-              <input type="text" class="input-field" v-model="userId" :placeholder="$t('userId')" disabled />
+        <div v-else class="password-check-container"">
+          <div class="header-wrapper"> <!-- 추가된 부분 -->
+            <div class="content-header d-flex align-items-center">
+              <div class="account-title flex-grow-1 d-flex align-items-center">
+                <p class="account-text">{{ $t('account') }}</p>
+              </div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g clip-path="url(#clip0_1_984)">
+                  <path
+                    d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                    fill="#84919A"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
             </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('name') }}</p>
-              <input type="text" class="input-field" v-model="name" :placeholder="$t('name')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('email') }}</p>
-              <input type="text" class="input-field" v-model="email" :placeholder="$t('email')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('changePassword') }}</p>
-              <input type="password" class="input-field" v-model="password" :placeholder="$t('changePassword')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('confirmPassword') }}</p>
-              <input type="password" class="input-field" v-model="confirmPassword" :placeholder="$t('confirmPassword')" />
-            </div>
-          </div>
-          <div v-if="currentTab === 'preference'">
-            <div class="input-group">
-              <p class="input-label">{{ $t('notifications') }}</p>
-              <input type="checkbox" class="input-field" v-model="notifications" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('language') }}</p>
-              <select class="input-field" v-model="language" @change="changeLanguage">
-                <option value="ko">한국어</option>
-                <option value="en">English</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('theme') }}</p>
-              <select class="input-field" v-model="theme" @input="changeTheme">
-                <option value="light">{{ $t('light') }}</option>
-                <option value="dark">{{ $t('dark') }}</option>
-              </select>
+            <div class="tabs d-flex justify-content-start">
+              <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
+                <div class="tab-content">
+                  <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
+                </div>
+              </div>
+              <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
+                <div class="tab-content">
+                  <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="button-container d-flex justify-content-center mt-auto">
-          <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
-            <p class="button-text">{{ $t('modify') }}</p>
+          <div class="form row">
+            <div v-if="currentTab === 'privacy'">
+              <div class="input-group">
+                <p class="input-label">{{ $t('userId') }}</p>
+                <input type="text" class="input-field" v-model="userId" :placeholder="$t('userId')" disabled />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('name') }}</p>
+                <input type="text" class="input-field" v-model="name" :placeholder="$t('name')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('email') }}</p>
+                <input type="text" class="input-field" v-model="email" :placeholder="$t('email')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('changePassword') }}</p>
+                <input type="password" class="input-field" v-model="password" :placeholder="$t('changePassword')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('confirmPassword') }}</p>
+                <input type="password" class="input-field" v-model="confirmPassword" :placeholder="$t('confirmPassword')" />
+              </div>
+            </div>
+            <div v-if="currentTab === 'preference'">
+              <div class="input-group">
+                <p class="input-label">{{ $t('notifications') }}</p>
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="notifications" class="input-checkbox" v-model="notifications" />
+                  <label for="notifications" class="checkbox-label">{{ notifications ? $t('enabled') : $t('disabled') }}</label>
+                </div>
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('language') }}</p>
+                <select class="input-field" v-model="language" @change="changeLanguage">
+                  <option value="ko">한국어</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('theme') }}</p>
+                <select class="input-field" v-model="theme" @input="changeTheme">
+                  <option value="light">{{ $t('light') }}</option>
+                  <option value="dark">{{ $t('dark') }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="button-container d-flex justify-content-center mt-auto">
+              <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
+                <p class="button-text">{{ $t('modify') }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -108,6 +125,8 @@ const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const passwordCheck = ref('');
+const isPasswordChecked = ref(false);
 
 const notifications = ref(false);
 const language = ref('ko');
@@ -118,7 +137,6 @@ theme.value = themeStore.theme;
 
 const settingsStore = useSettingsStore();
 notifications.value = settingsStore.notifications;
-
 
 const changeTheme = () => {
   themeStore.setTheme(theme.value);
@@ -149,6 +167,15 @@ const selectTab = async (tab) => {
     } catch (error) {
       console.error(error);
     }
+  }
+};
+
+const checkPassword = async () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user && user.password === passwordCheck.value) {
+    isPasswordChecked.value = true;
+  } else {
+    alert(t('passwordIncorrect'));
   }
 };
 
@@ -228,88 +255,100 @@ const updateSettings = async () => {
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 8px;
+  gap: 24px;
+  padding: 24px;
+  border-radius: 12px;
   background: var(--content-background);
-  box-shadow: -6px 10px 40px 0 rgba(52, 52, 52, 0.08);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   box-sizing: border-box;
-  width: calc(100% - 40px); /* Adjust width to account for margin */
-  margin: 20px; /* Add margin */
-  max-width: 1400px; /* Limit the maximum width */
+  width: calc(100% - 48px);
+  margin: 24px;
+  max-width: 1200px;
+}
+
+.password-check-container {
+  width: 80%; /* 기존 양식과 동일한 너비 */
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.header-wrapper {
+  position: sticky; /* 추가된 부분 */
+  top: 0; /* 추가된 부분 */
+  background: var(--content-background); /* 추가된 부분 */
+  z-index: 10; /* 추가된 부분 */
+  width: 100%; /* 추가된 부분 */
 }
 
 .content-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
 }
 
 .account-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
-  position: relative;
   gap: 10px;
 }
 
 .account-text {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: bold;
   text-align: left;
   color: var(--link-color);
 }
 
 .tabs {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%; /* Make tabs take the full width */
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
   border-bottom: 1px solid var(--border-color);
+  padding-top: 10px;
 }
 
 .tab {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1; /* Make tabs grow equally */
-  flex-shrink: 0;
-  gap: 16px;
-  cursor: pointer; /* Add cursor pointer */
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  background-color: var(--hover-background-color);
 }
 
 .tab-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  position: relative;
-  gap: 8px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 20px;
 }
 
 .tab-text {
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .selected {
-  border-bottom: 2px solid var(--selected-tab-color);
+  background-color: var(--selected-tab-background);
 }
 
 .selected-text {
@@ -318,67 +357,93 @@ const updateSettings = async () => {
 
 .form {
   display: flex;
-  flex-direction: column; /* Arrange items in a column */
-  gap: 32px; /* Increase gap between input groups */
-  align-items: center; /* Center form items horizontally */
+  flex-direction: row; /* 변경된 부분 */
+  flex-wrap: wrap; /* 추가된 부분: 행이 너무 길어지지 않도록 */
+  gap: 24px;
+  align-items: center;
   width: 100%;
+  justify-content: center; /* 변경된 부분: 가운데 정렬 */
+  /* 위쪽에 마진 추가 */
+  margin-top: 120px;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Reduce gap between label and input */
-  width: 60%; /* Adjust width as needed */
-  margin: 10px auto;
+  gap: 0px;
+  width: 80%;
+  margin: 20px auto;
 }
 
 .input-label {
-  margin-bottom: 2px;
-  font-size: 15px; /* Increase font size for better readability */
-  font-weight: 600; /* Make font weight bolder */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a more modern and readable font */
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: left;
   color: var(--text-color);
 }
 
 .input-field {
   width: 100%;
-  padding: 3px 12px; /* Adjust padding for better appearance */
-  margin: 0;
+  padding: 10px 12px;
   border-radius: 8px;
   background: var(--input-background);
   border: 1px solid var(--input-border-color);
-  box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
-  font-size: 16px; /* Adjust font size for input fields */
-  height: auto;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.input-field:focus {
+  border-color: var(--input-focus-border-color);
+  outline: none;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 15px;
+  font-weight: 500;
   color: var(--text-color);
 }
 
 .button-container {
-  width: 100%;
-  padding: 0 16px;
+  padding: 24px 0; /* 변경된 부분: 상하 패딩 추가 */
+  display: flex; /* 추가된 부분 */
+  justify-content: center; /* 추가된 부분 */
+  width: 100%; /* 추가된 부분 */
+  max-width: 300px; /* 추가된 부분 */
 }
 
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 0;
-  flex-shrink: 0;
-  position: relative;
-  gap: 8px;
-  padding: 12px 0 0 0; /* Increase padding for better appearance */
-  border-radius: 30px; /* Make the button more rounded */
-  background: var(--button-background); /* 파스텔톤의 파란 그라데이션 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a box shadow */
-  width: 100%; /* Make button width full */
-  max-width: 600px; /* Limit the button's maximum width */
+  padding: 20px 20px;
+  border-radius: 30px;
+  background: var(--button-background);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 300px;
   cursor: pointer;
   transition: background 0.3s, transform 0.1s;
+  position: relative; /* 추가된 부분 */
+  line-height: normal; /* 추가된 부분 */
 }
 
 .button:hover {
-  background: var(--button-hover-background); /* Hover gradient background */
+  background: var(--button-hover-background);
 }
 
 .button:active {
@@ -386,14 +451,25 @@ const updateSettings = async () => {
 }
 
 .button-text {
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px; /* Font size */
-  font-weight: 600; /* Font weight */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Use a modern, readable font */
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: center;
-  color: var(--button-text-color); /* Text color */
-  line-height: 1; /* Ensure the text is vertically centered */
+  color: var(--button-text-color);
+  line-height: 1.2;
+  position: absolute; /* 추가된 부분 */
+  top: 50%; /* 추가된 부분 */
+  left: 50%; /* 추가된 부분 */
+  transform: translate(-50%, -50%); /* 추가된 부분 */
+}
+
+.icon {
+  fill: var(--icon-color);
+  transition: fill 0.3s;
+}
+
+.icon:hover {
+  fill: var(--icon-hover-color);
 }
 
 </style>

@@ -140,4 +140,10 @@
   text-align: left;
   color: #252c32;
 }
+
+@media (max-width: 1250px) and (min-width: 961px) {
+  .box-container{
+    width:100%
+  }
+}
 </style>
