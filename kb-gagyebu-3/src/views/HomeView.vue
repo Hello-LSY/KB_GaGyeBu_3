@@ -60,11 +60,11 @@
               <h2>Login</h2>
               <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" v-model="formData.email" required />
+                <input type="email" class="form-control" v-model="formData.email" @keydown.enter="login('loginModal')" required />
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" v-model="formData.password" required />
+                <input type="password" class="form-control" v-model="formData.password" @keydown.enter="login('loginModal')" required />
               </div>
               <button type="button" class="btn btn-primary w-100" @click="login('loginModal')">Login</button>
             </div>
@@ -189,7 +189,6 @@ const register = async (modalId) => {
     // 회원가입 처리
     await authStore.register(formData.name, formData.email, formData.password);
     closeModal(modalId);
-    router.push('/home');
     // 회원가입 성공 시 모달 닫기 이벤트 트리거
   } catch (error) {
     alert(error.message);
