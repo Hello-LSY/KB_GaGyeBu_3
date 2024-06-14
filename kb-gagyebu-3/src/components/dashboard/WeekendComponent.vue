@@ -19,6 +19,8 @@
     datasets: []
   });
 
+  const barThickness = ref(window.innerWidth <= 756 ? 15 : 25);
+
   const chartOptions = ref({
     responsive: true,
     maintainAspectRatio: false,
@@ -83,13 +85,13 @@
         labels: getDateLabels(weeklyTransactions, lastSunday),
         datasets: [
           {
-            barThickness: 25,
+            barThickness: barThickness.value,
             label: "Income",
             data: weeklyTransactions.map(week => props.calculateTotalAmount(week, 'income')), 
             backgroundColor: '#5987e3',
           },
           {
-            barThickness: 25,
+            barThickness:  barThickness.value,
             label: "Expense",
             data: weeklyTransactions.map(week => props.calculateTotalAmount(week, 'expense')), 
             backgroundColor: '#ed7868',
@@ -117,5 +119,11 @@
   .chart-container {
     height: 80%;
     width: 75%;
+  }
+
+  @media (max-width: 961px) {
+    .chart-container {
+      width: 90%;
+    }
   }
 </style>
