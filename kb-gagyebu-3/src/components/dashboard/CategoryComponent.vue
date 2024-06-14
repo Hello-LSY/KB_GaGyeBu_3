@@ -100,7 +100,7 @@ const selectTab = (tab) => {
   isIncome.value = tab;
 };
 
-const computeCategorySums = (transactions, categories, type) => {
+const calculateCategorySums = (transactions, categories, type) => {
   const sumByCategory = {};
 
   transactions.forEach(transaction => {
@@ -124,19 +124,18 @@ onMounted(async () => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const userId = userInfo.id
     
-    const transactions = await axios.get('http://localhost:3000/transactions')
+    const response = await axios.get(`http://localhost:3000/transactions?userId=${userId}`);
     const categories = await axios.get('http://localhost:3000/categories')
     
-    // 사용자 필터링
-    transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
+    const transactions = response.data
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
-    const currentMonthTransactions = props.filterTransactionsByDate(transactions.data, currentYear, currentMonth);
+    const currentMonthTransactions = props.filterTransactionsByDate(transactions, currentYear, currentMonth);
     
-    const incomeSum = computeCategorySums(currentMonthTransactions, categories, "income")
-    const expenseSum = computeCategorySums(currentMonthTransactions, categories, "expense")
+    const incomeSum = calculateCategorySums(currentMonthTransactions, categories, "income")
+    const expenseSum = calculateCategorySums(currentMonthTransactions, categories, "expense")
 
     let sortedIncomeDetails = Object.entries(incomeSum).sort((a, b) => b[1] - a[1]);
     let sortedExpenseDetails = Object.entries(expenseSum).sort((a, b) => b[1] - a[1]);

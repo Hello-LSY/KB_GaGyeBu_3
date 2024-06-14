@@ -80,9 +80,8 @@
     const userInfo = JSON.parse(localStorage.getItem('user'));
     const userId = userInfo.id;
 
-    const response = await axios.get('http://localhost:3000/transactions');
-    const transactions = response.data.filter(transaction => transaction.userId === userId);
-    // console.log('Loaded transactions:', transactions); // 로그 추가
+    const response = await axios.get(`http://localhost:3000/transactions?userId=${userId}`);
+    const transactions = response.data
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
