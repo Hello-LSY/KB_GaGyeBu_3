@@ -2,25 +2,25 @@
     <div class="dashboard-content container mt-3">
       <div class="row">
         <!-- Left Column: Box + Weekly -->
-        <div class="col-md-9 col-12 left-column">
-          <div class="row mb-2">
-            <div class="col-md-4 col-12 mb-3 box-container">
+        <div class="col-lg-9 col-12 left-column">
+          <div class="row lg-2">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.balance.percent" :title="totalMonthly.balance.title" :content="totalMonthly.balance.amount" :pathData="totalMonthly.balance.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-container">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.income.percent" :title="totalMonthly.income.title" :content="totalMonthly.income.amount" :pathData="totalMonthly.income.pathData"/>
             </div>
-            <div class="col-md-4 col-12 mb-3 box-container">
+            <div class="col-lg-4 col-12 mb-3 box-container">
               <BoxComponent :percentage="totalMonthly.expenese.percent" :title="totalMonthly.expenese.title" :content="totalMonthly.expenese.amount" :pathData="totalMonthly.expenese.pathData"/>
             </div>
           </div>
           <div class="row">
-            <div class="col-12 weekly-spend-container">
+            <div class="col-12 mb-3 weekly-spend-container">
               <WeekendComponent :calculateTotalAmount="calculateTotalAmount"/>
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-12 category-container">
+        <div class="col-lg-3 mb-3 col-12 category-container">
           <CategoryComponent :filterTransactionsByDate="filterTransactionsByDate" />
         </div>
       </div>
@@ -127,7 +127,6 @@
     overflow: auto;
   }
 
-  /* Fixed height for the weekly component */
   .weekly-spend-container {
     height: 350px; 
     justify-content: center;
@@ -154,18 +153,17 @@
     transform: translateY(-5px);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1250px) and (min-width: 961px) {
     .category-container {
-      height: auto;
-      margin-top: 20px;
+      width: 100%; 
     }
 
-    .weekly-spend-container {
-      height: 250px;
+    .weekly-spend-container{
+      width: 100%;
     }
 
-    .dashboard-container {
-      overflow: auto; 
+    .left-column{
+      width: 100%;
     }
   }
 </style>
