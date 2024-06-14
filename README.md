@@ -19,6 +19,7 @@
 ### 3. 손쉬운 가계부 관리
 > 지출 내역을 보기 쉽게 캘린더 형식으로 제공하며, 버튼 클릭 한번으로 가계부 관리가 가능합니다.
 </br>
+![transaction](kb-gagyebu-3/src/assets/ReadmeImg/transaction1.gif)
 
 ### 4. 사용자화 된 알림 및 다국어, 테마 지원
 > 사용자에게 사용 내역 알림을 제공하며, 영어 및 다국어 지원과 다크/라이트 테마를 지원합니다.
@@ -51,13 +52,13 @@ npm run json-server
 
 `main branch` : 운영 서버 배포 단위 branch </br>
 `dev branch` : 주요 개발 branch, main merge 전 거치는 branch, test 서버로 배포되는 branch </br>
-`feature branch`: 각자 개발 branch </br>
+`feature branch` : 각자 개발 branch </br>
 
 </br>
 
 ## 🧑‍🔧 Tech Stack
 ### Frontend
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"><img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"><img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
 
 ### Develop Tool
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> 
@@ -71,10 +72,10 @@ npm run json-server
 ## 👥 팀원 소개
 <table>
   <tr>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="160px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="160px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.png" alt="img" width="160px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.png" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png" alt="img" width="180px"></td>
   </tr>
   <tr>
     <td align="center" style="width: 90px;">
