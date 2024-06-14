@@ -7,25 +7,24 @@
 
 ## 👆🏻 서비스 핵심 기능
 ### 1. 한눈에 보기 편한 대시보드
+![dashboard](kb-gagyebu-3/src/assets/ReadmeImg/dashboard.gif)
 > 월별 소비 내용을 카테고리별, 주간별 요약하여 보기 쉽게 제공합니다.
 </br>
-![dashboard](kb-gagyebu-3/src/assets/ReadmeImg/dashboard.gif)
 
 ### 2. 개인화된 지출 분석
-> 사용자의 지출을 분석하여 추천하는 카드와 키워드를 알 수 있습니다.
 ![analytics](kb-gagyebu-3/src/assets/ReadmeImg/analytics.gif)
-</br>
+> 사용자의 지출을 분석하여 추천하는 카드와 키워드를 알 수 있습니다.
 
 ### 3. 손쉬운 가계부 관리
+![transaction](kb-gagyebu-3/src/assets/ReadmeImg/transaction1.gif)
 > 지출 내역을 보기 쉽게 캘린더 형식으로 제공하며, 버튼 클릭 한번으로 가계부 관리가 가능합니다.
 </br>
-![transaction](kb-gagyebu-3/src/assets/ReadmeImg/transaction1.gif)
 
 ### 4. 사용자화 된 알림 및 다국어, 테마 지원
-> 사용자에게 사용 내역 알림을 제공하며, 영어 및 다국어 지원과 다크/라이트 테마를 지원합니다.
-</br>
 ![setting](kb-gagyebu-3/src/assets/ReadmeImg/setting.gif)
 ![language](kb-gagyebu-3/src/assets/ReadmeImg/language.gif)
+> 사용자에게 사용 내역 알림을 제공하며, 영어 및 다국어 지원과 다크/라이트 테마를 지원합니다.
+</br>
 
 </br>
 </aside>
