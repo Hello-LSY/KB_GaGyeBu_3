@@ -13,7 +13,7 @@
             </div>
           </div>
         </div>
-        <div v-else class="password-check-container"">
+        <div v-else class="password-check-container2">
           <div class="header-wrapper"> <!-- 추가된 부분 -->
             <div class="content-header d-flex align-items-center">
               <div class="account-title flex-grow-1 d-flex align-items-center">
@@ -271,6 +271,16 @@ const updateSettings = async () => {
 }
 
 .password-check-container {
+  width: 80%; /* 기존 양식과 동일한 너비 */
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.password-check-container2 {
   width: 80%; /* 기존 양식과 동일한 너비 */
   max-width: 1200px;
   margin: 0 auto;
