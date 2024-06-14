@@ -2,93 +2,106 @@
   <div class="container">
     <div class="custom-container">
       <div class="content container-fluid">
-        <div class="header-wrapper"> <!-- 추가된 부분 -->
-          <div class="content-header d-flex align-items-center">
-            <div class="account-title flex-grow-1 d-flex align-items-center">
-              <p class="account-text">{{ $t('account') }}</p>
-            </div>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <g clip-path="url(#clip0_1_984)">
-                <path
-                  d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-                  fill="#84919A"
-                ></path>
-              </g>
-              <defs>
-                <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
-              </defs>
-            </svg>
+        <div v-if="!isPasswordChecked" class="password-check-container">
+          <div class="input-group">
+            <p class="input-label">{{ $t('비밀번호 입력') }}</p>
+            <input type="password" class="input-field" v-model="passwordCheck" :placeholder="$t('password')" />
           </div>
-          <div class="tabs d-flex justify-content-start">
-            <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
-              <div class="tab-content">
-                <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
-              </div>
-            </div>
-            <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
-              <div class="tab-content">
-                <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
-              </div>
+          <div class="button-container d-flex justify-content-center mt-auto">
+            <div class="button" @click="checkPassword">
+              <p class="button-text">{{ $t('confirm') }}</p>
             </div>
           </div>
         </div>
-        <div class="form row">
-          <div v-if="currentTab === 'privacy'">
-            <div class="input-group">
-              <p class="input-label">{{ $t('userId') }}</p>
-              <input type="text" class="input-field" v-model="userId" :placeholder="$t('userId')" disabled />
+        <div v-else class="password-check-container"">
+          <div class="header-wrapper"> <!-- 추가된 부분 -->
+            <div class="content-header d-flex align-items-center">
+              <div class="account-title flex-grow-1 d-flex align-items-center">
+                <p class="account-text">{{ $t('account') }}</p>
+              </div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g clip-path="url(#clip0_1_984)">
+                  <path
+                    d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                    fill="#84919A"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
             </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('name') }}</p>
-              <input type="text" class="input-field" v-model="name" :placeholder="$t('name')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('email') }}</p>
-              <input type="text" class="input-field" v-model="email" :placeholder="$t('email')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('changePassword') }}</p>
-              <input type="password" class="input-field" v-model="password" :placeholder="$t('changePassword')" />
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('confirmPassword') }}</p>
-              <input type="password" class="input-field" v-model="confirmPassword" :placeholder="$t('confirmPassword')" />
-            </div>
-          </div>
-          <div v-if="currentTab === 'preference'">
-            <div class="input-group">
-              <p class="input-label">{{ $t('notifications') }}</p>
-              <div class="custom-checkbox">
-                <input type="checkbox" id="notifications" class="input-checkbox" v-model="notifications" />
-                <label for="notifications" class="checkbox-label">{{ notifications ? $t('enabled') : $t('disabled') }}</label>
+            <div class="tabs d-flex justify-content-start">
+              <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
+                <div class="tab-content">
+                  <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
+                </div>
+              </div>
+              <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
+                <div class="tab-content">
+                  <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
+                </div>
               </div>
             </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('language') }}</p>
-              <select class="input-field" v-model="language" @change="changeLanguage">
-                <option value="ko">한국어</option>
-                <option value="en">English</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <p class="input-label">{{ $t('theme') }}</p>
-              <select class="input-field" v-model="theme" @input="changeTheme">
-                <option value="light">{{ $t('light') }}</option>
-                <option value="dark">{{ $t('dark') }}</option>
-              </select>
-            </div>
           </div>
-          <div class="button-container d-flex justify-content-center mt-auto">
-            <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
-              <p class="button-text">{{ $t('modify') }}</p>
+          <div class="form row">
+            <div v-if="currentTab === 'privacy'">
+              <div class="input-group">
+                <p class="input-label">{{ $t('userId') }}</p>
+                <input type="text" class="input-field" v-model="userId" :placeholder="$t('userId')" disabled />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('name') }}</p>
+                <input type="text" class="input-field" v-model="name" :placeholder="$t('name')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('email') }}</p>
+                <input type="text" class="input-field" v-model="email" :placeholder="$t('email')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('changePassword') }}</p>
+                <input type="password" class="input-field" v-model="password" :placeholder="$t('changePassword')" />
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('confirmPassword') }}</p>
+                <input type="password" class="input-field" v-model="confirmPassword" :placeholder="$t('confirmPassword')" />
+              </div>
+            </div>
+            <div v-if="currentTab === 'preference'">
+              <div class="input-group">
+                <p class="input-label">{{ $t('notifications') }}</p>
+                <div class="custom-checkbox">
+                  <input type="checkbox" id="notifications" class="input-checkbox" v-model="notifications" />
+                  <label for="notifications" class="checkbox-label">{{ notifications ? $t('enabled') : $t('disabled') }}</label>
+                </div>
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('language') }}</p>
+                <select class="input-field" v-model="language" @change="changeLanguage">
+                  <option value="ko">한국어</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <p class="input-label">{{ $t('theme') }}</p>
+                <select class="input-field" v-model="theme" @input="changeTheme">
+                  <option value="light">{{ $t('light') }}</option>
+                  <option value="dark">{{ $t('dark') }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="button-container d-flex justify-content-center mt-auto">
+              <div class="button" @click="currentTab === 'privacy' ? updatePassword() : updateSettings()">
+                <p class="button-text">{{ $t('modify') }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -96,8 +109,6 @@
     </div>
   </div>
 </template>
-
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -114,6 +125,8 @@ const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const passwordCheck = ref('');
+const isPasswordChecked = ref(false);
 
 const notifications = ref(false);
 const language = ref('ko');
@@ -124,7 +137,6 @@ theme.value = themeStore.theme;
 
 const settingsStore = useSettingsStore();
 notifications.value = settingsStore.notifications;
-
 
 const changeTheme = () => {
   themeStore.setTheme(theme.value);
@@ -155,6 +167,15 @@ const selectTab = async (tab) => {
     } catch (error) {
       console.error(error);
     }
+  }
+};
+
+const checkPassword = async () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user && user.password === passwordCheck.value) {
+    isPasswordChecked.value = true;
+  } else {
+    alert(t('passwordIncorrect'));
   }
 };
 
@@ -247,6 +268,16 @@ const updateSettings = async () => {
   width: calc(100% - 48px);
   margin: 24px;
   max-width: 1200px;
+}
+
+.password-check-container {
+  width: 80%; /* 기존 양식과 동일한 너비 */
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
 }
 
 .header-wrapper {
