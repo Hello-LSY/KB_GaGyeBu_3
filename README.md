@@ -3,8 +3,6 @@
 ### 사용자의 소비를 분석해주는 나만의 가계부
 ![image](kb-gagyebu-3/src/assets/ReadmeImg/logo.png)
 
-</aside>
-<hr>
 </br>
 
 ## 👆🏻 서비스 핵심 기능
@@ -20,6 +18,7 @@
 ### 4. 사용자화 된 알림 및 다국어, 테마 지원
 > 사용자에게 사용 내역 알림을 제공하며, 영어 및 다국어 지원과 다크/라이트 테마를 지원합니다.
 
+</br>
 </aside>
 <hr>
 </br>
@@ -41,18 +40,14 @@ npm run dev
 npm run json-server
 ```
 </br>
-</br>
 
 ## 🌳 git branch 전략
 
-`main branch` : 운영 서버 배포 단위 branch
-`dev branch` : 주요 개발 branch, main merge 전 거치는 branch, test 서버로 배포되는 branch
-`feature branch`: 각자 개발 branch
+`main branch` : 운영 서버 배포 단위 branch </br>
+`dev branch` : 주요 개발 branch, main merge 전 거치는 branch, test 서버로 배포되는 branch </br>
+`feature branch`: 각자 개발 branch </br>
 
-</aside>
-<hr>
 </br>
-
 
 ## 🧑‍🔧 Tech Stack
 ### Frontend
@@ -64,16 +59,29 @@ npm run json-server
 ### Communicate Tool
 <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
-</aside>
-<hr>
+
 </br>
 
-
-</aside>
-<hr>
-</br>
-
-# 👥 팀원 소개
-| <img width="165" alt="kim" src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png"> | <img width="165" alt="Lee" src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg"> | <img width="165" alt="Han" src="kb-gagyebu-3/src/assets/ReadmeImg/han.png"> | <img width="165" alt="Yoon" src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png"> |
-| --- | --- | --- | --- |
-| [김태균](https://github.com/dkssudgo112) | [이신영](hhttps://github.com/Hello-LSY) | [한상민](https://github.com/SangminHann) | [윤다빈](https://github.com/yundabin0608) |
+## 👥 팀원 소개
+<table>
+  <tr>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.jpeg1" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.jpeg" alt="img" width="160px"></td>
+  </tr>
+  <tr>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/dkssudgo112">김태균</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/Hello-LSY">이신영</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/SangminHann">한상민</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/yundabin0608">윤다빈</a>
+    </td>
+  </tr>
+</table>
