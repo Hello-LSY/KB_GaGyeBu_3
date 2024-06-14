@@ -68,10 +68,10 @@
     try {
       const userInfo = JSON.parse(localStorage.getItem('user'));      
       const userId = userInfo.id;
-  
-      const transactions = await axios.get('http://localhost:3000/transactions');
-  
-      transactions.data = transactions.data.filter(transaction => transaction.userId === userId);
+      
+      const response = await axios.get(`http://localhost:3000/transactions?userId=${userId}`);
+
+      const transactions = response.data;
   
       // // 이번 주 토요일, 지난주 일요일 찾기
       const currentDate = new Date();
@@ -79,7 +79,7 @@
       thisSaturday.setDate(currentDate.getDate() + (6 - currentDate.getDay()));
       const lastSunday = new Date(thisSaturday);
       lastSunday.setDate(thisSaturday.getDate() - 6);
-      const weeklyTransactions = getWeeklyTransactions(transactions.data, lastSunday)
+      const weeklyTransactions = getWeeklyTransactions(transactions, lastSunday)
   
       chartData.value = {
         labels: getDateLabels(weeklyTransactions, lastSunday),
