@@ -4,22 +4,24 @@
       <p class="app-header h1 p-">내 가계부</p>
     </div>
     <div class='demo-app-main'>
-      <FullCalendar
-        class='demo-app-calendar'
-        ref="fullCalendar"
-        :options='calendarOptions'
-      >
-        <template v-slot:eventContent='arg'>
-          <div class="event-custom"
-          :style="{
-            backgroundColor: getEventColor(arg.event.extendedProps.type),
-            borderRadius: '3px'
-          }">
-            <b> {{ arg.timeText }}</b>
-            <i>₩ {{ arg.event.extendedProps.amount }}</i>
-          </div>
-        </template>
-      </FullCalendar>
+      <transition name="slide-fade">
+        <FullCalendar
+          class='demo-app-calendar'
+          ref="fullCalendar"
+          :options='calendarOptions'
+        >
+          <template v-slot:eventContent='arg'>
+            <div class="event-custom"
+            :style="{
+              backgroundColor: getEventColor(arg.event.extendedProps.type),
+              borderRadius: '3px'
+            }">
+              <b> {{ arg.timeText }}</b>
+              <i>₩ {{ arg.event.extendedProps.amount }}</i>
+            </div>
+          </template>
+        </FullCalendar>
+      </transition>
     </div>
     
     <!-- 거래 내역 등록 모달창 -->
@@ -599,6 +601,19 @@ b { /* used for event dates/times */
 
 .fc-event.transfer {
   background-color: grey; /* 이체 색상 */
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
 }
 </style>
 
