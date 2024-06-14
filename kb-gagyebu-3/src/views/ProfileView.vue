@@ -2,39 +2,41 @@
   <div class="container">
     <div class="custom-container">
       <div class="content container-fluid">
-        <div class="content-header d-flex align-items-center">
-          <div class="account-title flex-grow-1 d-flex align-items-center">
-            <p class="account-text">{{ $t('account') }}</p>
-          </div>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <g clip-path="url(#clip0_1_984)">
-              <path
-                d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-                fill="#84919A"
-              ></path>
-            </g>
-            <defs>
-              <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
-            </defs>
-          </svg>
-        </div>
-        <div class="tabs d-flex justify-content-start">
-          <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
-            <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
+        <div class="header-wrapper"> <!-- 추가된 부분 -->
+          <div class="content-header d-flex align-items-center">
+            <div class="account-title flex-grow-1 d-flex align-items-center">
+              <p class="account-text">{{ $t('account') }}</p>
             </div>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <g clip-path="url(#clip0_1_984)">
+                <path
+                  d="M11 7H13V9H11V7ZM12 17C12.55 17 13 16.55 13 16V12C13 11.45 12.55 11 12 11C11.45 11 11 11.45 11 12V16C11 16.55 11.45 17 12 17ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                  fill="#84919A"
+                ></path>
+              </g>
+              <defs>
+                <clipPath id="clip0_1_984"><rect width="24" height="24" fill="white"></rect></clipPath>
+              </defs>
+            </svg>
           </div>
-          <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
-            <div class="tab-content">
-              <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
+          <div class="tabs d-flex justify-content-start">
+            <div class="tab" :class="{ selected: currentTab === 'privacy' }" @click="selectTab('privacy')">
+              <div class="tab-content">
+                <p class="tab-text" :class="{ 'selected-text': currentTab === 'privacy' }">{{ $t('privacy') }}</p>
+              </div>
+            </div>
+            <div class="tab" :class="{ selected: currentTab === 'preference' }" @click="selectTab('preference')">
+              <div class="tab-content">
+                <p class="tab-text" :class="{ 'selected-text': currentTab === 'preference' }">{{ $t('preference') }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -94,6 +96,7 @@
     </div>
   </div>
 </template>
+
 
 
 <script setup>
@@ -246,6 +249,14 @@ const updateSettings = async () => {
   max-width: 1200px;
 }
 
+.header-wrapper {
+  position: sticky; /* 추가된 부분 */
+  top: 0; /* 추가된 부분 */
+  background: var(--content-background); /* 추가된 부분 */
+  z-index: 10; /* 추가된 부분 */
+  width: 100%; /* 추가된 부분 */
+}
+
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -321,14 +332,16 @@ const updateSettings = async () => {
   align-items: center;
   width: 100%;
   justify-content: center; /* 변경된 부분: 가운데 정렬 */
+  /* 위쪽에 마진 추가 */
+  margin-top: 120px;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0px;
   width: 80%;
-  margin: 10px auto;
+  margin: 20px auto;
 }
 
 .input-label {
@@ -427,4 +440,5 @@ const updateSettings = async () => {
 .icon:hover {
   fill: var(--icon-hover-color);
 }
+
 </style>
