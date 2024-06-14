@@ -26,8 +26,6 @@
 ## 💽 DB ERD
 ![image](kb-gagyebu-3/src/assets/ReadmeImg/erd.png)
 
-</aside>
-<hr>
 </br>
 
 ## 💻 프로젝트 실행 방법
@@ -67,8 +65,8 @@ npm run json-server
   <tr>
     <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="160px"></td>
     <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="160px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.jpeg1" alt="img" width="160px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.jpeg" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.png" alt="img" width="160px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png" alt="img" width="160px"></td>
   </tr>
   <tr>
     <td align="center" style="width: 90px;">
