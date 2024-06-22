@@ -1,2 +1,2 @@
-exclude:
-  - "node_modules"
+echo "exclude:" > _config.yml
+echo "  - 'node_modules'" >> _config.yml
