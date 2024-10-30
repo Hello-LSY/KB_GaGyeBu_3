@@ -3,6 +3,30 @@
 ### 사용자의 소비를 분석해주는 나만의 가계부
 ![image](kb-gagyebu-3/src/assets/ReadmeImg/logo.png)
 
+## 👥 팀원 소개
+<table>
+  <tr>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.png" alt="img" width="180px"></td>
+    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png" alt="img" width="180px"></td>
+  </tr>
+  <tr>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/dkssudgo112">김태균</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/Hello-LSY">이신영</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/SangminHann">한상민</a>
+    </td>
+    <td align="center" style="width: 90px;">
+      <a href="https://github.com/yundabin0608">윤다빈</a>
+    </td>
+  </tr>
+</table>
+
 </br>
 
 ## 👆🏻 서비스 핵심 기능
@@ -64,29 +88,9 @@ npm run json-server
 ### Communicate Tool
 <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
-
 </br>
 
-## 👥 팀원 소개
-<table>
-  <tr>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/kim.png" alt="img" width="180px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/lee.jpeg" alt="img" width="180px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/han.png" alt="img" width="180px"></td>
-    <td align="center"><img src="kb-gagyebu-3/src/assets/ReadmeImg/yoon.png" alt="img" width="180px"></td>
-  </tr>
-  <tr>
-    <td align="center" style="width: 90px;">
-      <a href="https://github.com/dkssudgo112">김태균</a>
-    </td>
-    <td align="center" style="width: 90px;">
-      <a href="https://github.com/Hello-LSY">이신영</a>
-    </td>
-    <td align="center" style="width: 90px;">
-      <a href="https://github.com/SangminHann">한상민</a>
-    </td>
-    <td align="center" style="width: 90px;">
-      <a href="https://github.com/yundabin0608">윤다빈</a>
-    </td>
-  </tr>
-</table>
+## 관련 자료
+
+- 프레젠테이션
+https://www.canva.com/design/DAGIEPjobaI/0WeFpHZtNsVfGxzQXoqQzg/edit
